@@ -45,14 +45,26 @@ source("dois-reviews.R")
 
 
 ```{r}
-# mindfulness open acces review on intervention:
-#cochrane_url <- "https://www.cochranelibrary.com/cdsr/doi/10.1002/14651858.CD012791.pub2/full"
+# mindfulness open access review on intervention:
+# friendly review:
+mindfulness_url <- "https://www.cochranelibrary.com/cdsr/doi/10.1002/14651858.CD012791.pub2/full"
 
 
 cochrane_url <- dois_reviews_paywalled[1]
-cochrane_url <- dois_reviews_2017[1]
-cochrane_url <- "https://doi.org/10.1002/14651858.CD009326.pub3"
-review_url <- cochrane_url 
+
+# friendly review:
+friendly_url <- "http://dx.doi.org/10.1002/14651858.CD003474.pub4"
+
+# no "summary of findings table"
+nosumtable_url <- "https://doi.org/10.1002/14651858.CD009326.pub3"
+
+
+# not recent review:
+old_version_url <- "https://www.cochranelibrary.com/cdsr/doi/10.1002/14651858.CD001352/full"
+
+
+
+review_url <- mindfulness_url 
 ```
 
 
@@ -107,6 +119,7 @@ review <- list()
 
 ```{r test-parse-review}
 test_review <- parse_review(review_url)
+test_review <- parse_review(mindfulness_url)
 
 ```
 
@@ -119,7 +132,8 @@ test_review <- parse_review(review_url)
 
 ```{r}
 reviews_parsed3 <- 
-   dois_reviews_2017[21:30] %>% 
+   dois_reviews_2017[21] %>% 
+   c(nosumtable_url, mindfulness_url, old_version_url) %>% 
    map_dfr(parse_review, .id = "id_review")
 ```
 
@@ -142,11 +156,11 @@ reviews_parsed2 <-
 
 
 ```{r}
-write_csv(reviews_parsed2, 
-            file = paste0("test_reviews_infos2", ".csv"))
+write_csv(reviews_parsed3, 
+            file = paste0("test_reviews_infos3", ".csv"))
 
-writexl::write_xlsx(reviews_parsed2,
-                    path = "test_reviews_infos2.xlsx")
+writexl::write_xlsx(reviews_parsed3,
+                    path = "test_reviews_infos3.xlsx")
 ```
 
 
