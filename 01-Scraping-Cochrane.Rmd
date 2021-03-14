@@ -52,6 +52,9 @@ mindfulness_url <- "https://www.cochranelibrary.com/cdsr/doi/10.1002/14651858.CD
 
 cochrane_url <- dois_reviews_paywalled[1]
 
+# paywalled url:
+paywalled_url <- "https://www.cochranelibrary.com/cdsr/doi/10.1002/14651858.CD013879/full"
+
 # friendly review:
 friendly_url <- "http://dx.doi.org/10.1002/14651858.CD003474.pub4"
 
@@ -63,6 +66,8 @@ nosumtable_url <- "https://doi.org/10.1002/14651858.CD009326.pub3"
 old_version_url <- "https://www.cochranelibrary.com/cdsr/doi/10.1002/14651858.CD001352/full"
 
 
+url_throws_error <- "http://dx.doi.org/10.1002/14651858.CD000245.pub4"
+
 
 review_url <- mindfulness_url 
 ```
@@ -70,7 +75,7 @@ review_url <- mindfulness_url
 
 
 
-# Functions to get main study infos
+# Source functions to get main study infos
 
 ```{r}
 source("funs-parse-cochrane.R")
@@ -104,10 +109,12 @@ review <- list()
   review$summaryTable_metadata <- get_summary_table_metadata(review$page_content)
   
   #undebug(add_metadata_to_summary_table)
-  review$final_table <- add_metadata_to_summary_table(summarytable = review$summarytable1,
-                                                      metadata_review =  review$metadata,
-                                                      abstract_review = review$abstract,
-                                                      metadata_summaryTable = review$summaryTable_metadata)
+  review$final_table <- concat_tables(
+    page_content = review$page_content,
+    summarytable = review$summarytable1,
+    metadata_review =  review$metadata,
+    abstract_review = review$abstract,
+    metadata_summaryTable = review$summaryTable_metadata)
 ```
 
 
@@ -131,9 +138,9 @@ test_review <- parse_review(mindfulness_url)
 
 
 ```{r}
-reviews_parsed3 <- 
-   dois_reviews_2017[21] %>% 
-   c(nosumtable_url, mindfulness_url, old_version_url) %>% 
+reviews_parsed4 <- 
+   dois_reviews_2017[31:40] %>% 
+   #c(nosumtable_url, mindfulness_url, old_version_url) %>% 
    map_dfr(parse_review, .id = "id_review")
 ```
 

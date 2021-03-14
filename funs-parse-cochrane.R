@@ -12,12 +12,31 @@ library(stringr)  # string manipulation
 
 create_empty_df <- function(names_vec) {
   
-  df <- data.frame(matrix(ncol = length(names_vec), nrow = 0)) 
+  df <- data.frame(matrix(ncol = length(names_vec), nrow = 1)) 
   colnames(df) <- names_vec
   
   return(df)
 }
 
+
+
+get_review_metadata_colnames <- function() {
+  
+  review_metadata_colnames <- c(
+    "title",
+    "doi",
+    "authors",
+    "publish_type",
+    "is_most_recent_version",
+    "url_most_most_version",
+    "summaryTable_count",
+    "GRADE_somewhere_in_the_text",
+    "is_paywalled"
+  )
+  
+  return(review_metadata_colnames)
+  
+}
 
 
 get_summarytab_colnames <- function() {
@@ -35,7 +54,8 @@ get_summarytab_colnames <- function() {
   "Comments",
   "effect_statistic",
   "CI_lower",
-  "CI_upper"
+  "CI_upper",
+  "effect_size"
   )
   
   return(summarytab1_colnames)
@@ -58,6 +78,29 @@ get_summarytab_metadata_colnames <- function() {
 
 
 
+
+get_all_colnames <- function(output_file = "first",  # if first, take first output file in "output" folder
+                             verbose = FALSE, ...) {
+  
+  if (output_file == "first") {
+    first_file_found <- dir("output/", pattern = "^\\d.*csv")[1]
+    output_file_df <- read_csv(glue::glue("output/{first_file_found}"),
+                               col_types = cols(),
+                               ...)
+  } else {
+  if (!file.exists(output_file)) stop("File not found!")
+  output_file_df <- read_csv(output_file, 
+                             col_types = cols(),
+                             ...)
+  }
+  
+  
+  output <- names(output_file_df)
+  
+  if (verbose) print(output)
+  
+  return(output)
+}
 
 
 
@@ -148,6 +191,20 @@ get_review_metadata <- function(page_content, verbose = TRUE){
     str_detect(c("GRADE"))
   
   
+  # check if paywalled
+  is_paywalled <- NA
+  is_paywalled <-
+    page_content %>% 
+    html_nodes(".unlock") %>% 
+    html_text() %>% 
+    str_to_lower() %>% 
+    str_trim() %>% 
+    str_detect("unlock .* full review") %>% 
+    magrittr::extract(1)
+  
+  if (is.na(is_paywalled)) is_paywalled <- FALSE
+  
+  
   output <- list(title = title_publication,
                  doi = review_doi,
                  authors = authors,
@@ -155,7 +212,8 @@ get_review_metadata <- function(page_content, verbose = TRUE){
                  is_most_recent_version = is_most_recent_version,
                  url_most_most_version = url_most_most_version,
                  summaryTable_count = summaryTable_count,
-                 GRADE_somewhere_in_the_text = GRADE_somewhere_in_the_text
+                 GRADE_somewhere_in_the_text = GRADE_somewhere_in_the_text,
+                 is_paywalled = is_paywalled
                  )
   
   if (verbose) print(output)
@@ -372,15 +430,20 @@ get_summary_table <- function(page_content,
     select(id_measure, everything())
   
   # delete non-rata rows:
-  max_row_to_delete <- 
+  header_rows <- 
     summaryOfFindingsTable %>% 
-    filter(Outcomes == "Outcomes") %>% 
+    filter(str_detect(str_to_lower(Outcomes), "outcomes?$")) %>% 
     pull(id_measure) %>% 
     max()
   
-  summaryOfFindingsTable2 <-
+  # we'll need this table further down below:
+  summaryOfFindingsTable <-
     summaryOfFindingsTable %>% 
-    filter(id_measure > max_row_to_delete)
+    mutate(header_row = row_number() <= header_rows) 
+  
+  summaryOfFindingsTable2 <-
+    summaryOfFindingsTable %>%
+    filter(id_measure > header_rows)
   
   
   # delete footer:
@@ -394,7 +457,7 @@ get_summary_table <- function(page_content,
     filter(!identical_cells_across_cols)  
   
   
-  # find columns where to GRADES are shown:
+  # find columns where GRADES are shown:
   col_GRADES <- 
     summaryOfFindingsTable3 %>% 
     map( ~ str_detect(.x, pattern = "⊕|⊝")) %>% 
@@ -419,16 +482,19 @@ get_summary_table <- function(page_content,
   
   summaryOfFindingsTable5 <-
     summaryOfFindingsTable4 %>% 
-    mutate(effect_statistic = effect_statistic_per_outcome)
+    mutate(effect_statistic = effect_statistic_per_outcome[1],)
   
   
   # find column where number of participants and number of studies are noted for each outcome:
-  n_of_trials_string <- "of [Pp]articipants[[:space:]]*\\([Ss]tudies\\)"
+  n_of_trials_string <- "of [Pp]articipants[[:space:]]*\\([Ss]tudies\\)|"
+  n_of_trials_string2 <- "([Ss]tudies)|[Pp]articipants"
+
   
 
   col_participants_studies <- 
-    summaryOfFindingsTable %>% 
-    map( ~ str_detect(., pattern = n_of_trials_string)) %>% 
+    summaryOfFindingsTable %>%  # as defined above
+    filter(header_row == TRUE) %>% 
+    map( ~ str_detect(., pattern = n_of_trials_string2)) %>% 
     map_lgl( ~ any(. == TRUE)) %>% 
     keep(isTRUE) %>% 
     names()
@@ -436,14 +502,20 @@ get_summary_table <- function(page_content,
   summaryOfFindingsTable6 <-
     summaryOfFindingsTable5 %>% 
     rename(n_participants_studies := {col_participants_studies}) %>% 
-    separate(col = n_participants_studies, sep = "\\(",
-             into = c("n_participants", "n_studies"),
-             remove = FALSE)
+    mutate(n_participants = str_extract(n_participants_studies, 
+                                        "\\d+[[:blank:]]*[Pp]articipants"),
+           n_studies = str_extract(n_participants_studies,
+                                   "\\d+[[:blank:]]* [Ss]tud(y|ies)"))
+    # separate(col = n_participants_studies, sep = "\\(",
+    #          into = c("n_participants", "n_studies"),
+    #          remove = FALSE)
   
   
   # find column with effect sizes and CI per outcome:
-  rel_eff_CI_str <- "Relative effect[s]*[[[:space:]]*\\(95%[[:space:]]*CI\\)]*"
-  
+  rel_eff_CI_str2 <- "Relative effect[s]*[[[:space:]]*\\(95%[[:space:]]*CI\\)]*"
+  rel_eff_CI_str <- "\\(95%[[:space:]]*CI\\)]*"
+
+    
   col_rel_eff_CI <- 
     summaryOfFindingsTable %>% 
     map( ~ str_detect(., pattern = rel_eff_CI_str)) %>% 
@@ -459,7 +531,8 @@ get_summary_table <- function(page_content,
     mutate(CI_lower = str_remove(CI_lower, "\\(")) %>% 
     mutate(CI_upper = str_extract(relative_effect_95CI,
                                   "\\d+\\.*\\d+\\)")) %>% 
-    mutate(CI_upper = str_remove(CI_upper, "\\)"))
+    mutate(CI_upper = str_remove(CI_upper, "\\)")) %>% 
+    mutate(effect_size = str_extract(relative_effect_95CI, "[:alpha:]{1,4}\\s*\\d*\\.?\\d*"))
   
   
   # check if there's a comment column for each outcome:
@@ -603,7 +676,8 @@ get_summary_table_metadata <- function(page_content,
 # concatenate tables -------------------------------------------
 
 
-concat_tables <- function(summarytable,
+concat_tables <- function(page_content,
+                          summarytable,
                           metadata_review,
                           abstract_review,
                           metadata_summaryTable,
@@ -710,16 +784,34 @@ concat_tables <- function(summarytable,
 
 
 
-parse_review <- function(review_url, 
-                         final_table = TRUE,
-                         verbose = TRUE) {
+parse_review <- function(
+  review_url, 
+  final_table = TRUE,  # should the results be converted from list to df?
+  save_to_file = TRUE,  # should results be saved to disk?
+  output_dir = "output",  # folder where to write output to
+  overwrite = FALSE,  # if FALSE, existing results file will not be overwritten
+  verbose = TRUE, ...) {
   
+  
+  # check if output file exists:
+  file_path <- glue::glue("{output_dir}/{review_url}.csv") %>% 
+    str_remove("http[s]*://[dx.]*doi.org/10.1002/")
+  output_file_exists <- file.exists(file_path)
+  
+  # check if we should overwrite it, otherwise stop (if output  file already exists):
+  if (output_file_exists == TRUE & overwrite == FALSE) {
+    writeLines(glue::glue("Output file exists. NOT overwriting: {file_path}\n"))
+    
+    output <- create_empty_df(names_vec = get_all_colnames())
+    output$doi <- review_url
+  } else {
   review <- list()
   
   if (verbose) cat(paste0("**Starting to parse the review with this doi: ", review_url, "**\n"))
   
   review$page_content <- read_html(review_url)  
   review$metadata <- get_review_metadata(review$page_content)
+  
   review$abstract <- get_abstract(review$page_content)
   
   #undebug(get_summary_table)
@@ -727,20 +819,45 @@ parse_review <- function(review_url,
   review$summarytable1 <- get_summary_table(review$page_content)
   review$summaryTable_metadata <- get_summary_table_metadata(review$page_content)
   
-  #undebug(add_metadata_to_summary_table)
-  review$final_table <- concat_tables(summarytable = review$summarytable1,
-                                      metadata_review =  review$metadata,
-                                      abstract_review = review$abstract,
-                                      metadata_summaryTable = review$summaryTable_metadata)
+  #undebug(concat_tables)
+  review$final_table <- concat_tables(
+    page_content = review$page_content,
+    summarytable = review$summarytable1,
+    metadata_review =  review$metadata,
+    abstract_review = review$abstract,
+    metadata_summaryTable = review$summaryTable_metadata)
   
   output <- review
   
   if (final_table) output <- review$final_table
   
+  
+  
   if (verbose) {
     print(output)
     writeLines("\n")
-    writeLines("Review has been parsed.")
+    writeLines(paste0("Review has been parsed.\n"))
+  }
+  
+  if (save_to_file) {
+    if (length(output_dir) == 0) stop("Please specify output directory.")
+
+    # use doi to check whether output file exists
+    file_path <- glue::glue("{output_dir}/{review$metadata$doi}.csv") %>% 
+      str_remove("http[s]*://[dx.]*doi.org/10.1002/")
+    
+    # check if output file exists:
+    output_file_exists <- file.exists(file_path)
+    
+    # check if we should overwrite it, otherwise stop (if output  file already exists):
+    if (output_file_exists == TRUE & overwrite == FALSE) {
+      writeLines(glue::glue("Output file exists. NOT overwriting: {file_path}\n"))
+    } else {
+    write_csv(x = review[["final_table"]], 
+              file = file_path, ...)
+    writeLines(glue::glue("Results have been save to file: {file_path}\n"))
+    }
+  }
   }
   
   return(output)
