@@ -689,6 +689,12 @@ get_summary_table <- function(page_content,
       simplify() %>% 
       parse_number()
     
+    
+    if (length(n_participants_studies) > length(n_participants)){
+      n_participants <- c(n_participants, rep(NA, length(n_participants_studies) - length(n_participants)))
+      n_studies <- c(n_studies, rep(NA, length(n_participants_studies) - length(n_studies)))
+    }
+    
     # tmp <- str_extract_all(n_participants_studies,"\\d*,?\\d*")
     # 
     # for (i in 1:length(tmp)) {
@@ -718,11 +724,12 @@ get_summary_table <- function(page_content,
   }
   
   
-  
-  
   summaryOfFindingsTable6 <-
     summaryOfFindingsTable5 %>% 
-    rename(n_participants_studies := {col_participants_studies}) %>% 
+    rename(n_participants_studies := {col_participants_studies})  
+  
+  summaryOfFindingsTable6 <-
+    summaryOfFindingsTable6 %>% 
     mutate(n_participants = parse_n_subj_n_studies(n_participants_studies,
                                                    return = "subjects"),
            n_studies = parse_n_subj_n_studies(n_participants_studies,
@@ -738,7 +745,6 @@ get_summary_table <- function(page_content,
   # NOTE: ABSOLUTE effects are ANTI matched. Only RELATIVE effects!
 
     
-  # ERROR
   col_rel_eff_CI <- 
     summaryOfFindingsTable %>% 
     filter(header_row == TRUE) %>% 
@@ -746,6 +752,7 @@ get_summary_table <- function(page_content,
     map_lgl( ~ any(. == TRUE)) %>% 
     keep(isTRUE) %>% 
     names()
+  
   
   # if the column is not uniquely defined, stop parsing:
   if (length(col_rel_eff_CI) > 1) {
@@ -758,8 +765,16 @@ get_summary_table <- function(page_content,
     writeLines(glue::glue("Stop parsing: {warning_df$type}\n"))
     
     return(output)
-  
   }
+  
+  if (length(col_rel_eff_CI) == 0)  {
+    col_rel_eff_CI <- "NO_RELATIV_EFFECTS_REPORTED"
+    summaryOfFindingsTable6 <- 
+      summaryOfFindingsTable6 %>% 
+      mutate(NO_RELATIV_EFFECTS_REPORTED = NA)
+    }
+  
+  
   
   summaryOfFindingsTable7 <- 
     summaryOfFindingsTable6 %>% 
@@ -1126,7 +1141,6 @@ parse_review_parts <- function(
   
   review$summaryTable_count <- get_nr_of_summary_tables(review$page_content)
   
-  # XXX
   # possibly_get_summary_table <- possibly(get_summary_table,
   #                                        otherwise = stop_parsing_return_empty_df(
   #                                          review_url = review_url,
