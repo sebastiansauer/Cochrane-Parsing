@@ -170,6 +170,20 @@ stop_parsing_return_empty_df <- function(review_url,
 
 
 
+get_review_url_from_pagecontent <- function(page_content) {
+  
+  # get doi:
+  review_doi <-
+    page_content %>% 
+    html_nodes(".doi-header") %>% 
+    html_text() %>% 
+    str_remove_all(pattern = " ")
+  
+  return(review_doi)
+}
+
+
+
 
 
 
@@ -190,13 +204,8 @@ get_review_metadata <- function(page_content, verbose = TRUE){
     html_text()
   
   
-  # get doi:
-  review_doi <-
-    page_content %>% 
-    html_nodes(".doi-header") %>% 
-    html_text() %>% 
-    str_remove_all(pattern = " ")
-  
+  # get review_doi:
+  review_doi <- get_review_url_from_pagecontent(page_content)
   
   # get authors:
   authors <- 
@@ -667,7 +676,7 @@ get_summary_table <- function(page_content,
                                      return = c("subjects", "studies")) {
     
     
-    rct_string <- "\\(\\d+\\s*RCT[s]\\)"
+    rct_string <- "\\(\\d+\\s*(RCT[s]?|stud\\w+)\\)"
     
     n_studies <- str_extract_all(n_participants_studies, 
                                  rct_string) %>% 
@@ -717,7 +726,7 @@ get_summary_table <- function(page_content,
     mutate(n_participants = parse_n_subj_n_studies(n_participants_studies,
                                                    return = "subjects"),
            n_studies = parse_n_subj_n_studies(n_participants_studies,
-                                              return = "subjects"))
+                                              return = "studies"))
     # separate(col = n_participants_studies, sep = "\\(",
     #          into = c("n_participants", "n_studies"),
     #          remove = FALSE)
@@ -836,7 +845,14 @@ get_summary_table_metadata <- function(page_content,
   
   nr_summaryOfFindingsTable <- get_nr_of_summary_tables(page_content, verbose = FALSE)
   
-  if (nr_summaryOfFindingsTable == 0) print("No (zero) summary tables detected! This function cannot run. \n")
+  if (nr_summaryOfFindingsTable == 0) {
+    print("No (zero) summary tables detected! This function cannot report results. \n")
+    output <- stop_parsing_return_empty_df(review_url = 
+                                             get_review_url_from_pagecontent(page_content),
+                                           error_message = "No summary tables detected.")
+    return(output)
+  }  
+    
   else {
     paste0("Number of summary tables detected: ", nr_summaryOfFindingsTable, "\n")
     
@@ -1107,19 +1123,19 @@ parse_review_parts <- function(
   #undebug(get_summary_table)
   
 
-# Parse summary table -----------------------------------------------------
-
   
   review$summaryTable_count <- get_nr_of_summary_tables(review$page_content)
   
   # XXX
-  possibly_get_summary_table <- possibly(get_summary_table,
-                                         otherwise = stop_parsing_return_empty_df(
-                                           review_url = review_url,
-                                           error_message = "Error in `get_summary_table`"
-                                         ))
+  # possibly_get_summary_table <- possibly(get_summary_table,
+  #                                        otherwise = stop_parsing_return_empty_df(
+  #                                          review_url = review_url,
+  #                                          error_message = "Error in `get_summary_table`"
+  #                                        ))
   
-  review$summarytable1 <- possibly_get_summary_table(review$page_content)
+  review$summarytable1 <- get_summary_table(review$page_content)
+  
+  #review$summarytable1 <- possibly_get_summary_table(review$page_content)
   review$summaryTable_metadata <- get_summary_table_metadata(review$page_content)
   
   
@@ -1154,43 +1170,42 @@ parse_review_parts <- function(
 
 write_parsed_review_to_file <- function(review,
                                        output_dir = "output",
-                                       save_to_file = TRUE,
                                        overwrite = TRUE){
   
-  if (save_to_file) {
     if (length(output_dir) == 0) stop("Please specify output directory.")
     
     # use doi to check whether output file exists
-    file_path <- glue::glue("{output_dir}/{review$metadata$doi}.csv") %>% 
-      sanitize_review_url()
+    file_path <- glue::glue("{output_dir}/{review$doi}.csv") %>% 
+      sanitize_review_url() 
+    
+    file_path <- file_path[1]
     
     # check if output file exists:
     output_file_exists <- file.exists(file_path)
     
     # check if we should overwrite it, otherwise stop (if output  file already exists):
-    if (output_file_exists == TRUE & overwrite == FALSE) {
+    if (output_file_exists & overwrite) {
       writeLines(glue::glue("Output file exists. NOT overwriting: {file_path}\n"))
     } else {
-      write_csv(x = output, 
+      write_csv(x = review, 
                 file = file_path)
       writeLines(glue::glue("Results have been save to file: {file_path}\n"))
     }
-  }
   
-  return(review)
+    return(review)
   
 }
 
 
 
-check_if_output_file_exists <- function(review, output = "output") { 
-  
-  # check if output file exists:
-  file_path <- glue::glue("{output_dir}/{review$metadata$doi}.csv") %>% 
-    sanitize_review_url()
-  output_file_exists <- file.exists(file_path)
- 
-  }
+# check_if_output_file_exists <- function(review, output = "output") { 
+#   
+#   # check if output file exists:
+#   file_path <- glue::glue("{output_dir}/{review$metadata$doi}.csv") %>% 
+#     sanitize_review_url()
+#   output_file_exists <- file.exists(file_path)
+#  
+#   }
 
 
 
@@ -1212,6 +1227,7 @@ check_if_output_file_exists <- function(review, output = "output") {
 parse_review <- function(review_url) {
   
   review_parsed_parts <- parse_review_parts(review_url)
-  write_parsed_review_to_file(review_parsed_parts)
+  write_parsed_review_to_file(review = review_parsed_parts)
   
 }
+
