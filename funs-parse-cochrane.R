@@ -223,7 +223,13 @@ get_review_metadata <- function(page_content, verbose = TRUE){
     html_nodes(".publish-type") %>% 
     html_text()
   
-  
+  # XXX
+  if (str_detect(publish_type, "Diagnostic")) {
+    output <- stop_parsing_return_empty_df(review_url = review_doi,
+                                           error_message = glue::glue("Publish type is {publish_type}"))
+    
+    return(output)
+  }  
   
   # check if its the most recent version:
   chr_is_most_recent_version <-
@@ -692,30 +698,11 @@ get_summary_table <- function(page_content,
     
     if (length(n_participants_studies) > length(n_participants)){
       n_participants <- c(n_participants, rep(NA, length(n_participants_studies) - length(n_participants)))
+    }
+    if (length(n_participants_studies) > length(n_studies)){
       n_studies <- c(n_studies, rep(NA, length(n_participants_studies) - length(n_studies)))
     }
     
-    # tmp <- str_extract_all(n_participants_studies,"\\d*,?\\d*")
-    # 
-    # for (i in 1:length(tmp)) {
-    #   x <- tmp[i] %>% simplify()
-    #   
-    #   x <- parse_number(x)
-    #   
-    #   x <- as.numeric(x)
-    #   
-    #   
-    #   if (length(x) == 2) {
-    #     if (x[1] > x[2]) {
-    #       n_participants[i] <- x[1]
-    #       n_studies[i] <- x[2]
-    #     }
-    #     if (x[1] < x[2]) {
-    #       n_participants[i] <- x[2]
-    #       n_studies[i] <- x[1]
-    #     }
-    #   }
-    # }
     
     
     if (return == "subjects") return(n_participants)
@@ -791,12 +778,14 @@ get_summary_table <- function(page_content,
   # check if there's a comment column for each outcome:
   col_comments <- "Comments"
   
+  # XXX
   col_comments <-
     summaryOfFindingsTable %>%
+    filter(header_row == TRUE) %>% 
     map(~ str_detect(., pattern = col_comments)) %>%
     map_lgl( ~ any(. == TRUE)) %>%
     keep(isTRUE) %>%
-    names
+    names()
   
   if (length(col_comments) == 0) col_comments <- NA
   
