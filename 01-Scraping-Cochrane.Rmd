@@ -130,7 +130,7 @@ review <- list()
 
 ```{r test-parse-review}
 test_review <- parse_review("https://doi.org/10.1002/14651858.CD011767.pub2")
-test_review <- parse_review(mindfulness_url, overwrite = TRUE)
+test_review <- parse_review(review_url, overwrite = TRUE)
 ```
 
 

@@ -153,8 +153,10 @@ stop_parsing_return_empty_df <- function(review_url,
                                          error_message = "no message",
                                          is_critical = TRUE) {
   
-  warning_df <<- raise_warning(type = error_message,
-                               critical = is_critical)
+  warning_df <<- 
+    warning_df %>% 
+    bind_rows(raise_warning(type = error_message,
+                               critical = is_critical))
   
   output <- create_empty_df(names_vec = get_all_colnames())
   output$doi <- review_url
@@ -356,7 +358,7 @@ get_review_metadata <- function(page_content, verbose = TRUE){
     html_nodes(".publish-type") %>% 
     html_text()
   
-  # XXX
+  
   if (str_detect(publish_type, "Diagnostic")) {
     output <- stop_parsing_return_empty_df(review_url = review_doi,
                                            error_message = glue::glue("Publish type is {publish_type}"))
@@ -385,15 +387,17 @@ get_review_metadata <- function(page_content, verbose = TRUE){
    
       # if there is a version warning, stop parsing:
       
-      warning_df <<- raise_warning(type = version_warning,
-                                   critical = TRUE)
-      output <- create_empty_df(names_vec = get_all_colnames())
-      output$doi <- review_url
-      output$warning <- warning_df$type
+      warning_df <<- 
+        warning_df %>% 
+        bind_rows(raise_warning(type = version_warning,
+                                   critical = FALSE))
       
-      writeLines(glue::glue("Stop parsing: {warning_df$type}\n"))
+      #output <- create_empty_df(names_vec = get_all_colnames())
+      #output$doi <- review_url
       
-      return(output)
+      writeLines(glue::glue("Version warning: {warning_df$type}\n"))
+      
+      #return(output)
     }
   
   
@@ -412,6 +416,11 @@ get_review_metadata <- function(page_content, verbose = TRUE){
                  "not the most recent")
     ))  {
       is_most_recent_version <- FALSE 
+      
+      warning_df <<- 
+        warning_df %>% 
+        bind_rows(raise_warning(type = "outdated_version",
+                                critical = FALSE))
       
       # get url to most recent version:
       url_most_most_version <- 
@@ -450,6 +459,13 @@ get_review_metadata <- function(page_content, verbose = TRUE){
   
   if (is.na(is_paywalled)) is_paywalled <- FALSE
   
+  if (is_paywalled)
+    
+    warning_df <<- 
+    warning_df %>% 
+    bind_rows(raise_warning(type = "is paywalled",
+                            critical = FALSE))
+  
   
   output <- list(title = title_publication,
                  doi = review_doi,
@@ -460,7 +476,7 @@ get_review_metadata <- function(page_content, verbose = TRUE){
                  summaryTable_count = summaryTable_count,
                  GRADE_somewhere_in_the_text = GRADE_somewhere_in_the_text,
                  is_paywalled = is_paywalled,
-                 warning = warning_df$type
+                 warning = str_c(warning_df$type, collapse = " - ")
                  )
   
   if (verbose) print(output)
@@ -620,8 +636,14 @@ get_nr_of_summary_tables <- function(page_content,
     str_detect("Summary of findings") %>% sum()
 
   # warn if there are no summary tables:
-  if (summary_sections_exists == FALSE) 
-    writeLines("No (zero) summary section detected!")
+  if (summary_sections_exists == FALSE) {
+    writeLines("No (zero) summary sections detected!")
+    
+    warning_df <<- 
+      warning_df %>% 
+      bind_rows(raise_warning(type = "No (zero) summary sections detected",
+                              critical = FALSE))
+  }
   else {
     if (verbose) writeLines(paste0("Number of summary tables detected: ", nr_summary_tables))
     
@@ -660,6 +682,11 @@ get_summary_table <- function(page_content,
                               first_outcome_only = FALSE,
                               verbose = TRUE) {
   
+  
+  warnings_summary_table <- NA
+  
+  
+  
   # stop if critical warning has been raised earlier on:
   if (warning_df$critical == TRUE) {
     
@@ -689,265 +716,12 @@ get_summary_table <- function(page_content,
     output$Comments <- "No summary table detected, hence no outcomes reported"
     
     print("As no summary findings tables were detected, I'm stopping the collection of summary tables.")
-    return(output)
     
-  } # otherwise, go on:
-  
-  # old version, likely to be buggy in some situations:
-  summaryOfFindingsTable2 <- 
-    page_content %>% 
-    html_nodes("table") %>% 
-    .[[table_number]] %>% 
-    html_table(fill = TRUE)
-  
-  
-  # get raw summary of findings table:
-  summaryOfFindingsTable <- 
-    page_content %>% 
-    html_nodes(".summaryOfFindings") %>% 
-    html_nodes("table") %>% 
-    .[[table_number]] %>% 
-    html_table(fill = TRUE)
-  
-  
-  # find column in which the outcome variables are mentioned:
-  col_Outcomes <- 
-    summaryOfFindingsTable %>% 
-    map(~ str_detect(., pattern = "^Outcome[s]*$")) %>% 
-    map_lgl(~ any(. == TRUE)) %>% 
-    which()
-  
-  names(summaryOfFindingsTable)[col_Outcomes] <- "Outcomes"
-  
-  # add id column:
-  summaryOfFindingsTable <- 
-    summaryOfFindingsTable %>% 
-    mutate(id_measure = row_number()) %>% 
-    select(id_measure, everything())
-  
-  # delete non-rata rows:
-  header_rows <- 
-    summaryOfFindingsTable %>% 
-    filter(str_detect(str_to_lower(Outcomes), "^outcomes?$")) %>% 
-    pull(id_measure) %>% 
-    max()
-  
-  # we'll need this table further down below:
-  summaryOfFindingsTable <-
-    summaryOfFindingsTable %>% 
-    mutate(header_row = row_number() <= header_rows) 
-  
-  summaryOfFindingsTable2 <-
-    summaryOfFindingsTable %>%
-    filter(id_measure > header_rows)
-  
-  
-  # delete footer:
-  identical_cells_across_cols <- 
-    map2_lgl(.x = summaryOfFindingsTable2$Outcomes,
-             .y = summaryOfFindingsTable2$X2,
-             .f = identical)
-  
-  summaryOfFindingsTable3 <-
-    summaryOfFindingsTable2 %>% 
-    filter(!identical_cells_across_cols)  
-  
-  
-  # find columns where GRADES are shown:
-  col_GRADES <- 
-    summaryOfFindingsTable3 %>% 
-    map( ~ str_detect(.x, pattern = "⊕|⊝")) %>% 
-    map_lgl( ~ any(. == TRUE)) %>% 
-    keep(.p = . == TRUE) %>% 
-    names()
-  
-  summaryOfFindingsTable4 <-
-    summaryOfFindingsTable3 %>% 
-    rename(GRADE := {col_GRADES}) 
-  
-  
-  # find the effect statistic used:
-  effect_statistic <- "SMD|RR|OR|MD|[M|m]ean.+[S|s]core"
-  
-  effect_statistic_per_outcome <- 
-    summaryOfFindingsTable4 %>% 
-    map_dfc(~ tibble(col = str_extract(., 
-                                       pattern = effect_statistic))) %>% 
-    pmap_chr(.f = paste) %>% 
-    map_chr(~ str_remove_all(., pattern = "NA | NA"))
-  
-  summaryOfFindingsTable5 <-
-    summaryOfFindingsTable4 %>% 
-    mutate(effect_statistic = effect_statistic_per_outcome[1],)
-  
-  
-  # find column where number of participants and number of studies are noted for each outcome:
-  #n_of_trials_string <- "of [Pp]articipants[[:space:]]*\\([Ss]tudies\\)|"
-  n_of_trials_string2 <- "([Ss]tudies)|[Pp]articipants"
-
-  
-
-  col_participants_studies <- 
-    summaryOfFindingsTable %>%  # as defined above
-    filter(header_row == TRUE) %>% 
-    map( ~ str_detect(., pattern = n_of_trials_string2)) %>% 
-    map_lgl( ~ any(. == TRUE)) %>% 
-    keep(isTRUE) %>% 
-    names()
-  
-  # stop parsing if column is not uniquely defined:
-  if (length(col_participants_studies) > 1) {
-    warning_df <<- raise_warning(type = "too many columns at `col_participants_studies`",
-                             critical = TRUE)
-    output <- create_empty_df(names_vec = get_all_colnames())
-    output$doi <- review_url
-    output$warning <- warning_df$type
-    
-    writeLines(glue::glue("Stop parsing: {warning_df$type}\n"))
-    
-    return(output)
-  }
-  
-  
-  # function to parse the number of subjects
-  # and the number of studies from one string/variable:
-  parse_n_subj_n_studies <- function(n_participants_studies,
-                                     return = c("subjects", "studies")) {
-    
-    
-    rct_string <- "\\(\\d+\\s*(RCT[s]?|stud\\w+)\\)"
-    
-    n_studies <- str_extract_all(n_participants_studies, 
-                                 rct_string) %>% 
-      simplify() %>% 
-      parse_number()
-    
-    
-    n_participants <- str_remove_all(n_participants_studies,
-                                     rct_string) %>% 
-      simplify() %>% 
-      parse_number()
-    
-    
-    if (length(n_participants_studies) > length(n_participants)){
-      n_participants <- c(n_participants, rep(NA, length(n_participants_studies) - length(n_participants)))
-    }
-    if (length(n_participants_studies) > length(n_studies)){
-      n_studies <- c(n_studies, rep(NA, length(n_participants_studies) - length(n_studies)))
-    }
-    
-    
-    
-    if (return == "subjects") return(n_participants)
-    if (return == "studies") return(n_studies)
+    # XXX
+    #return(output)
     
   }
-  
-  
-  summaryOfFindingsTable6 <-
-    summaryOfFindingsTable5 %>% 
-    rename(n_participants_studies := {col_participants_studies})  
-  
-  summaryOfFindingsTable6 <-
-    summaryOfFindingsTable6 %>% 
-    mutate(n_participants = parse_n_subj_n_studies(n_participants_studies,
-                                                   return = "subjects"),
-           n_studies = parse_n_subj_n_studies(n_participants_studies,
-                                              return = "studies"))
-    # separate(col = n_participants_studies, sep = "\\(",
-    #          into = c("n_participants", "n_studies"),
-    #          remove = FALSE)
-  
-  
-  # find column with effect sizes and CI per outcome:
-  #rel_eff_CI_str2 <- "Relative effect[s]*[[[:space:]]*\\(95%[[:space:]]*CI\\)]*"
-  rel_eff_CI_str <- "([Rr]elative [Ee]ffect.*95% CI)|95% CI  [^absolute]"
-  # NOTE: ABSOLUTE effects are ANTI matched. Only RELATIVE effects!
-
-    
-  col_rel_eff_CI <- 
-    summaryOfFindingsTable %>% 
-    filter(header_row == TRUE) %>% 
-    map( ~ str_detect(., pattern = rel_eff_CI_str)) %>% 
-    map_lgl( ~ any(. == TRUE)) %>% 
-    keep(isTRUE) %>% 
-    names()
-  
-  
-  # if the column is not uniquely defined, stop parsing:
-  if (length(col_rel_eff_CI) > 1) {
-    warning_df <<- raise_warning(type = "too many columns at `col_rel_eff_CI`",
-                                 critical = TRUE)
-    output <- create_empty_df(names_vec = get_all_colnames())
-    output$doi <- review_url
-    output$warning <- warning_df$type
-    
-    writeLines(glue::glue("Stop parsing: {warning_df$type}\n"))
-    
-    return(output)
-  }
-  
-  if (length(col_rel_eff_CI) == 0)  {
-    col_rel_eff_CI <- "NO_RELATIV_EFFECTS_REPORTED"
-    summaryOfFindingsTable6 <- 
-      summaryOfFindingsTable6 %>% 
-      mutate(NO_RELATIV_EFFECTS_REPORTED = NA)
-    }
-  
-  
-  
-  summaryOfFindingsTable7 <- 
-    summaryOfFindingsTable6 %>% 
-    rename(relative_effect_95CI := {col_rel_eff_CI}) %>% 
-    mutate(CI_lower = str_extract(relative_effect_95CI,
-                                  "\\(\\d+\\.*\\d+")) %>% 
-    mutate(CI_lower = str_remove(CI_lower, "\\(")) %>% 
-    mutate(CI_upper = str_extract(relative_effect_95CI,
-                                  "\\d+\\.*\\d+\\)")) %>% 
-    mutate(CI_upper = str_remove(CI_upper, "\\)")) %>% 
-    mutate(effect_size = str_extract(relative_effect_95CI, "[:alpha:]{1,4}\\s*\\d*\\.?\\d*"))
-  
-  
-  # check if there's a comment column for each outcome:
-  col_comments <- "Comments"
-  
-  # XXX
-  col_comments <-
-    summaryOfFindingsTable %>%
-    filter(header_row == TRUE) %>% 
-    map(~ str_detect(., pattern = col_comments)) %>%
-    map_lgl( ~ any(. == TRUE)) %>%
-    keep(isTRUE) %>%
-    names()
-  
-  if (length(col_comments) == 0) col_comments <- NA
-  
-  # there's not always a column with comments,
-  # so we need to be careful:
-  if (!(col_comments %in% c(NA, "", " "))) {
-    summaryOfFindingsTable7 <-
-      summaryOfFindingsTable7 %>%
-      rename(Comments := {col_comments})
-  }
-  
-  
-  #re-number if column:
-  summaryOfFindingsTable7 <- 
-    summaryOfFindingsTable7 %>% 
-    mutate(id_measure = row_number()) %>% 
-    select(id_measure, everything(), -header_row)
-  
-  
-  output <- summaryOfFindingsTable7
-  
-  if (first_outcome_only) {
-    output <- slice(output, 1)
-  }
-  
-  return(output)
-  
 }
-
 
 
 
@@ -961,40 +735,45 @@ get_summary_table_metadata <- function(page_content,
                                        table_number = 1,
                                        verbose = TRUE) {
   
+  # run only if at least one such tables exists:
+  nr_summaryOfFindingsTable <- get_nr_of_summary_tables(page_content, verbose = FALSE)
+  
+  
+  
   # stop if critical warning has been raised earlier on:
   if (warning_df$critical == TRUE) {
     
-    writeLines("Stopping reading the summary table, as critical warning has been raised earlier on")
-    
-    output <- create_empty_df(names_vec = get_all_colnames())
-    output$doi <- review_url
-    output$warning <- warning_df$type
-    
-    return(output)
-    
-  }
-  
-  
-  
-  
-  
-  # run only if at least one such tables exists:
-  
-  nr_summaryOfFindingsTable <- get_nr_of_summary_tables(page_content, verbose = FALSE)
-  
+ 
   if (nr_summaryOfFindingsTable == 0) {
-    print("No (zero) summary tables detected! This function cannot report results. \n")
-    output <- stop_parsing_return_empty_df(review_url = 
-                                             get_review_url_from_pagecontent(page_content),
-                                           error_message = "No summary tables detected.")
-    return(output)
-  }  
+    print("No (zero) summary tables detected! This function cannot report metadata of SoF tables.\n")
+    #output <- stop_parsing_return_empty_df(review_url = 
+    #                                         get_review_url_from_pagecontent(page_content),
+    #                                       error_message = "No summary tables detected.")
+    #return(output)
     
-  else {
-    paste0("Number of summary tables detected: ", nr_summaryOfFindingsTable, "\n")
-    
+    warning_df <<-
+      warning_df %>% 
+      bind_rows(raise_warning(type = "no summary table detected. Cannot read its metadata",
+                              critical = FALSE))
   }
+    
+    output <-
+      list(
+        main_comparison_of_review = NA,
+        main_comparison_population = NA,
+        main_comparison_setting = NA,
+        main_comparison_comparsion_type = NA
+      )
+    
+    writeLines("Stopping reading the summary table metadata, as critical warning has been raised earlier on")
+    
+    
   
+    } else {  # more than zero SoF tables, and no critical warning:
+    paste0("Number of summary tables detected: ", nr_summaryOfFindingsTable, "\n")
+  
+  
+  # stop if strange stuff happens:
   if (table_number > nr_summaryOfFindingsTable) {
     
     print("This table does not exist! Aborting.\n")
@@ -1006,14 +785,8 @@ get_summary_table_metadata <- function(page_content,
     
   }
   
-  # old version, likely to be buggy in some situations:
-  summaryOfFindingsTable2 <- 
-    page_content %>% 
-    html_nodes("table") %>% 
-    .[[table_number]] %>% 
-    html_table(fill = TRUE)
-  
-  
+    
+  # otherwise, start normal work:
   # get raw summary of findings table:
   summaryOfFindingsTable <- 
     page_content %>% 
@@ -1065,6 +838,10 @@ get_summary_table_metadata <- function(page_content,
   
   if (verbose) print(output)
   
+  
+  # if critical warning had been raised before, then report empty data:
+  }
+    
   return(output)
   
 }
@@ -1080,13 +857,14 @@ concat_tables <- function(page_content,
                           metadata_review,
                           abstract_review,
                           metadata_summaryTable,
+                          stop_early = FALSE, 
                           summarytable,
                           verbose = TRUE,
                           drop_unused_cols = TRUE) {
   
   
   # stop if critical warning has been raised earlier on:
-  if (warning_df$critical == TRUE) {
+  if (warning_df$critical == TRUE & stop_early) {
     
     writeLines("Stopping reading the summary table, as critical warning has been raised earlier on")
     
@@ -1099,8 +877,6 @@ concat_tables <- function(page_content,
   }
   
   
-  
-
   # reformat abstract list to df:
   abstract_df <-
     abstract_review %>% 
@@ -1128,12 +904,12 @@ concat_tables <- function(page_content,
   
   
   # create empty df, if there are no summary tables:
-  if (summary_table_count == 0L) {
-    
-    summarytable <- create_empty_df(names = get_summarytab_colnames())
-    metadata_summaryTable_df <- create_empty_df(names = get_summarytab_metadata_colnames())
-    
-  }
+  # if (summary_table_count == 0L) {
+  #   
+  #   summarytable <- create_empty_df(names = get_summarytab_colnames())
+  #   metadata_summaryTable_df <- create_empty_df(names = get_summarytab_metadata_colnames())
+  #   
+  # }
   
   
   # concatenate summarytable and abstract as main df:
@@ -1207,7 +983,7 @@ concat_tables <- function(page_content,
 
 
 
-# parse_review ------------------------------------------------------------
+# parse parts ------------------------------------------------------------
 
 
 
@@ -1255,7 +1031,6 @@ parse_review_parts <- function(
   
   # check if there' a critical warning, in which case we stop parsing:
   if (warning_df$critical == TRUE) {
-    
     # stop parsing, document error:
     output <- create_empty_df(names_vec = get_all_colnames())
     output$doi <- review_url
@@ -1264,8 +1039,7 @@ parse_review_parts <- function(
     writeLines(glue::glue("STOPPING parsing. Critical warning has been raised: {warning_df$type}"))
     
     return(output)
-    
-  } else {
+    } else {
     # begin regular parsing:
 
   # parse abstract
@@ -1303,21 +1077,18 @@ parse_review_parts <- function(
   
   if (final_table) output <- review$final_table
   
-  
-  
   if (verbose) {
     print(output)
     writeLines("\n")
     writeLines(paste0("Review has been parsed.\n"))
   }
-  
-
   }
     
   
   return(output)
   
 }
+
 
 
 write_parsed_review_to_file <- function(review_url,
@@ -1343,30 +1114,12 @@ write_parsed_review_to_file <- function(review_url,
 
 
 
-# check_if_output_file_exists <- function(review, output = "output") { 
-#   
-#   # check if output file exists:
-#   file_path <- glue::glue("{output_dir}/{review$metadata$doi}.csv") %>% 
-#     sanitize_review_url()
-#   output_file_exists <- file.exists(file_path)
-#  
-#   }
 
 
 
+# final call --------------------------------------------------------------
 
-# write_output_to_disk <- function(review, output = "output",
-#                                  overwrite = TRUE) {
-#   
-#   output_file_exists <- check_if_output_file_exists(review, output)
-#   
-#   # check if we should overwrite it, otherwise stop (if output  file already exists):
-#   if (output_file_exists == TRUE & overwrite == FALSE) {
-#     writeLines(glue::glue("Output file exists. NOT overwriting: {file_path}\n"))
-#     
-#     # otherwise, start parsing
-#   }
-# }
+
 
 
 parse_review <- function(review_url,
