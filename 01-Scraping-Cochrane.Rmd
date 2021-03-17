@@ -39,7 +39,10 @@ update_geom_font_defaults(font_rc)
 
 
 ```{r}
-source("dois-reviews.R")
+source("data/dois-reviews.R")
+dois_list <- readxl::read_xlsx("data/doi-list-reviewer.xlsx")
+dois_jh <- dois_list %>% 
+  filter(reviewer == "JH")
 ```
 
 
@@ -127,13 +130,30 @@ review <- list()
 
 ```{r test-parse-review}
 test_review <- parse_review("https://doi.org/10.1002/14651858.CD011767.pub2")
-test_review <- parse_review(mindfulness_url)
+test_review <- parse_review(mindfulness_url, overwrite = TRUE)
 ```
 
 
 
 ## Loop
 
+
+```{r}
+dois_jh1 <-
+  dois_jh %>% 
+  slice(1:50) %>% 
+  pull(url) 
+
+review_jh1 <- 
+  dois_jh1 %>% 
+  map_dfr(parse_review, .id = "id_review")
+```
+
+
+
+```{r}
+writexl::write_xlsx(review_jh1, path = "output/reviews_jh1.xlsx")
+```
 
 
 

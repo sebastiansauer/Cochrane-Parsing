@@ -185,6 +185,139 @@ get_review_url_from_pagecontent <- function(page_content) {
 
 
 
+init <- function() {
+  
+  
+  # initialize logging:
+  warning_df <<- raise_warning(type = "NO warnings",
+                               critical = FALSE,
+                               write_to_disk = FALSE) 
+  
+  # init count:
+  i <<- 1
+  
+  
+}
+
+
+
+build_cochrane_url_from_doi <- function(review_url) {
+  
+  # example OK: https://www.cochranelibrary.com/cdsr/doi/10.1002/14651858.CD008268.pub3/full
+  
+  # ex. NOT OK: http://dx.doi.org/10.1002/14651858.CD008268.pub3
+  # 
+  url_is_doi_type <- 
+  review_url %>% 
+    str_detect("^https?://(dx.)?doi.org/10.1002/")
+  
+  if (url_is_doi_type) {
+  # get url stem:
+  url_stem <- sanitize_review_url(review_url) 
+  
+  # rebuild it to www.cochranelibrary.com form:
+  url_cochrane <- 
+    paste0("https://www.cochranelibrary.com/cdsr/doi/10.1002/", url_stem, "/full")
+  output <- url_cochrane
+  } else {
+    output <- review_url
+  }
+  
+  return(output)
+  
+}
+
+
+
+
+
+
+
+
+# check-if-review-file-exists ---------------------------------------------
+
+
+check_if_review_file_exists <- function(review_url, 
+                                        output_dir = "output",
+                                        verbose = TRUE) {
+  
+  if (length(output_dir) == 0) stop("Please specify output directory.")
+  
+  # use doi to check whether output file exists
+  file_path <- glue::glue("{output_dir}/{review_url}.csv") %>% 
+    sanitize_review_url() 
+  
+  file_path <- file_path[1]
+  
+  # check if output file exists:
+  output_file_exists <- file.exists(file_path)
+  
+  if (verbose) writeLines(glue::glue("Output file exists: {file_path}\n"))
+  
+  return(output_file_exists)
+  
+}
+
+
+# get-info-page -----------------------------------------------------------
+
+
+get_review_info_page <- function(review_url, verbose = TRUE) {
+  
+  
+  infopage_url <- glue::glue("{review_url}/information") %>% 
+    str_remove("/full")
+  
+  page_content <- read_html(infopage_url)  
+  
+  info_publication <- 
+    page_content %>% 
+    html_nodes("#information") %>% 
+    html_text()
+  
+  
+  publication_date <-
+    info_publication %>% 
+    str_extract("Version published:\\s+\\d+\\s+\\w+\\s+\\d{4}") %>% 
+    str_remove("Version published:\\s+") %>% 
+    str_squish()
+  
+  
+  review_type <-
+    info_publication %>% 
+    str_extract("Type:\\s+\\w+") %>% 
+    str_remove("Type:") %>% 
+    str_squish()
+  
+  
+  review_group <-
+    info_publication %>% 
+    str_extract("Cochrane\\s+Editorial\\s+Group:\\s+.+Copyright?") %>% 
+    str_remove("Cochrane\\s+Editorial\\s+Group:") %>% 
+    str_remove_all("Copyright:*") %>% 
+    str_squish
+
+  review_mesh_keywords <- 
+  page_content %>% 
+    html_nodes("#keywords") %>% 
+    html_text()
+   
+    
+  output <- tibble(
+    publication_date = publication_date,
+    review_type = review_type,
+    review_group = review_group,
+    review_mesh_keywords = review_mesh_keywords)
+  
+  return(output)
+    
+  
+}
+
+
+
+
+
 
 
 # get-review-metadata -----------------------------------------------------
@@ -649,8 +782,8 @@ get_summary_table <- function(page_content,
   
   
   # find column where number of participants and number of studies are noted for each outcome:
-  n_of_trials_string <- "of [Pp]articipants[[:space:]]*\\([Ss]tudies\\)|"
-  #n_of_trials_string2 <- "([Ss]tudies)|[Pp]articipants"
+  #n_of_trials_string <- "of [Pp]articipants[[:space:]]*\\([Ss]tudies\\)|"
+  n_of_trials_string2 <- "([Ss]tudies)|[Pp]articipants"
 
   
 
@@ -943,10 +1076,11 @@ get_summary_table_metadata <- function(page_content,
 
 
 concat_tables <- function(page_content,
-                          summarytable,
+                          info_page,
                           metadata_review,
                           abstract_review,
                           metadata_summaryTable,
+                          summarytable,
                           verbose = TRUE,
                           drop_unused_cols = TRUE) {
   
@@ -1003,37 +1137,53 @@ concat_tables <- function(page_content,
   
   
   # concatenate summarytable and abstract as main df:
-  summarytable2 <-
+  output_table <-
     summarytable %>% 
     bind_cols(abstract_df)
   
+  # add info page:
+  output_table2 <- 
+    output_table %>% 
+    bind_cols(info_page)
+    
+  
   
   # add review metadata:
-  summarytable3 <-    
+  output_table3 <-    
     metadata_review_df %>% 
-    bind_cols(summarytable2)
+    bind_cols(output_table2)
   
 
   
   # then, add summarytable metadata to main df:
-  summarytable4 <- 
+  output_table4 <- 
     metadata_summaryTable_df %>% 
-    bind_cols(summarytable3)
+    bind_cols(output_table3)
   
   
   # drop unused cols:
   if (drop_unused_cols) {
-    summarytable4 <- 
-      summarytable4 %>% 
+    output_table5 <- 
+      output_table4 %>% 
       select(-starts_with("X"))
   }
   
   
   # sort columns:
-  summarytable5 <-
-    summarytable4 %>% 
-    select(doi, title, authors, publish_type, 
-           is_most_recent_version, url_most_most_version,
+  output_table6 <-
+    output_table5 %>% 
+    select(doi, 
+           
+           publication_date,
+           review_type,
+           review_group,
+           review_mesh_keywords,
+           
+           title, 
+           authors, 
+           publish_type, 
+           is_most_recent_version, 
+           url_most_most_version,
            starts_with("main_comp"),
            background,
            objectives,
@@ -1044,7 +1194,7 @@ concat_tables <- function(page_content,
            conclusions,
            everything())
   
-  output <- summarytable5
+  output <- output_table6
   
   if (verbose) print(output)
   
@@ -1063,16 +1213,30 @@ concat_tables <- function(page_content,
 
 
 parse_review_parts <- function(
-  review_url, 
+  review_url,
+  overwrite = TRUE,
   final_table = TRUE,  # should the results be converted from list to df?
   verbose = TRUE, ...) {
   
   
-  # initialize logging:
-  warning_df <<- raise_warning(type = "NO warnings",
-                              critical = FALSE,
-                              write_to_disk = FALSE) 
+  # check if output file exists, and if so, skip the parsing:
+  output_file_exists <- check_if_review_file_exists(review_url)
   
+  if (output_file_exists & !overwrite) {
+    
+    output <- create_empty_df(names_vec = get_all_colnames())
+    output$doi <- review_url
+    output$warning <- "Output file already exists"
+    
+    writeLines(glue::glue("Output file already exists. Skipping."))
+    
+    return(output)
+    
+  }
+  
+  
+  # else, start normal work:
+  init()
   
   
  
@@ -1080,7 +1244,13 @@ parse_review_parts <- function(
   
   if (verbose) cat(paste0("**Starting to parse the review with this doi: ", review_url, "**\n"))
   
+  # parse info page:
+  review$info_page <- get_review_info_page(review_url)
+  
+  # read html page:
   review$page_content <- read_html(review_url)  
+  
+  # read metadata:
   review$metadata <- get_review_metadata(review$page_content)
   
   # check if there' a critical warning, in which case we stop parsing:
@@ -1093,34 +1263,12 @@ parse_review_parts <- function(
     
     writeLines(glue::glue("STOPPING parsing. Critical warning has been raised: {warning_df$type}"))
     
-    
-    # if (save_to_file) {
-    #   if (length(output_dir) == 0) stop("Please specify output directory.")
-    #   
-    #   # use doi to check whether output file exists
-    #   file_path <- glue::glue("{output_dir}/{review$metadata$doi}.csv") %>% 
-    #     sanitize_review_url()
-    #   
-    #   # check if output file exists:
-    #   output_file_exists <- file.exists(file_path)
-    #   
-    #   # check if we should overwrite it, otherwise stop (if output  file already exists):
-    #   if (output_file_exists == TRUE & overwrite == FALSE) {
-    #     writeLines(glue::glue("Output file exists. NOT overwriting: {file_path}\n"))
-    #   } else {
-    #     write_csv(x = output, 
-    #               file = file_path, ...)
-    #     writeLines(glue::glue("Results have been save to file: {file_path}\n"))
-    #   }
-    # }
-    # 
-    
-    
     return(output)
     
   } else {
     # begin regular parsing:
 
+  # parse abstract
   review$abstract <- get_abstract(review$page_content) %>% 
     map(str_trim)
   
@@ -1144,6 +1292,7 @@ parse_review_parts <- function(
   
   #undebug(concat_tables)
   review$final_table <- concat_tables(
+    info_page = review$info_page,
     page_content = review$page_content,
     summarytable = review$summarytable1,
     metadata_review =  review$metadata,
@@ -1171,28 +1320,21 @@ parse_review_parts <- function(
 }
 
 
-write_parsed_review_to_file <- function(review,
-                                       output_dir = "output",
-                                       overwrite = TRUE){
+write_parsed_review_to_file <- function(review_url,
+                                        review,
+                                        output_dir = "output",
+                                        overwrite = TRUE){
   
-    if (length(output_dir) == 0) stop("Please specify output directory.")
     
-    # use doi to check whether output file exists
-    file_path <- glue::glue("{output_dir}/{review$doi}.csv") %>% 
-      sanitize_review_url() 
-    
-    file_path <- file_path[1]
-    
-    # check if output file exists:
-    output_file_exists <- file.exists(file_path)
+  output_file_exists <- check_if_review_file_exists(review_url)
     
     # check if we should overwrite it, otherwise stop (if output  file already exists):
-    if (output_file_exists & overwrite) {
+    if (output_file_exists & !overwrite) {
       writeLines(glue::glue("Output file exists. NOT overwriting: {file_path}\n"))
     } else {
       write_csv(x = review, 
                 file = file_path)
-      writeLines(glue::glue("Results have been save to file: {file_path}\n"))
+      writeLines(glue::glue("Results have been saved to file: {file_path}\n"))
     }
   
     return(review)
@@ -1227,10 +1369,16 @@ write_parsed_review_to_file <- function(review,
 # }
 
 
-parse_review <- function(review_url) {
+parse_review <- function(review_url,
+                         overwrite = TRUE) {
   
-  review_parsed_parts <- parse_review_parts(review_url)
-  write_parsed_review_to_file(review = review_parsed_parts)
+  review_url_cochrane <- build_cochrane_url_from_doi(review_url)
+  
+  review_parsed_parts <- parse_review_parts(review_url_cochrane, 
+                                            overwrite = overwrite)
+  write_parsed_review_to_file(review_url = review_url_cochrane,
+                              review = review_parsed_parts,
+                              overwrite = overwrite)
   
 }
 
