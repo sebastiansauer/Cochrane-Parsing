@@ -136,7 +136,7 @@ review <- list()
 ## Test it
 
 ```{r test-parse-review}
-test_review <- parse_review(dois_hw[50], overwrite = TRUE)
+test_review <- parse_review(, overwrite = TRUE)
 test_review <- parse_review(review_url, overwrite = TRUE)
 test_review <- parse_review(mindfulness_url, overwrite = TRUE)
 ```
@@ -173,21 +173,32 @@ review_jh1 <-
 
 
 
+```{r}
+writexl::write_xlsx(review_jh1, path = "output/reviews_jh1.xlsx")
+```
+
+
+
 ### HW
 
 ```{r}
 reviews_parsed_hw <-
   dois_hw %>% 
-  map_dfr(parse_review, .id = "id_review")
+  #magrittr::extract(49:50) %>% 
+  map_dfr(parse_review, output_dir = "output/hw")
 ```
-
-
-
-# Write to Disk
 
 ```{r}
-writexl::write_xlsx(review_jh1, path = "output/reviews_jh1.xlsx")
+reviews_parsed_hw 
 ```
+
+```{r}
+writexl::write_xlsx(reviews_parsed_hw, path = "output/hw/reviews_hw.xlsx")
+```
+
+
+
+
 
 
 

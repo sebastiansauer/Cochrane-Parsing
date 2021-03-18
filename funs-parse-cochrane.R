@@ -190,7 +190,7 @@ init_new_review <- function() {
   
   
   # initialize logging:
-  warning_df <<- raise_warning(type = "Initializing",
+  warning_df <<- raise_warning(type = " ",
                                critical = FALSE,
                                write_to_disk = FALSE) 
   
@@ -871,21 +871,38 @@ parse_review_parts <- function(
   
   output <- create_empty_df(names_vec = get_all_colnames())
   
-  review <- list()
+  #review <- list()
   
   if (verbose) cat(paste0("**Starting to parse the review with this doi: ", review_url, "**\n"))
   
-  # parse info page, must be sanitized! (see function for that):
-  review$info_page <- get_review_info_page(review_url)
-  
+ 
   # read html page, must be sanitized! (see function for that):
-  review$page_content <- read_html(review_url)  
+  safely_read_html <- safely(read_html)
+  safe_page_content <- safely_read_html(review_url)  
+  
+  if (!is.null(safe_page_content$error)) {
+    
+    warning_df <<-
+      warning_df %>% 
+      raise_warning(type = safe_page_content$error,
+                    critical = TRUE)
+    
+    output <- create_empty_df(names_vec = get_all_colnames())
+    
+    return(output)
+    
+  }
+    page_content <- safe_page_content$result
+  
+  # parse info page, must be sanitized! (see function for that):
+  info_page <- get_review_info_page(review_url)
+  
   
   # read metadata:
-  review$metadata <- get_review_metadata(review$page_content)
+  metadata <- get_review_metadata(page_content)
   
   # read abstract:
-  review$abstract <- get_abstract(review$page_content)
+  abstract <- get_abstract(page_content)
   
   # check if there' a critical warning, in which case we stop parsing:
   if (any(warning_df$critical == TRUE)) {
@@ -893,25 +910,23 @@ parse_review_parts <- function(
     
     writeLines(glue::glue("STOPPING parsing. Critical warning has been raised: {str_c(warning_df$type, collapse = ' | ')}"))
     
-    review$final_table <- concat_tables(
-      info_page = review$info_page,
-      page_content = review$page_content,
+    final_table <- concat_tables(
+      info_page = info_page,
+      page_content = page_content,
       summarytable = NA,
-      metadata_review =  review$metadata,
-      abstract_review = review$abstract
+      metadata_review =  metadata,
+      abstract_review = abstract
       #metadata_summaryTable = NA
     )
  
-       output <- review
-    
-    if (final_table) output <- review$final_table
+    output <- review$final_table
  
     return(output)
  
     } else {
     # begin regular parsing:
 
-    review$summaryTable_count <- get_nr_of_summary_tables(review$page_content)
+    summaryTable_count <- get_nr_of_summary_tables(page_content)
     
     # possibly_get_summary_table <- possibly(get_summary_table,
     #                                        otherwise = stop_parsing_return_empty_df(
@@ -919,26 +934,24 @@ parse_review_parts <- function(
     #                                          error_message = "Error in `get_summary_table`"
     #                                        ))
     
-    review$summarytable1 <- get_summary_table(review$page_content)
+    summarytable1 <- get_summary_table(page_content)
     
     #review$summarytable1 <- possibly_get_summary_table(review$page_content)
     #review$summaryTable_metadata <- get_summary_table_metadata(review$page_content)
     
     
     #undebug(concat_tables)
-    review$final_table <- concat_tables(
-      info_page = review$info_page,
-      page_content = review$page_content,
-      summarytable = review$summarytable1,
-      metadata_review =  review$metadata,
-      abstract_review = review$abstract
+    final_table <- concat_tables(
+      info_page = info_page,
+      page_content = page_content,
+      summarytable = summarytable1,
+      metadata_review =  metadata,
+      abstract_review = abstract
       #metadata_summaryTable = review$summaryTable_metadata
     )
     
     
-    output <- review
-    
-    if (final_table) output <- review$final_table
+   output <- final_table
     
     if (verbose) {
       print(output)
@@ -966,6 +979,7 @@ write_parsed_review_to_file <- function(review_url,
                                         output_dir = "output",
                                         overwrite = TRUE){
   
+  writeLines("Now writing file to disk.\n")
   
   output_file_exists <- check_if_review_file_exists(review_url)
   
@@ -1000,9 +1014,10 @@ write_parsed_review_to_file <- function(review_url,
 
 parse_review <- function(review_url,
                          verbose = TRUE,
+                         output_dir = "output",
                          overwrite_file = TRUE) {
   
-  if (verbose) writeLines(glue::glue("______Now starting with review number {count_reviews}______\n"))
+  if (verbose) writeLines(glue::glue("______Now starting with review number ((( {count_reviews} )))______\n"))
   
   
   review_url_cochrane <- build_cochrane_url_from_doi(review_url)
@@ -1011,11 +1026,14 @@ parse_review <- function(review_url,
                                             overwrite = overwrite_file)
   write_parsed_review_to_file(review_url = review_url_cochrane,
                               review = review_parsed_parts,
+                              output_dir = output_dir,
                               overwrite = overwrite_file)
   
   #if (!exists(x = count_reviews))
 
   count_reviews <<- count_reviews + 1
+  
+  return(review_parsed_parts)
   
   
 }

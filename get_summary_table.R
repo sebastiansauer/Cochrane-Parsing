@@ -482,6 +482,25 @@ get_summary_table <- function(page_content,
       summaryOfFindingsTable7 %>% 
       bind_cols(SoF_table_metadata)
     
+    
+    # xxx
+    # 
+    # define `not-%in%`:
+    `%nin%` <- Negate(`%in%`)
+    
+    # compute significance:
+    summaryOfFindingsTable8 <-
+    summaryOfFindingsTable8 %>%
+      mutate(effect_statistic = str_squish(effect_statistic),
+             is_significant = case_when(
+               (str_detect(effect_statistic, "RR|OR|HR")) & (CI_lower > 1) ~ "is_significant",
+               (str_detect(effect_statistic, "RR|OR|HR")) & (CI_upper < 1) ~ "is_significant",
+               (effect_statistic == "SMD") & (CI_lower > 0) ~ "is_significant",
+               (effect_statistic == "SMD") & (CI_upper < 0) ~ "is_significant",
+               (effect_statistic %nin% str_to_upper(c("OR", "RR", "SMD", "HR"))) ~ "unknown",
+               TRUE ~ "not-significant"
+             ))
+
     output <- summaryOfFindingsTable8
     
     if (first_outcome_only) {
