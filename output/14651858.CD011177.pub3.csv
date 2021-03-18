@@ -1,0 +1,85 @@
+doi,publication_date,review_type,review_group,review_mesh_keywords,title,authors,publish_type,is_most_recent_version,url_most_most_version,main_comparison_of_review,main_comparison_population,main_comparison_setting,main_comparison_comparsion_type,background,objectives,search_methods,selection_criteria,data_coll_analysis,main_results,conclusions,summaryTable_count,GRADE_somewhere_in_the_text,is_paywalled,id_measure,Outcomes,relative_effect_95CI,n_participants_studies,GRADE,Comments,effect_statistic,n_participants,n_studies,CI_lower,CI_upper,effect_size,warnings
+https://doi.org/10.1002/14651858.CD011177.pub3,20 June 2017,Intervention,Cochrane Acute Respiratory Infections Group,"Keywords
+
+
+Medical Subject Headings (MeSH) Keywords
+
+Fever [therapy];
+Measles [complications, mortality, *therapy];
+Pneumonia [therapy];
+Randomized Controlled Trials as Topic;
+Zinc [*administration & dosage, deficiency];
+
+
+
+Medical Subject Headings Check Words
+
+Child;
+Humans;
+
+
+
+",Zinc supplementation for the treatment of measles in children,"Ajibola A Awotiwon, Olabisi Oduwole, Anju Sinha, Charles I Okwundu",Review - Intervention,TRUE,NA,Zinc versus placebo for the treatment of measles in children,children with measles and pneumonia,stertiary care centre in a low‐income country,placebo," Measles is an important cause of childhood morbidity and mortality globally, despite increasing vaccine coverage. Zinc plays a significant role in the maintenance of normal immunological functions, therefore supplements given to zinc‐deficient children will increase the availability of zinc and could reduce measles‐related morbidity and mortality. This is an update of a review first published in 2015.  ", To assess the effects of zinc supplementation in reducing morbidity and mortality in children with measles.  ," We searched CENTRAL (03 February 2017, Issue 2), MEDLINE (1946 to 03 February 2017), Embase (1974 to 03 February 2017), CINAHL (1981 to 03 February 2017), LILACS (1982 to 03 February 2017), Web of Science (1985 to 03 February 2017), and BIOSIS Previews (1985 to 27 June 2014). We also searched ClinicalTrials.gov, the Australian New Zealand Clinical Trials Registry and the World Health Organization (WHO) International Clinical Trials Registry Platform (ICTRP) on 03 February 2017 to identify unpublished and ongoing studies.  "," We searched CENTRAL (03 February 2017, Issue 2), MEDLINE (1946 to 03 February 2017), Embase (1974 to 03 February 2017), CINAHL (1981 to 03 February 2017), LILACS (1982 to 03 February 2017), Web of Science (1985 to 03 February 2017), and BIOSIS Previews (1985 to 27 June 2014). We also searched ClinicalTrials.gov, the Australian New Zealand Clinical Trials Registry and the World Health Organization (WHO) International Clinical Trials Registry Platform (ICTRP) on 03 February 2017 to identify unpublished and ongoing studies.  Selection criteria Randomised controlled trials (RCTs) and quasi‐RCTs evaluating the effects of zinc in reducing morbidity and mortality in children with measles.  "," Two review authors independently assessed the studies for inclusion and extracted data on outcomes, details of the interventions, and other study characteristics using a standardised data extraction form. We used risk ratio (RR) and hazard ratio (HR) as measures of effect with 95% confidence intervals (CI). We included only one study, and did not conduct meta‐analysis.  "," We did not identify any new studies for inclusion in this update. One RCT met our inclusion criteria. The study was conducted in India and included 85 children diagnosed with measles and pneumonia. The trial showed no significant difference in mortality between children with measles and pneumonia who received zinc supplements and those who received placebo (RR 0.34, 95% CI 0.01 to 8.14). There was no significant difference in time to absence of fever between children who received zinc supplements and those who did not (HR 1.08, 95% CI 0.67 to 1.74). No treatment‐related side effects were reported in either group. We assessed the overall quality of the evidence as very low.  ", We could not draw any definitive conclusions from this review about the effects of zinc supplementation on clinical outcomes of children with measles due to the very low quality of the evidence available. There is insufficient evidence to confirm or refute the effect of zinc supplementation in children with measles.   ,1,TRUE,FALSE,1,Mortality  Follow‐up: mean 6 days,RR 0.34  (0.01 to 8.14),85 (1 study),"⊕⊕⊝⊝very low1,2",,RR,85,1,0.01,8.14,RR 0.34,Initializing
+https://doi.org/10.1002/14651858.CD011177.pub3,20 June 2017,Intervention,Cochrane Acute Respiratory Infections Group,"Keywords
+
+
+Medical Subject Headings (MeSH) Keywords
+
+Fever [therapy];
+Measles [complications, mortality, *therapy];
+Pneumonia [therapy];
+Randomized Controlled Trials as Topic;
+Zinc [*administration & dosage, deficiency];
+
+
+
+Medical Subject Headings Check Words
+
+Child;
+Humans;
+
+
+
+",Zinc supplementation for the treatment of measles in children,"Ajibola A Awotiwon, Olabisi Oduwole, Anju Sinha, Charles I Okwundu",Review - Intervention,TRUE,NA,Zinc versus placebo for the treatment of measles in children,children with measles and pneumonia,stertiary care centre in a low‐income country,placebo," Measles is an important cause of childhood morbidity and mortality globally, despite increasing vaccine coverage. Zinc plays a significant role in the maintenance of normal immunological functions, therefore supplements given to zinc‐deficient children will increase the availability of zinc and could reduce measles‐related morbidity and mortality. This is an update of a review first published in 2015.  ", To assess the effects of zinc supplementation in reducing morbidity and mortality in children with measles.  ," We searched CENTRAL (03 February 2017, Issue 2), MEDLINE (1946 to 03 February 2017), Embase (1974 to 03 February 2017), CINAHL (1981 to 03 February 2017), LILACS (1982 to 03 February 2017), Web of Science (1985 to 03 February 2017), and BIOSIS Previews (1985 to 27 June 2014). We also searched ClinicalTrials.gov, the Australian New Zealand Clinical Trials Registry and the World Health Organization (WHO) International Clinical Trials Registry Platform (ICTRP) on 03 February 2017 to identify unpublished and ongoing studies.  "," We searched CENTRAL (03 February 2017, Issue 2), MEDLINE (1946 to 03 February 2017), Embase (1974 to 03 February 2017), CINAHL (1981 to 03 February 2017), LILACS (1982 to 03 February 2017), Web of Science (1985 to 03 February 2017), and BIOSIS Previews (1985 to 27 June 2014). We also searched ClinicalTrials.gov, the Australian New Zealand Clinical Trials Registry and the World Health Organization (WHO) International Clinical Trials Registry Platform (ICTRP) on 03 February 2017 to identify unpublished and ongoing studies.  Selection criteria Randomised controlled trials (RCTs) and quasi‐RCTs evaluating the effects of zinc in reducing morbidity and mortality in children with measles.  "," Two review authors independently assessed the studies for inclusion and extracted data on outcomes, details of the interventions, and other study characteristics using a standardised data extraction form. We used risk ratio (RR) and hazard ratio (HR) as measures of effect with 95% confidence intervals (CI). We included only one study, and did not conduct meta‐analysis.  "," We did not identify any new studies for inclusion in this update. One RCT met our inclusion criteria. The study was conducted in India and included 85 children diagnosed with measles and pneumonia. The trial showed no significant difference in mortality between children with measles and pneumonia who received zinc supplements and those who received placebo (RR 0.34, 95% CI 0.01 to 8.14). There was no significant difference in time to absence of fever between children who received zinc supplements and those who did not (HR 1.08, 95% CI 0.67 to 1.74). No treatment‐related side effects were reported in either group. We assessed the overall quality of the evidence as very low.  ", We could not draw any definitive conclusions from this review about the effects of zinc supplementation on clinical outcomes of children with measles due to the very low quality of the evidence available. There is insufficient evidence to confirm or refute the effect of zinc supplementation in children with measles.   ,1,TRUE,FALSE,2,Mortality  Follow‐up: mean 6 days,RR 0.34  (0.01 to 8.14),85 (1 study),"⊕⊕⊝⊝very low1,2",8 per 1000  (0 to 189),RR,85,1,0.01,8.14,RR 0.34,Initializing
+https://doi.org/10.1002/14651858.CD011177.pub3,20 June 2017,Intervention,Cochrane Acute Respiratory Infections Group,"Keywords
+
+
+Medical Subject Headings (MeSH) Keywords
+
+Fever [therapy];
+Measles [complications, mortality, *therapy];
+Pneumonia [therapy];
+Randomized Controlled Trials as Topic;
+Zinc [*administration & dosage, deficiency];
+
+
+
+Medical Subject Headings Check Words
+
+Child;
+Humans;
+
+
+
+",Zinc supplementation for the treatment of measles in children,"Ajibola A Awotiwon, Olabisi Oduwole, Anju Sinha, Charles I Okwundu",Review - Intervention,TRUE,NA,Zinc versus placebo for the treatment of measles in children,children with measles and pneumonia,stertiary care centre in a low‐income country,placebo," Measles is an important cause of childhood morbidity and mortality globally, despite increasing vaccine coverage. Zinc plays a significant role in the maintenance of normal immunological functions, therefore supplements given to zinc‐deficient children will increase the availability of zinc and could reduce measles‐related morbidity and mortality. This is an update of a review first published in 2015.  ", To assess the effects of zinc supplementation in reducing morbidity and mortality in children with measles.  ," We searched CENTRAL (03 February 2017, Issue 2), MEDLINE (1946 to 03 February 2017), Embase (1974 to 03 February 2017), CINAHL (1981 to 03 February 2017), LILACS (1982 to 03 February 2017), Web of Science (1985 to 03 February 2017), and BIOSIS Previews (1985 to 27 June 2014). We also searched ClinicalTrials.gov, the Australian New Zealand Clinical Trials Registry and the World Health Organization (WHO) International Clinical Trials Registry Platform (ICTRP) on 03 February 2017 to identify unpublished and ongoing studies.  "," We searched CENTRAL (03 February 2017, Issue 2), MEDLINE (1946 to 03 February 2017), Embase (1974 to 03 February 2017), CINAHL (1981 to 03 February 2017), LILACS (1982 to 03 February 2017), Web of Science (1985 to 03 February 2017), and BIOSIS Previews (1985 to 27 June 2014). We also searched ClinicalTrials.gov, the Australian New Zealand Clinical Trials Registry and the World Health Organization (WHO) International Clinical Trials Registry Platform (ICTRP) on 03 February 2017 to identify unpublished and ongoing studies.  Selection criteria Randomised controlled trials (RCTs) and quasi‐RCTs evaluating the effects of zinc in reducing morbidity and mortality in children with measles.  "," Two review authors independently assessed the studies for inclusion and extracted data on outcomes, details of the interventions, and other study characteristics using a standardised data extraction form. We used risk ratio (RR) and hazard ratio (HR) as measures of effect with 95% confidence intervals (CI). We included only one study, and did not conduct meta‐analysis.  "," We did not identify any new studies for inclusion in this update. One RCT met our inclusion criteria. The study was conducted in India and included 85 children diagnosed with measles and pneumonia. The trial showed no significant difference in mortality between children with measles and pneumonia who received zinc supplements and those who received placebo (RR 0.34, 95% CI 0.01 to 8.14). There was no significant difference in time to absence of fever between children who received zinc supplements and those who did not (HR 1.08, 95% CI 0.67 to 1.74). No treatment‐related side effects were reported in either group. We assessed the overall quality of the evidence as very low.  ", We could not draw any definitive conclusions from this review about the effects of zinc supplementation on clinical outcomes of children with measles due to the very low quality of the evidence available. There is insufficient evidence to confirm or refute the effect of zinc supplementation in children with measles.   ,1,TRUE,FALSE,3,Time to fever abatement  Follow‐up: mean 6 days,HR 1.08  (0.67 to 1.74),78 (1 study),"⊕⊕⊝⊝very low1,2",,"NA",78,1,0.67,1.74,HR 1.08,Initializing
+https://doi.org/10.1002/14651858.CD011177.pub3,20 June 2017,Intervention,Cochrane Acute Respiratory Infections Group,"Keywords
+
+
+Medical Subject Headings (MeSH) Keywords
+
+Fever [therapy];
+Measles [complications, mortality, *therapy];
+Pneumonia [therapy];
+Randomized Controlled Trials as Topic;
+Zinc [*administration & dosage, deficiency];
+
+
+
+Medical Subject Headings Check Words
+
+Child;
+Humans;
+
+
+
+",Zinc supplementation for the treatment of measles in children,"Ajibola A Awotiwon, Olabisi Oduwole, Anju Sinha, Charles I Okwundu",Review - Intervention,TRUE,NA,Zinc versus placebo for the treatment of measles in children,children with measles and pneumonia,stertiary care centre in a low‐income country,placebo," Measles is an important cause of childhood morbidity and mortality globally, despite increasing vaccine coverage. Zinc plays a significant role in the maintenance of normal immunological functions, therefore supplements given to zinc‐deficient children will increase the availability of zinc and could reduce measles‐related morbidity and mortality. This is an update of a review first published in 2015.  ", To assess the effects of zinc supplementation in reducing morbidity and mortality in children with measles.  ," We searched CENTRAL (03 February 2017, Issue 2), MEDLINE (1946 to 03 February 2017), Embase (1974 to 03 February 2017), CINAHL (1981 to 03 February 2017), LILACS (1982 to 03 February 2017), Web of Science (1985 to 03 February 2017), and BIOSIS Previews (1985 to 27 June 2014). We also searched ClinicalTrials.gov, the Australian New Zealand Clinical Trials Registry and the World Health Organization (WHO) International Clinical Trials Registry Platform (ICTRP) on 03 February 2017 to identify unpublished and ongoing studies.  "," We searched CENTRAL (03 February 2017, Issue 2), MEDLINE (1946 to 03 February 2017), Embase (1974 to 03 February 2017), CINAHL (1981 to 03 February 2017), LILACS (1982 to 03 February 2017), Web of Science (1985 to 03 February 2017), and BIOSIS Previews (1985 to 27 June 2014). We also searched ClinicalTrials.gov, the Australian New Zealand Clinical Trials Registry and the World Health Organization (WHO) International Clinical Trials Registry Platform (ICTRP) on 03 February 2017 to identify unpublished and ongoing studies.  Selection criteria Randomised controlled trials (RCTs) and quasi‐RCTs evaluating the effects of zinc in reducing morbidity and mortality in children with measles.  "," Two review authors independently assessed the studies for inclusion and extracted data on outcomes, details of the interventions, and other study characteristics using a standardised data extraction form. We used risk ratio (RR) and hazard ratio (HR) as measures of effect with 95% confidence intervals (CI). We included only one study, and did not conduct meta‐analysis.  "," We did not identify any new studies for inclusion in this update. One RCT met our inclusion criteria. The study was conducted in India and included 85 children diagnosed with measles and pneumonia. The trial showed no significant difference in mortality between children with measles and pneumonia who received zinc supplements and those who received placebo (RR 0.34, 95% CI 0.01 to 8.14). There was no significant difference in time to absence of fever between children who received zinc supplements and those who did not (HR 1.08, 95% CI 0.67 to 1.74). No treatment‐related side effects were reported in either group. We assessed the overall quality of the evidence as very low.  ", We could not draw any definitive conclusions from this review about the effects of zinc supplementation on clinical outcomes of children with measles due to the very low quality of the evidence available. There is insufficient evidence to confirm or refute the effect of zinc supplementation in children with measles.   ,1,TRUE,FALSE,4,Time to fever abatement  Follow‐up: mean 6 days,HR 1.08  (0.67 to 1.74),78 (1 study),"⊕⊕⊝⊝very low1,2",Median time to absence of fever 96 hours IQR (72 to 116),"NA",78,1,0.67,1.74,HR 1.08,Initializing

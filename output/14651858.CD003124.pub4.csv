@@ -1,0 +1,27 @@
+doi,publication_date,review_type,review_group,review_mesh_keywords,title,authors,publish_type,is_most_recent_version,url_most_most_version,main_comparison_of_review,main_comparison_population,main_comparison_setting,main_comparison_comparsion_type,background,objectives,search_methods,selection_criteria,data_coll_analysis,main_results,conclusions,summaryTable_count,GRADE_somewhere_in_the_text,is_paywalled,id_measure,Outcomes,relative_effect_95CI,n_participants_studies,n_participants,n_studies,GRADE,Comments,effect_statistic,CI_lower,CI_upper,effect_size,warnings
+https://doi.org/10.1002/14651858.CD003124.pub4,31 May 2013,Intervention,Cochrane Acute Respiratory Infections Group,"Keywords
+
+
+Medical Subject Headings (MeSH) Keywords
+
+Acetylcysteine [adverse effects, *therapeutic use];
+Acute Disease;
+Age Factors;
+Carbocysteine [adverse effects, *therapeutic use];
+Cough [drug therapy];
+Expectorants [adverse effects, *therapeutic use];
+Randomized Controlled Trials as Topic;
+Respiratory Tract Infections [*drug therapy];
+
+
+
+Medical Subject Headings Check Words
+
+Child;
+Child, Preschool;
+Humans;
+Infant;
+
+
+
+",Acetylcysteine and carbocysteine for acute upper and lower respiratory tract infections in paediatric patients without chronic broncho‐pulmonary disease ,"Martin Chalumeau, Yvonne CM Duijvestijn",Review - Intervention,TRUE,NA,NA,NA,NA,NA," Acetylcysteine and carbocysteine are the most commonly prescribed mucolytic drugs in Brazil and many European and African countries. To our knowledge, no systematic review has been published on their efficacy and safety for acute upper and lower respiratory tract infections (RTIs) in children without chronic broncho‐pulmonary disease.  ", The objective was to assess the efficacy and safety and to establish a benefit‐risk ratio of acetylcysteine and carbocysteine as symptomatic treatments for acute upper and lower RTIs in paediatric patients without chronic broncho‐pulmonary disease.  ," We searched CENTRAL (2013, Issue 2), MEDLINE (1966 to February week 3, 2013), EMBASE (1980 to March 2013), Micromedex (2010), Pascal (1987 to 2004) and Science Citation Index (1974 to March 2013).  "," We searched CENTRAL (2013, Issue 2), MEDLINE (1966 to February week 3, 2013), EMBASE (1980 to March 2013), Micromedex (2010), Pascal (1987 to 2004) and Science Citation Index (1974 to March 2013).  Selection criteria To study efficacy, we used randomised controlled trials (RCTs) comparing the use of acetylcysteine or carbocysteine versus placebo, either alone or as an add‐on therapy. To study safety, we used trials comparing acetylcysteine or carbocysteine versus active treatment or no treatment and case reports.  "," In this review update two review authors (YD, MC), with help from a colleague, extracted data and assessed trial quality. We performed a subgroup analysis of children younger than two years of age.  "," We included six trials involving 497 participants to study efficacy. They showed some benefit (e.g. reduction of cough at day seven) from mucolytic agents, although differences were of little clinical relevance. No conclusion was drawn about the subgroup of infants younger than two years because data were unavailable. Thirty‐four studies, including the previous six trials involving 2064 children, were eligible to study safety. Overall safety was good but very few data were available to evaluate safety in infants younger than two years. However, 59 cases of paradoxically increased bronchorrhoea observed in infants were reported to the French pharmacovigilance system.  "," The results have to be interpreted with caution because they are based on a limited number of participants included in studies whose methodological quality is questionable. Acetylcysteine and carbocysteine seem to have a limited efficacy and appear to be safe in children older than two years. These results should take into consideration the fact that acetylcysteine and carbocysteine are prescribed for self limiting diseases (for example, acute cough, bronchitis). Given strong concerns about safety, these drugs should only be used for acute upper and lower RTIs in the context of a RCT with regards to children younger than two years.   ",0,FALSE,FALSE,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Initializing | No (zero) summary sections detected | No (zero) summary sections detected | No (zero) summary sections detected | No SoF table detected

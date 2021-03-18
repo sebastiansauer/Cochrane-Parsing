@@ -1,0 +1,25 @@
+doi,publication_date,review_type,review_group,review_mesh_keywords,title,authors,publish_type,is_most_recent_version,url_most_most_version,main_comparison_of_review,main_comparison_population,main_comparison_setting,main_comparison_comparsion_type,background,objectives,search_methods,selection_criteria,data_coll_analysis,main_results,conclusions,summaryTable_count,GRADE_somewhere_in_the_text,is_paywalled,id_measure,Outcomes,relative_effect_95CI,n_participants_studies,n_participants,n_studies,GRADE,Comments,effect_statistic,CI_lower,CI_upper,effect_size,warnings
+https://doi.org/10.1002/14651858.CD004975.pub3,13 December 2013,Intervention,Cochrane Acute Respiratory Infections Group,"Keywords
+
+
+Medical Subject Headings (MeSH) Keywords
+
+Acute Disease;
+Amoxicillin [*administration & dosage];
+Anti‐Bacterial Agents [*administration & dosage];
+Clavulanic Acid [*administration & dosage];
+Drug Administration Schedule;
+Drug Therapy, Combination [methods];
+Otitis Media [*drug therapy];
+Randomized Controlled Trials as Topic;
+
+
+
+Medical Subject Headings Check Words
+
+Child;
+Humans;
+
+
+
+",Once or twice daily versus three times daily amoxicillin with or without clavulanate for the treatment of acute otitis media ,"Sanguansak Thanaviratananich, Malinee Laopaiboon, Patravoot Vatanasapt",Review - Intervention,TRUE,NA,NA,NA,NA,NA," Acute otitis media (AOM) is a common problem in children, for which amoxicillin, with or without clavulanate, is frequently prescribed as a treatment of choice. The conventional recommendation is either three or four daily doses. However, nowadays it is frequently prescribed as once or twice daily doses. If once or twice daily amoxicillin, with or without clavulanate, is as effective for acute otitis media as three or four times a day, it may be more convenient to give the medication once or twice a day to children and hence improve compliance.  "," To compare the effectiveness of one or two daily doses with three or four daily doses of amoxicillin, with or without clavulanate, for the treatment of AOM in children; and to compare complication rates and adverse reactions.  "," We searched CENTRAL 2013, Issue 2, MEDLINE (January 1950 to March week 1, 2013), EMBASE (1974 to March 2013) and the Science Citation Index (2001 to March 2013).  "," We searched CENTRAL 2013, Issue 2, MEDLINE (January 1950 to March week 1, 2013), EMBASE (1974 to March 2013) and the Science Citation Index (2001 to March 2013).  Selection criteria We included randomised controlled trials (RCTs) of children aged 12 years or younger with AOM, diagnosed by acute ear pain (otalgia) and inflamed ear drum (confirmed by positive tympanocentesis or tympanogram of type B or C).  "," Two review authors independently extracted data on treatment outcomes from individual trials and assessed trial quality based on selection bias, performance bias and detection bias, attrition bias, reporting bias and other biases. We defined the quality grading as low risk of bias, high risk of bias or unclear risk of bias. We summarised the results as risk ratio (RR) with 95% confidence intervals (CI).  "," We included five studies with 1601 children in the review. Pooled analysis demonstrated that the following outcomes were comparable between the two groups: clinical cure at the end of therapy (RR 1.03, 95% CI 0.99 to 1.07); during therapy (RR 1.06, 95% CI 0.85 to 1.33) and at follow‐up (RR 1.02, 95% CI 0.95 to 1.09); recurrent AOM (RR 1.21, 95% CI 0.52 to 2.81); compliance rate (RR 1.04, 95% CI 0.98 to 1.10) and overall adverse events (RR 0.92, 95% CI 0.52 to 1.63). When we performed subgroup analysis separately for trials with amoxicillin only and amoxicillin/clavulanate only, it showed that all important outcomes were comparable between once or twice daily groups and the three times daily group. The risk of bias amongst the five included studies was as follows: for random sequence generation we graded two studies as low and three unclear risk of bias; for allocation concealment all studies were at unclear risk of bias; for blinding (performance and detection bias) we graded four as high and one as unclear risk of bias; for incomplete outcome data (attrition bias) we graded two low, two high and one as unclear risk of bias; for reporting bias four were at low and one at high risk; and for ‘other’ bias four were at low and one at unclear risk of bias.  "," This review showed that the results of using once or twice daily doses of amoxicillin, with or without clavulanate, were comparable with three doses for the treatment of AOM.   ",0,FALSE,FALSE,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Initializing | No (zero) summary sections detected | No (zero) summary sections detected | No (zero) summary sections detected | No SoF table detected

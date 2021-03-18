@@ -160,7 +160,6 @@ stop_parsing_return_empty_df <- function(review_url,
   
   output <- create_empty_df(names_vec = get_all_colnames())
   output$doi <- review_url
-  output$warning <- warning_df$type
   
   writeLines(glue::glue("Stop parsing: {warning_df$type}\n"))
   
@@ -187,16 +186,15 @@ get_review_url_from_pagecontent <- function(page_content) {
 
 
 
-init <- function() {
+init_new_review <- function() {
   
   
   # initialize logging:
-  warning_df <<- raise_warning(type = "NO warnings",
+  warning_df <<- raise_warning(type = "Initializing",
                                critical = FALSE,
                                write_to_disk = FALSE) 
   
-  # init count:
-  i <<- 1
+
   
   
 }
@@ -641,17 +639,17 @@ get_abstract <- function(page_content, verbose = TRUE) {
   
   
   # stop if critical warning has been raised earlier on:
-  if (any(warning_df$critical == TRUE)) {
-    
-    writeLines("Stopping reading the summary table, as critical warning has been raised earlier on")
-    
-    output <- create_empty_df(names_vec = get_all_colnames())
-    output$doi <- review_url
-    output$warning <- warning_df$type
-    
-    return(output)
-    
-  }
+  # if (any(warning_df$critical == TRUE)) {
+  #   
+  #   writeLines("Stopping reading the summary table, as critical warning has been raised earlier on")
+  #   
+  #   output <- create_empty_df(names_vec = get_all_colnames())
+  #   output$doi <- review_url
+  #   output$warning <- str_c(warning_df$type, collapse = " | ")
+  #   
+  #   return(output)
+  #   
+  # }
   
   
   
@@ -726,11 +724,10 @@ concat_tables <- function(page_content,
                           info_page,
                           metadata_review,
                           abstract_review,
-                          metadata_summaryTable,
+                          #metadata_summaryTable,
                           stop_early = FALSE, 
                           summarytable,
                           verbose = TRUE,
-                          warnings,
                           drop_unused_cols = TRUE) {
   
   
@@ -739,7 +736,7 @@ concat_tables <- function(page_content,
   # stop if critical warning has been raised earlier on:
   if (any(warning_df$critical == TRUE & stop_early)) {
     
-    writeLines("Stopping reading the summary table, as critical warning has been raised earlier on")
+    writeLines("Stopping concatenating, as critical warning has been raised earlier on")
     
     output <- create_empty_df(names_vec = get_all_colnames())
     output$doi <- review_url
@@ -771,12 +768,14 @@ concat_tables <- function(page_content,
   
   
   
-  if (is.na(metadata_summaryTable)) {
-    metadata_summaryTable_df <- create_empty_df(names_vec = get_summarytab_metadata_colnames())
-  }
+  # if (is.na(metadata_summaryTable)) {
+  #   metadata_summaryTable_df <- create_empty_df(names_vec = get_summarytab_metadata_colnames())
+  # }
   
   if (is.na(summarytable)) {
-    summarytable <- create_empty_df(names_vec = get_summarytab_colnames())
+    summarytable <- create_empty_df(names_vec = c(get_summarytab_colnames(),
+                                                  get_summarytab_metadata_colnames()
+                                    ))
   } 
   
   
@@ -800,23 +799,23 @@ concat_tables <- function(page_content,
   
   
   # then, add summarytable metadata to main df:
-  output_table4 <- 
-    metadata_summaryTable %>% 
-    bind_cols(output_table3)
+  # output_table4 <- 
+  #   metadata_summaryTable %>% 
+  #   bind_cols(output_table3)
   
   
   # drop unused cols:
   if (drop_unused_cols) {
-    output_table5 <- 
-      output_table4 %>% 
+    output_table3 <- 
+      output_table3 %>% 
       select(-starts_with("X"))
   }
   
   
   # add warnings
   output_table6 <-
-    output_table5 %>% 
-    mutate(warnings = str_c(warnings$type, collapse = " | "))
+    output_table3 %>% 
+    mutate(warnings = str_c(warning_df$type, collapse = " | "))
   
   
   # sort columns:
@@ -893,11 +892,9 @@ parse_review_parts <- function(
   
   
   # else, start normal work:
-  init()
+  init_new_review()
   
   output <- create_empty_df(names_vec = get_all_colnames())
-  
-  
   
   review <- list()
   
@@ -917,23 +914,18 @@ parse_review_parts <- function(
   
   # check if there' a critical warning, in which case we stop parsing:
   if (any(warning_df$critical == TRUE)) {
-    # stop parsing, document error:
-    # output <- create_empty_df(names_vec = get_all_colnames())
-    # output$doi <- review_url
-    # output$warning <- warning_df$type
+
     
-    
-    
-    writeLines(glue::glue("STOPPING parsing. Critical warning has been raised: {warning_df$type}"))
+    writeLines(glue::glue("STOPPING parsing. Critical warning has been raised: {str_c(warning_df$type, collapse = ' | ')}"))
     
     review$final_table <- concat_tables(
       info_page = review$info_page,
       page_content = review$page_content,
       summarytable = NA,
       metadata_review =  review$metadata,
-      abstract_review = review$abstract,
-      metadata_summaryTable = NA,
-      warnings = warning_df)
+      abstract_review = review$abstract
+      #metadata_summaryTable = NA
+    )
     
     
     output <- review
@@ -941,23 +933,14 @@ parse_review_parts <- function(
     if (final_table) output <- review$final_table
     
     
-    
     return(output)
     
     # xxx
     
-  } else {
+  
+    } else {
     # begin regular parsing:
-    
-    
-    # parse abstract
-    review$abstract <- get_abstract(review$page_content) %>% 
-      map(str_trim)
-    
-    #undebug(get_summary_table)
-    
-    
-    
+
     review$summaryTable_count <- get_nr_of_summary_tables(review$page_content)
     
     # possibly_get_summary_table <- possibly(get_summary_table,
@@ -969,7 +952,7 @@ parse_review_parts <- function(
     review$summarytable1 <- get_summary_table(review$page_content)
     
     #review$summarytable1 <- possibly_get_summary_table(review$page_content)
-    review$summaryTable_metadata <- get_summary_table_metadata(review$page_content)
+    #review$summaryTable_metadata <- get_summary_table_metadata(review$page_content)
     
     
     #undebug(concat_tables)
@@ -978,9 +961,9 @@ parse_review_parts <- function(
       page_content = review$page_content,
       summarytable = review$summarytable1,
       metadata_review =  review$metadata,
-      abstract_review = review$abstract,
-      metadata_summaryTable = review$summaryTable_metadata,
-      warnings = warning_df)
+      abstract_review = review$abstract
+      #metadata_summaryTable = review$summaryTable_metadata
+    )
     
     
     output <- review
@@ -998,6 +981,13 @@ parse_review_parts <- function(
   return(output)
   
 }
+
+
+
+
+
+
+# write-parsed-review-to-file ---------------------------------------------
 
 
 
@@ -1036,10 +1026,13 @@ write_parsed_review_to_file <- function(review_url,
 # final call --------------------------------------------------------------
 
 
-
+#init()
 
 parse_review <- function(review_url,
                          overwrite = TRUE) {
+  
+  if (verbose) writeLines(glue::glue("______Now starting with review number {count_reviews}______\n"))
+  
   
   review_url_cochrane <- build_cochrane_url_from_doi(review_url)
   
@@ -1048,6 +1041,10 @@ parse_review <- function(review_url,
   write_parsed_review_to_file(review_url = review_url_cochrane,
                               review = review_parsed_parts,
                               overwrite = overwrite)
+  
+
+  count_reviews <- count_reviews + 1
+  
   
 }
 

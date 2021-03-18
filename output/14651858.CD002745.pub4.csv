@@ -1,0 +1,298 @@
+doi,publication_date,review_type,review_group,review_mesh_keywords,title,authors,publish_type,is_most_recent_version,url_most_most_version,main_comparison_of_review,main_comparison_population,main_comparison_setting,main_comparison_comparsion_type,background,objectives,search_methods,selection_criteria,data_coll_analysis,main_results,conclusions,summaryTable_count,GRADE_somewhere_in_the_text,is_paywalled,id_measure,Outcomes,relative_effect_95CI,n_participants_studies,GRADE,Comments,effect_statistic,n_participants,n_studies,CI_lower,CI_upper,effect_size,warnings
+https://doi.org/10.1002/14651858.CD002745.pub4,21 November 2014,Intervention,Cochrane Acute Respiratory Infections Group,"Keywords
+
+
+Medical Subject Headings (MeSH) Keywords
+
+Amantadine [adverse effects, *therapeutic use];
+Antiviral Agents [adverse effects, *therapeutic use];
+*Influenza A virus;
+Influenza A Virus, H1N1 Subtype;
+Influenza, Human [*prevention & control];
+Randomized Controlled Trials as Topic;
+Rimantadine [adverse effects, *therapeutic use];
+Sex Factors;
+
+
+
+Medical Subject Headings Check Words
+
+Adolescent;
+Aged;
+Child;
+Humans;
+Young Adult;
+
+
+
+",Amantadine and rimantadine for influenza A in children and the elderly,"Márcia G Alves Galvão, Marilene Augusta Rocha Crispino Santos, Antonio JL Alves da Cunha",Review - Intervention,TRUE,NA,Amantadine compared with placebo for prevention and treatment of influenza A in children,children with no influenza A infection (prevention) or with influenza A infection (treatment)  ,sall  ,placebo," Influenza is an acute respiratory illness caused by influenza A and B viruses. Complications may occur, especially among children and the elderly.  "," To assess the effectiveness and safety of amantadine and rimantadine in preventing, treating and shortening the duration of influenza A in children and the elderly.  "," We searched CENTRAL (2014, Issue 9), MEDLINE (1966 to September week 4, 2014) and EMBASE (1980 to October 2014).  "," We searched CENTRAL (2014, Issue 9), MEDLINE (1966 to September week 4, 2014) and EMBASE (1980 to October 2014).  Selection criteria Randomised controlled trials (RCTs) or quasi‐RCTs comparing amantadine and/or rimantadine with no intervention, placebo, other antivirals or different doses or schedules of amantadine or rimantadine in children and the elderly with influenza A.  ", Two review authors independently assessed the search results. We extracted and analysed data using the standard Cochrane methodology.  ," We identified 12 studies (2494 participants: 1586 children and 908 elderly) comparing amantadine and rimantadine with placebo, paracetamol (one trial: 69 children) or zanamivir (two trials: 545 elderly) to treat influenza A.  Amantadine was effective in preventing influenza A in children (773 participants, risk ratio (RR) 0.11; 95% confidence interval (CI) 0.04 to 0.30). The assumed risk of influenza A in the control group was 10 per 100. The corresponding risk in the rimantadine group was one per 100 (95% CI 0 to 3). Nevertheless, the quality of the evidence was low and the safety of the drug was not well established.  For treatment, rimantadine was beneficial in abating fever on day three of treatment in children: one selected study with low risk of bias, moderate evidence quality and 69 participants (RR 0.36; 95% CI 0.14 to 0.91). The assumed risk was 38 per 100. The corresponding risk in the rimantadine group was 14 per 100 (95% CI 5 to 34).  Rimantadine did not show any prophylactic effect in the elderly. The quality of evidence was very low: 103 participants (RR 0.45; 95% CI 0.14 to 1.41). The assumed risk was 17 per 100. The corresponding risk in the rimantadine group was 7 per 100 (95% CI 2 to 23).  There was no evidence of adverse effects caused by treatment with amantadine or rimantadine. We found no studies assessing amantadine in the elderly. "," The quality of the evidence combined with a lack of knowledge about the safety of amantadine and the limited benefits of rimantadine, do not indicate that amantadine and rimantadine compared to control (placebo or paracetamol) could be useful in preventing, treating and shortening the duration of influenza A in children and the elderly.   ",4,TRUE,FALSE,1,Cases of influenza A during prophylaxis  (follow‐up:14 to 18 weeks),RR 0.11 (0.04 to 0.3),773 (2),"⊕⊕⊝⊝low1,2",,RR,773,NA,0.04,0.3,RR 0.11,Initializing
+https://doi.org/10.1002/14651858.CD002745.pub4,21 November 2014,Intervention,Cochrane Acute Respiratory Infections Group,"Keywords
+
+
+Medical Subject Headings (MeSH) Keywords
+
+Amantadine [adverse effects, *therapeutic use];
+Antiviral Agents [adverse effects, *therapeutic use];
+*Influenza A virus;
+Influenza A Virus, H1N1 Subtype;
+Influenza, Human [*prevention & control];
+Randomized Controlled Trials as Topic;
+Rimantadine [adverse effects, *therapeutic use];
+Sex Factors;
+
+
+
+Medical Subject Headings Check Words
+
+Adolescent;
+Aged;
+Child;
+Humans;
+Young Adult;
+
+
+
+",Amantadine and rimantadine for influenza A in children and the elderly,"Márcia G Alves Galvão, Marilene Augusta Rocha Crispino Santos, Antonio JL Alves da Cunha",Review - Intervention,TRUE,NA,Amantadine compared with placebo for prevention and treatment of influenza A in children,children with no influenza A infection (prevention) or with influenza A infection (treatment)  ,sall  ,placebo," Influenza is an acute respiratory illness caused by influenza A and B viruses. Complications may occur, especially among children and the elderly.  "," To assess the effectiveness and safety of amantadine and rimantadine in preventing, treating and shortening the duration of influenza A in children and the elderly.  "," We searched CENTRAL (2014, Issue 9), MEDLINE (1966 to September week 4, 2014) and EMBASE (1980 to October 2014).  "," We searched CENTRAL (2014, Issue 9), MEDLINE (1966 to September week 4, 2014) and EMBASE (1980 to October 2014).  Selection criteria Randomised controlled trials (RCTs) or quasi‐RCTs comparing amantadine and/or rimantadine with no intervention, placebo, other antivirals or different doses or schedules of amantadine or rimantadine in children and the elderly with influenza A.  ", Two review authors independently assessed the search results. We extracted and analysed data using the standard Cochrane methodology.  ," We identified 12 studies (2494 participants: 1586 children and 908 elderly) comparing amantadine and rimantadine with placebo, paracetamol (one trial: 69 children) or zanamivir (two trials: 545 elderly) to treat influenza A.  Amantadine was effective in preventing influenza A in children (773 participants, risk ratio (RR) 0.11; 95% confidence interval (CI) 0.04 to 0.30). The assumed risk of influenza A in the control group was 10 per 100. The corresponding risk in the rimantadine group was one per 100 (95% CI 0 to 3). Nevertheless, the quality of the evidence was low and the safety of the drug was not well established.  For treatment, rimantadine was beneficial in abating fever on day three of treatment in children: one selected study with low risk of bias, moderate evidence quality and 69 participants (RR 0.36; 95% CI 0.14 to 0.91). The assumed risk was 38 per 100. The corresponding risk in the rimantadine group was 14 per 100 (95% CI 5 to 34).  Rimantadine did not show any prophylactic effect in the elderly. The quality of evidence was very low: 103 participants (RR 0.45; 95% CI 0.14 to 1.41). The assumed risk was 17 per 100. The corresponding risk in the rimantadine group was 7 per 100 (95% CI 2 to 23).  There was no evidence of adverse effects caused by treatment with amantadine or rimantadine. We found no studies assessing amantadine in the elderly. "," The quality of the evidence combined with a lack of knowledge about the safety of amantadine and the limited benefits of rimantadine, do not indicate that amantadine and rimantadine compared to control (placebo or paracetamol) could be useful in preventing, treating and shortening the duration of influenza A in children and the elderly.   ",4,TRUE,FALSE,2,Cases of influenza A during prophylaxis  (follow‐up:14 to 18 weeks),RR 0.11 (0.04 to 0.3),773 (2),"⊕⊕⊝⊝low1,2",1 per 100  (0 to 3),RR,773,NA,0.04,0.3,RR 0.11,Initializing
+https://doi.org/10.1002/14651858.CD002745.pub4,21 November 2014,Intervention,Cochrane Acute Respiratory Infections Group,"Keywords
+
+
+Medical Subject Headings (MeSH) Keywords
+
+Amantadine [adverse effects, *therapeutic use];
+Antiviral Agents [adverse effects, *therapeutic use];
+*Influenza A virus;
+Influenza A Virus, H1N1 Subtype;
+Influenza, Human [*prevention & control];
+Randomized Controlled Trials as Topic;
+Rimantadine [adverse effects, *therapeutic use];
+Sex Factors;
+
+
+
+Medical Subject Headings Check Words
+
+Adolescent;
+Aged;
+Child;
+Humans;
+Young Adult;
+
+
+
+",Amantadine and rimantadine for influenza A in children and the elderly,"Márcia G Alves Galvão, Marilene Augusta Rocha Crispino Santos, Antonio JL Alves da Cunha",Review - Intervention,TRUE,NA,Amantadine compared with placebo for prevention and treatment of influenza A in children,children with no influenza A infection (prevention) or with influenza A infection (treatment)  ,sall  ,placebo," Influenza is an acute respiratory illness caused by influenza A and B viruses. Complications may occur, especially among children and the elderly.  "," To assess the effectiveness and safety of amantadine and rimantadine in preventing, treating and shortening the duration of influenza A in children and the elderly.  "," We searched CENTRAL (2014, Issue 9), MEDLINE (1966 to September week 4, 2014) and EMBASE (1980 to October 2014).  "," We searched CENTRAL (2014, Issue 9), MEDLINE (1966 to September week 4, 2014) and EMBASE (1980 to October 2014).  Selection criteria Randomised controlled trials (RCTs) or quasi‐RCTs comparing amantadine and/or rimantadine with no intervention, placebo, other antivirals or different doses or schedules of amantadine or rimantadine in children and the elderly with influenza A.  ", Two review authors independently assessed the search results. We extracted and analysed data using the standard Cochrane methodology.  ," We identified 12 studies (2494 participants: 1586 children and 908 elderly) comparing amantadine and rimantadine with placebo, paracetamol (one trial: 69 children) or zanamivir (two trials: 545 elderly) to treat influenza A.  Amantadine was effective in preventing influenza A in children (773 participants, risk ratio (RR) 0.11; 95% confidence interval (CI) 0.04 to 0.30). The assumed risk of influenza A in the control group was 10 per 100. The corresponding risk in the rimantadine group was one per 100 (95% CI 0 to 3). Nevertheless, the quality of the evidence was low and the safety of the drug was not well established.  For treatment, rimantadine was beneficial in abating fever on day three of treatment in children: one selected study with low risk of bias, moderate evidence quality and 69 participants (RR 0.36; 95% CI 0.14 to 0.91). The assumed risk was 38 per 100. The corresponding risk in the rimantadine group was 14 per 100 (95% CI 5 to 34).  Rimantadine did not show any prophylactic effect in the elderly. The quality of evidence was very low: 103 participants (RR 0.45; 95% CI 0.14 to 1.41). The assumed risk was 17 per 100. The corresponding risk in the rimantadine group was 7 per 100 (95% CI 2 to 23).  There was no evidence of adverse effects caused by treatment with amantadine or rimantadine. We found no studies assessing amantadine in the elderly. "," The quality of the evidence combined with a lack of knowledge about the safety of amantadine and the limited benefits of rimantadine, do not indicate that amantadine and rimantadine compared to control (placebo or paracetamol) could be useful in preventing, treating and shortening the duration of influenza A in children and the elderly.   ",4,TRUE,FALSE,3,Fever after initiation of treatment  (follow‐up: 3 days),RR 0.37 (0.08 to 1.75),104 (2),"⊕⊕⊝⊝low3,4",,RR,104,NA,0.08,1.75,RR 0.37,Initializing
+https://doi.org/10.1002/14651858.CD002745.pub4,21 November 2014,Intervention,Cochrane Acute Respiratory Infections Group,"Keywords
+
+
+Medical Subject Headings (MeSH) Keywords
+
+Amantadine [adverse effects, *therapeutic use];
+Antiviral Agents [adverse effects, *therapeutic use];
+*Influenza A virus;
+Influenza A Virus, H1N1 Subtype;
+Influenza, Human [*prevention & control];
+Randomized Controlled Trials as Topic;
+Rimantadine [adverse effects, *therapeutic use];
+Sex Factors;
+
+
+
+Medical Subject Headings Check Words
+
+Adolescent;
+Aged;
+Child;
+Humans;
+Young Adult;
+
+
+
+",Amantadine and rimantadine for influenza A in children and the elderly,"Márcia G Alves Galvão, Marilene Augusta Rocha Crispino Santos, Antonio JL Alves da Cunha",Review - Intervention,TRUE,NA,Amantadine compared with placebo for prevention and treatment of influenza A in children,children with no influenza A infection (prevention) or with influenza A infection (treatment)  ,sall  ,placebo," Influenza is an acute respiratory illness caused by influenza A and B viruses. Complications may occur, especially among children and the elderly.  "," To assess the effectiveness and safety of amantadine and rimantadine in preventing, treating and shortening the duration of influenza A in children and the elderly.  "," We searched CENTRAL (2014, Issue 9), MEDLINE (1966 to September week 4, 2014) and EMBASE (1980 to October 2014).  "," We searched CENTRAL (2014, Issue 9), MEDLINE (1966 to September week 4, 2014) and EMBASE (1980 to October 2014).  Selection criteria Randomised controlled trials (RCTs) or quasi‐RCTs comparing amantadine and/or rimantadine with no intervention, placebo, other antivirals or different doses or schedules of amantadine or rimantadine in children and the elderly with influenza A.  ", Two review authors independently assessed the search results. We extracted and analysed data using the standard Cochrane methodology.  ," We identified 12 studies (2494 participants: 1586 children and 908 elderly) comparing amantadine and rimantadine with placebo, paracetamol (one trial: 69 children) or zanamivir (two trials: 545 elderly) to treat influenza A.  Amantadine was effective in preventing influenza A in children (773 participants, risk ratio (RR) 0.11; 95% confidence interval (CI) 0.04 to 0.30). The assumed risk of influenza A in the control group was 10 per 100. The corresponding risk in the rimantadine group was one per 100 (95% CI 0 to 3). Nevertheless, the quality of the evidence was low and the safety of the drug was not well established.  For treatment, rimantadine was beneficial in abating fever on day three of treatment in children: one selected study with low risk of bias, moderate evidence quality and 69 participants (RR 0.36; 95% CI 0.14 to 0.91). The assumed risk was 38 per 100. The corresponding risk in the rimantadine group was 14 per 100 (95% CI 5 to 34).  Rimantadine did not show any prophylactic effect in the elderly. The quality of evidence was very low: 103 participants (RR 0.45; 95% CI 0.14 to 1.41). The assumed risk was 17 per 100. The corresponding risk in the rimantadine group was 7 per 100 (95% CI 2 to 23).  There was no evidence of adverse effects caused by treatment with amantadine or rimantadine. We found no studies assessing amantadine in the elderly. "," The quality of the evidence combined with a lack of knowledge about the safety of amantadine and the limited benefits of rimantadine, do not indicate that amantadine and rimantadine compared to control (placebo or paracetamol) could be useful in preventing, treating and shortening the duration of influenza A in children and the elderly.   ",4,TRUE,FALSE,4,Fever after initiation of treatment  (follow‐up: 3 days),RR 0.37 (0.08 to 1.75),104 (2),"⊕⊕⊝⊝low3,4",9 per 100  (2 to 40),RR,104,NA,0.08,1.75,RR 0.37,Initializing
+https://doi.org/10.1002/14651858.CD002745.pub4,21 November 2014,Intervention,Cochrane Acute Respiratory Infections Group,"Keywords
+
+
+Medical Subject Headings (MeSH) Keywords
+
+Amantadine [adverse effects, *therapeutic use];
+Antiviral Agents [adverse effects, *therapeutic use];
+*Influenza A virus;
+Influenza A Virus, H1N1 Subtype;
+Influenza, Human [*prevention & control];
+Randomized Controlled Trials as Topic;
+Rimantadine [adverse effects, *therapeutic use];
+Sex Factors;
+
+
+
+Medical Subject Headings Check Words
+
+Adolescent;
+Aged;
+Child;
+Humans;
+Young Adult;
+
+
+
+",Amantadine and rimantadine for influenza A in children and the elderly,"Márcia G Alves Galvão, Marilene Augusta Rocha Crispino Santos, Antonio JL Alves da Cunha",Review - Intervention,TRUE,NA,Amantadine compared with placebo for prevention and treatment of influenza A in children,children with no influenza A infection (prevention) or with influenza A infection (treatment)  ,sall  ,placebo," Influenza is an acute respiratory illness caused by influenza A and B viruses. Complications may occur, especially among children and the elderly.  "," To assess the effectiveness and safety of amantadine and rimantadine in preventing, treating and shortening the duration of influenza A in children and the elderly.  "," We searched CENTRAL (2014, Issue 9), MEDLINE (1966 to September week 4, 2014) and EMBASE (1980 to October 2014).  "," We searched CENTRAL (2014, Issue 9), MEDLINE (1966 to September week 4, 2014) and EMBASE (1980 to October 2014).  Selection criteria Randomised controlled trials (RCTs) or quasi‐RCTs comparing amantadine and/or rimantadine with no intervention, placebo, other antivirals or different doses or schedules of amantadine or rimantadine in children and the elderly with influenza A.  ", Two review authors independently assessed the search results. We extracted and analysed data using the standard Cochrane methodology.  ," We identified 12 studies (2494 participants: 1586 children and 908 elderly) comparing amantadine and rimantadine with placebo, paracetamol (one trial: 69 children) or zanamivir (two trials: 545 elderly) to treat influenza A.  Amantadine was effective in preventing influenza A in children (773 participants, risk ratio (RR) 0.11; 95% confidence interval (CI) 0.04 to 0.30). The assumed risk of influenza A in the control group was 10 per 100. The corresponding risk in the rimantadine group was one per 100 (95% CI 0 to 3). Nevertheless, the quality of the evidence was low and the safety of the drug was not well established.  For treatment, rimantadine was beneficial in abating fever on day three of treatment in children: one selected study with low risk of bias, moderate evidence quality and 69 participants (RR 0.36; 95% CI 0.14 to 0.91). The assumed risk was 38 per 100. The corresponding risk in the rimantadine group was 14 per 100 (95% CI 5 to 34).  Rimantadine did not show any prophylactic effect in the elderly. The quality of evidence was very low: 103 participants (RR 0.45; 95% CI 0.14 to 1.41). The assumed risk was 17 per 100. The corresponding risk in the rimantadine group was 7 per 100 (95% CI 2 to 23).  There was no evidence of adverse effects caused by treatment with amantadine or rimantadine. We found no studies assessing amantadine in the elderly. "," The quality of the evidence combined with a lack of knowledge about the safety of amantadine and the limited benefits of rimantadine, do not indicate that amantadine and rimantadine compared to control (placebo or paracetamol) could be useful in preventing, treating and shortening the duration of influenza A in children and the elderly.   ",4,TRUE,FALSE,5,Cough after initiation of treatment,Not estimable,0 (0),See comment,No selected trial,"NA",0,NA,NA,NA,Not ,Initializing
+https://doi.org/10.1002/14651858.CD002745.pub4,21 November 2014,Intervention,Cochrane Acute Respiratory Infections Group,"Keywords
+
+
+Medical Subject Headings (MeSH) Keywords
+
+Amantadine [adverse effects, *therapeutic use];
+Antiviral Agents [adverse effects, *therapeutic use];
+*Influenza A virus;
+Influenza A Virus, H1N1 Subtype;
+Influenza, Human [*prevention & control];
+Randomized Controlled Trials as Topic;
+Rimantadine [adverse effects, *therapeutic use];
+Sex Factors;
+
+
+
+Medical Subject Headings Check Words
+
+Adolescent;
+Aged;
+Child;
+Humans;
+Young Adult;
+
+
+
+",Amantadine and rimantadine for influenza A in children and the elderly,"Márcia G Alves Galvão, Marilene Augusta Rocha Crispino Santos, Antonio JL Alves da Cunha",Review - Intervention,TRUE,NA,Amantadine compared with placebo for prevention and treatment of influenza A in children,children with no influenza A infection (prevention) or with influenza A infection (treatment)  ,sall  ,placebo," Influenza is an acute respiratory illness caused by influenza A and B viruses. Complications may occur, especially among children and the elderly.  "," To assess the effectiveness and safety of amantadine and rimantadine in preventing, treating and shortening the duration of influenza A in children and the elderly.  "," We searched CENTRAL (2014, Issue 9), MEDLINE (1966 to September week 4, 2014) and EMBASE (1980 to October 2014).  "," We searched CENTRAL (2014, Issue 9), MEDLINE (1966 to September week 4, 2014) and EMBASE (1980 to October 2014).  Selection criteria Randomised controlled trials (RCTs) or quasi‐RCTs comparing amantadine and/or rimantadine with no intervention, placebo, other antivirals or different doses or schedules of amantadine or rimantadine in children and the elderly with influenza A.  ", Two review authors independently assessed the search results. We extracted and analysed data using the standard Cochrane methodology.  ," We identified 12 studies (2494 participants: 1586 children and 908 elderly) comparing amantadine and rimantadine with placebo, paracetamol (one trial: 69 children) or zanamivir (two trials: 545 elderly) to treat influenza A.  Amantadine was effective in preventing influenza A in children (773 participants, risk ratio (RR) 0.11; 95% confidence interval (CI) 0.04 to 0.30). The assumed risk of influenza A in the control group was 10 per 100. The corresponding risk in the rimantadine group was one per 100 (95% CI 0 to 3). Nevertheless, the quality of the evidence was low and the safety of the drug was not well established.  For treatment, rimantadine was beneficial in abating fever on day three of treatment in children: one selected study with low risk of bias, moderate evidence quality and 69 participants (RR 0.36; 95% CI 0.14 to 0.91). The assumed risk was 38 per 100. The corresponding risk in the rimantadine group was 14 per 100 (95% CI 5 to 34).  Rimantadine did not show any prophylactic effect in the elderly. The quality of evidence was very low: 103 participants (RR 0.45; 95% CI 0.14 to 1.41). The assumed risk was 17 per 100. The corresponding risk in the rimantadine group was 7 per 100 (95% CI 2 to 23).  There was no evidence of adverse effects caused by treatment with amantadine or rimantadine. We found no studies assessing amantadine in the elderly. "," The quality of the evidence combined with a lack of knowledge about the safety of amantadine and the limited benefits of rimantadine, do not indicate that amantadine and rimantadine compared to control (placebo or paracetamol) could be useful in preventing, treating and shortening the duration of influenza A in children and the elderly.   ",4,TRUE,FALSE,6,Dizziness  (follow‐up: 7 days),RR 6.63 (0.32 to 137.33),599 (2),"⊕⊝⊝⊝very low3,4",,RR,599,NA,0.32,137.33,RR 6.63,Initializing
+https://doi.org/10.1002/14651858.CD002745.pub4,21 November 2014,Intervention,Cochrane Acute Respiratory Infections Group,"Keywords
+
+
+Medical Subject Headings (MeSH) Keywords
+
+Amantadine [adverse effects, *therapeutic use];
+Antiviral Agents [adverse effects, *therapeutic use];
+*Influenza A virus;
+Influenza A Virus, H1N1 Subtype;
+Influenza, Human [*prevention & control];
+Randomized Controlled Trials as Topic;
+Rimantadine [adverse effects, *therapeutic use];
+Sex Factors;
+
+
+
+Medical Subject Headings Check Words
+
+Adolescent;
+Aged;
+Child;
+Humans;
+Young Adult;
+
+
+
+",Amantadine and rimantadine for influenza A in children and the elderly,"Márcia G Alves Galvão, Marilene Augusta Rocha Crispino Santos, Antonio JL Alves da Cunha",Review - Intervention,TRUE,NA,Amantadine compared with placebo for prevention and treatment of influenza A in children,children with no influenza A infection (prevention) or with influenza A infection (treatment)  ,sall  ,placebo," Influenza is an acute respiratory illness caused by influenza A and B viruses. Complications may occur, especially among children and the elderly.  "," To assess the effectiveness and safety of amantadine and rimantadine in preventing, treating and shortening the duration of influenza A in children and the elderly.  "," We searched CENTRAL (2014, Issue 9), MEDLINE (1966 to September week 4, 2014) and EMBASE (1980 to October 2014).  "," We searched CENTRAL (2014, Issue 9), MEDLINE (1966 to September week 4, 2014) and EMBASE (1980 to October 2014).  Selection criteria Randomised controlled trials (RCTs) or quasi‐RCTs comparing amantadine and/or rimantadine with no intervention, placebo, other antivirals or different doses or schedules of amantadine or rimantadine in children and the elderly with influenza A.  ", Two review authors independently assessed the search results. We extracted and analysed data using the standard Cochrane methodology.  ," We identified 12 studies (2494 participants: 1586 children and 908 elderly) comparing amantadine and rimantadine with placebo, paracetamol (one trial: 69 children) or zanamivir (two trials: 545 elderly) to treat influenza A.  Amantadine was effective in preventing influenza A in children (773 participants, risk ratio (RR) 0.11; 95% confidence interval (CI) 0.04 to 0.30). The assumed risk of influenza A in the control group was 10 per 100. The corresponding risk in the rimantadine group was one per 100 (95% CI 0 to 3). Nevertheless, the quality of the evidence was low and the safety of the drug was not well established.  For treatment, rimantadine was beneficial in abating fever on day three of treatment in children: one selected study with low risk of bias, moderate evidence quality and 69 participants (RR 0.36; 95% CI 0.14 to 0.91). The assumed risk was 38 per 100. The corresponding risk in the rimantadine group was 14 per 100 (95% CI 5 to 34).  Rimantadine did not show any prophylactic effect in the elderly. The quality of evidence was very low: 103 participants (RR 0.45; 95% CI 0.14 to 1.41). The assumed risk was 17 per 100. The corresponding risk in the rimantadine group was 7 per 100 (95% CI 2 to 23).  There was no evidence of adverse effects caused by treatment with amantadine or rimantadine. We found no studies assessing amantadine in the elderly. "," The quality of the evidence combined with a lack of knowledge about the safety of amantadine and the limited benefits of rimantadine, do not indicate that amantadine and rimantadine compared to control (placebo or paracetamol) could be useful in preventing, treating and shortening the duration of influenza A in children and the elderly.   ",4,TRUE,FALSE,7,Dizziness  (follow‐up: 7 days),RR 6.63 (0.32 to 137.33),599 (2),"⊕⊝⊝⊝very low3,4",0 per 100  (0 to 0),RR,599,NA,0.32,137.33,RR 6.63,Initializing
+https://doi.org/10.1002/14651858.CD002745.pub4,21 November 2014,Intervention,Cochrane Acute Respiratory Infections Group,"Keywords
+
+
+Medical Subject Headings (MeSH) Keywords
+
+Amantadine [adverse effects, *therapeutic use];
+Antiviral Agents [adverse effects, *therapeutic use];
+*Influenza A virus;
+Influenza A Virus, H1N1 Subtype;
+Influenza, Human [*prevention & control];
+Randomized Controlled Trials as Topic;
+Rimantadine [adverse effects, *therapeutic use];
+Sex Factors;
+
+
+
+Medical Subject Headings Check Words
+
+Adolescent;
+Aged;
+Child;
+Humans;
+Young Adult;
+
+
+
+",Amantadine and rimantadine for influenza A in children and the elderly,"Márcia G Alves Galvão, Marilene Augusta Rocha Crispino Santos, Antonio JL Alves da Cunha",Review - Intervention,TRUE,NA,Amantadine compared with placebo for prevention and treatment of influenza A in children,children with no influenza A infection (prevention) or with influenza A infection (treatment)  ,sall  ,placebo," Influenza is an acute respiratory illness caused by influenza A and B viruses. Complications may occur, especially among children and the elderly.  "," To assess the effectiveness and safety of amantadine and rimantadine in preventing, treating and shortening the duration of influenza A in children and the elderly.  "," We searched CENTRAL (2014, Issue 9), MEDLINE (1966 to September week 4, 2014) and EMBASE (1980 to October 2014).  "," We searched CENTRAL (2014, Issue 9), MEDLINE (1966 to September week 4, 2014) and EMBASE (1980 to October 2014).  Selection criteria Randomised controlled trials (RCTs) or quasi‐RCTs comparing amantadine and/or rimantadine with no intervention, placebo, other antivirals or different doses or schedules of amantadine or rimantadine in children and the elderly with influenza A.  ", Two review authors independently assessed the search results. We extracted and analysed data using the standard Cochrane methodology.  ," We identified 12 studies (2494 participants: 1586 children and 908 elderly) comparing amantadine and rimantadine with placebo, paracetamol (one trial: 69 children) or zanamivir (two trials: 545 elderly) to treat influenza A.  Amantadine was effective in preventing influenza A in children (773 participants, risk ratio (RR) 0.11; 95% confidence interval (CI) 0.04 to 0.30). The assumed risk of influenza A in the control group was 10 per 100. The corresponding risk in the rimantadine group was one per 100 (95% CI 0 to 3). Nevertheless, the quality of the evidence was low and the safety of the drug was not well established.  For treatment, rimantadine was beneficial in abating fever on day three of treatment in children: one selected study with low risk of bias, moderate evidence quality and 69 participants (RR 0.36; 95% CI 0.14 to 0.91). The assumed risk was 38 per 100. The corresponding risk in the rimantadine group was 14 per 100 (95% CI 5 to 34).  Rimantadine did not show any prophylactic effect in the elderly. The quality of evidence was very low: 103 participants (RR 0.45; 95% CI 0.14 to 1.41). The assumed risk was 17 per 100. The corresponding risk in the rimantadine group was 7 per 100 (95% CI 2 to 23).  There was no evidence of adverse effects caused by treatment with amantadine or rimantadine. We found no studies assessing amantadine in the elderly. "," The quality of the evidence combined with a lack of knowledge about the safety of amantadine and the limited benefits of rimantadine, do not indicate that amantadine and rimantadine compared to control (placebo or paracetamol) could be useful in preventing, treating and shortening the duration of influenza A in children and the elderly.   ",4,TRUE,FALSE,8,Nausea/vomiting  (follow‐up: 7 days),RR 0.54 (0.15 to 2),599 (2),"⊕⊝⊝⊝very low3,4,5",,RR,599,NA,0.15,NA,RR 0.54,Initializing
+https://doi.org/10.1002/14651858.CD002745.pub4,21 November 2014,Intervention,Cochrane Acute Respiratory Infections Group,"Keywords
+
+
+Medical Subject Headings (MeSH) Keywords
+
+Amantadine [adverse effects, *therapeutic use];
+Antiviral Agents [adverse effects, *therapeutic use];
+*Influenza A virus;
+Influenza A Virus, H1N1 Subtype;
+Influenza, Human [*prevention & control];
+Randomized Controlled Trials as Topic;
+Rimantadine [adverse effects, *therapeutic use];
+Sex Factors;
+
+
+
+Medical Subject Headings Check Words
+
+Adolescent;
+Aged;
+Child;
+Humans;
+Young Adult;
+
+
+
+",Amantadine and rimantadine for influenza A in children and the elderly,"Márcia G Alves Galvão, Marilene Augusta Rocha Crispino Santos, Antonio JL Alves da Cunha",Review - Intervention,TRUE,NA,Amantadine compared with placebo for prevention and treatment of influenza A in children,children with no influenza A infection (prevention) or with influenza A infection (treatment)  ,sall  ,placebo," Influenza is an acute respiratory illness caused by influenza A and B viruses. Complications may occur, especially among children and the elderly.  "," To assess the effectiveness and safety of amantadine and rimantadine in preventing, treating and shortening the duration of influenza A in children and the elderly.  "," We searched CENTRAL (2014, Issue 9), MEDLINE (1966 to September week 4, 2014) and EMBASE (1980 to October 2014).  "," We searched CENTRAL (2014, Issue 9), MEDLINE (1966 to September week 4, 2014) and EMBASE (1980 to October 2014).  Selection criteria Randomised controlled trials (RCTs) or quasi‐RCTs comparing amantadine and/or rimantadine with no intervention, placebo, other antivirals or different doses or schedules of amantadine or rimantadine in children and the elderly with influenza A.  ", Two review authors independently assessed the search results. We extracted and analysed data using the standard Cochrane methodology.  ," We identified 12 studies (2494 participants: 1586 children and 908 elderly) comparing amantadine and rimantadine with placebo, paracetamol (one trial: 69 children) or zanamivir (two trials: 545 elderly) to treat influenza A.  Amantadine was effective in preventing influenza A in children (773 participants, risk ratio (RR) 0.11; 95% confidence interval (CI) 0.04 to 0.30). The assumed risk of influenza A in the control group was 10 per 100. The corresponding risk in the rimantadine group was one per 100 (95% CI 0 to 3). Nevertheless, the quality of the evidence was low and the safety of the drug was not well established.  For treatment, rimantadine was beneficial in abating fever on day three of treatment in children: one selected study with low risk of bias, moderate evidence quality and 69 participants (RR 0.36; 95% CI 0.14 to 0.91). The assumed risk was 38 per 100. The corresponding risk in the rimantadine group was 14 per 100 (95% CI 5 to 34).  Rimantadine did not show any prophylactic effect in the elderly. The quality of evidence was very low: 103 participants (RR 0.45; 95% CI 0.14 to 1.41). The assumed risk was 17 per 100. The corresponding risk in the rimantadine group was 7 per 100 (95% CI 2 to 23).  There was no evidence of adverse effects caused by treatment with amantadine or rimantadine. We found no studies assessing amantadine in the elderly. "," The quality of the evidence combined with a lack of knowledge about the safety of amantadine and the limited benefits of rimantadine, do not indicate that amantadine and rimantadine compared to control (placebo or paracetamol) could be useful in preventing, treating and shortening the duration of influenza A in children and the elderly.   ",4,TRUE,FALSE,9,Nausea/vomiting  (follow‐up: 7 days),RR 0.54 (0.15 to 2),599 (2),"⊕⊝⊝⊝very low3,4,5",7 per 100  (2 to 27),RR,599,NA,0.15,NA,RR 0.54,Initializing
+https://doi.org/10.1002/14651858.CD002745.pub4,21 November 2014,Intervention,Cochrane Acute Respiratory Infections Group,"Keywords
+
+
+Medical Subject Headings (MeSH) Keywords
+
+Amantadine [adverse effects, *therapeutic use];
+Antiviral Agents [adverse effects, *therapeutic use];
+*Influenza A virus;
+Influenza A Virus, H1N1 Subtype;
+Influenza, Human [*prevention & control];
+Randomized Controlled Trials as Topic;
+Rimantadine [adverse effects, *therapeutic use];
+Sex Factors;
+
+
+
+Medical Subject Headings Check Words
+
+Adolescent;
+Aged;
+Child;
+Humans;
+Young Adult;
+
+
+
+",Amantadine and rimantadine for influenza A in children and the elderly,"Márcia G Alves Galvão, Marilene Augusta Rocha Crispino Santos, Antonio JL Alves da Cunha",Review - Intervention,TRUE,NA,Amantadine compared with placebo for prevention and treatment of influenza A in children,children with no influenza A infection (prevention) or with influenza A infection (treatment)  ,sall  ,placebo," Influenza is an acute respiratory illness caused by influenza A and B viruses. Complications may occur, especially among children and the elderly.  "," To assess the effectiveness and safety of amantadine and rimantadine in preventing, treating and shortening the duration of influenza A in children and the elderly.  "," We searched CENTRAL (2014, Issue 9), MEDLINE (1966 to September week 4, 2014) and EMBASE (1980 to October 2014).  "," We searched CENTRAL (2014, Issue 9), MEDLINE (1966 to September week 4, 2014) and EMBASE (1980 to October 2014).  Selection criteria Randomised controlled trials (RCTs) or quasi‐RCTs comparing amantadine and/or rimantadine with no intervention, placebo, other antivirals or different doses or schedules of amantadine or rimantadine in children and the elderly with influenza A.  ", Two review authors independently assessed the search results. We extracted and analysed data using the standard Cochrane methodology.  ," We identified 12 studies (2494 participants: 1586 children and 908 elderly) comparing amantadine and rimantadine with placebo, paracetamol (one trial: 69 children) or zanamivir (two trials: 545 elderly) to treat influenza A.  Amantadine was effective in preventing influenza A in children (773 participants, risk ratio (RR) 0.11; 95% confidence interval (CI) 0.04 to 0.30). The assumed risk of influenza A in the control group was 10 per 100. The corresponding risk in the rimantadine group was one per 100 (95% CI 0 to 3). Nevertheless, the quality of the evidence was low and the safety of the drug was not well established.  For treatment, rimantadine was beneficial in abating fever on day three of treatment in children: one selected study with low risk of bias, moderate evidence quality and 69 participants (RR 0.36; 95% CI 0.14 to 0.91). The assumed risk was 38 per 100. The corresponding risk in the rimantadine group was 14 per 100 (95% CI 5 to 34).  Rimantadine did not show any prophylactic effect in the elderly. The quality of evidence was very low: 103 participants (RR 0.45; 95% CI 0.14 to 1.41). The assumed risk was 17 per 100. The corresponding risk in the rimantadine group was 7 per 100 (95% CI 2 to 23).  There was no evidence of adverse effects caused by treatment with amantadine or rimantadine. We found no studies assessing amantadine in the elderly. "," The quality of the evidence combined with a lack of knowledge about the safety of amantadine and the limited benefits of rimantadine, do not indicate that amantadine and rimantadine compared to control (placebo or paracetamol) could be useful in preventing, treating and shortening the duration of influenza A in children and the elderly.   ",4,TRUE,FALSE,10,Stimulation/insomnia  (follow‐up: 7 days),RR 0.46 (0.12 to 1.74),599 (2),"⊕⊕⊝⊝low3,4",,RR,599,NA,0.12,1.74,RR 0.46,Initializing
+https://doi.org/10.1002/14651858.CD002745.pub4,21 November 2014,Intervention,Cochrane Acute Respiratory Infections Group,"Keywords
+
+
+Medical Subject Headings (MeSH) Keywords
+
+Amantadine [adverse effects, *therapeutic use];
+Antiviral Agents [adverse effects, *therapeutic use];
+*Influenza A virus;
+Influenza A Virus, H1N1 Subtype;
+Influenza, Human [*prevention & control];
+Randomized Controlled Trials as Topic;
+Rimantadine [adverse effects, *therapeutic use];
+Sex Factors;
+
+
+
+Medical Subject Headings Check Words
+
+Adolescent;
+Aged;
+Child;
+Humans;
+Young Adult;
+
+
+
+",Amantadine and rimantadine for influenza A in children and the elderly,"Márcia G Alves Galvão, Marilene Augusta Rocha Crispino Santos, Antonio JL Alves da Cunha",Review - Intervention,TRUE,NA,Amantadine compared with placebo for prevention and treatment of influenza A in children,children with no influenza A infection (prevention) or with influenza A infection (treatment)  ,sall  ,placebo," Influenza is an acute respiratory illness caused by influenza A and B viruses. Complications may occur, especially among children and the elderly.  "," To assess the effectiveness and safety of amantadine and rimantadine in preventing, treating and shortening the duration of influenza A in children and the elderly.  "," We searched CENTRAL (2014, Issue 9), MEDLINE (1966 to September week 4, 2014) and EMBASE (1980 to October 2014).  "," We searched CENTRAL (2014, Issue 9), MEDLINE (1966 to September week 4, 2014) and EMBASE (1980 to October 2014).  Selection criteria Randomised controlled trials (RCTs) or quasi‐RCTs comparing amantadine and/or rimantadine with no intervention, placebo, other antivirals or different doses or schedules of amantadine or rimantadine in children and the elderly with influenza A.  ", Two review authors independently assessed the search results. We extracted and analysed data using the standard Cochrane methodology.  ," We identified 12 studies (2494 participants: 1586 children and 908 elderly) comparing amantadine and rimantadine with placebo, paracetamol (one trial: 69 children) or zanamivir (two trials: 545 elderly) to treat influenza A.  Amantadine was effective in preventing influenza A in children (773 participants, risk ratio (RR) 0.11; 95% confidence interval (CI) 0.04 to 0.30). The assumed risk of influenza A in the control group was 10 per 100. The corresponding risk in the rimantadine group was one per 100 (95% CI 0 to 3). Nevertheless, the quality of the evidence was low and the safety of the drug was not well established.  For treatment, rimantadine was beneficial in abating fever on day three of treatment in children: one selected study with low risk of bias, moderate evidence quality and 69 participants (RR 0.36; 95% CI 0.14 to 0.91). The assumed risk was 38 per 100. The corresponding risk in the rimantadine group was 14 per 100 (95% CI 5 to 34).  Rimantadine did not show any prophylactic effect in the elderly. The quality of evidence was very low: 103 participants (RR 0.45; 95% CI 0.14 to 1.41). The assumed risk was 17 per 100. The corresponding risk in the rimantadine group was 7 per 100 (95% CI 2 to 23).  There was no evidence of adverse effects caused by treatment with amantadine or rimantadine. We found no studies assessing amantadine in the elderly. "," The quality of the evidence combined with a lack of knowledge about the safety of amantadine and the limited benefits of rimantadine, do not indicate that amantadine and rimantadine compared to control (placebo or paracetamol) could be useful in preventing, treating and shortening the duration of influenza A in children and the elderly.   ",4,TRUE,FALSE,11,Stimulation/insomnia  (follow‐up: 7 days),RR 0.46 (0.12 to 1.74),599 (2),"⊕⊕⊝⊝low3,4",7 per 100  (2 to 27),RR,599,NA,0.12,1.74,RR 0.46,Initializing

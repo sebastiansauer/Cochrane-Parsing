@@ -146,7 +146,7 @@ get_summary_table <- function(page_content,
   if (any(warning_df$critical == TRUE)) {
     
     writeLines("Stopping reading the summary table, as critical warning has been raised earlier on")
-    
+    writeLines("Returning empty SoF table")
     output <- create_empty_df(names_vec = c(get_summarytab_colnames(), get_summarytab_metadata_colnames()))
     
     output$warning <- str_c(warning_df$type, collapse = " | ")

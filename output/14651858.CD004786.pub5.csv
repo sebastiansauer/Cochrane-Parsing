@@ -1,0 +1,277 @@
+doi,publication_date,review_type,review_group,review_mesh_keywords,title,authors,publish_type,is_most_recent_version,url_most_most_version,main_comparison_of_review,main_comparison_population,main_comparison_setting,main_comparison_comparsion_type,background,objectives,search_methods,selection_criteria,data_coll_analysis,main_results,conclusions,summaryTable_count,GRADE_somewhere_in_the_text,is_paywalled,id_measure,Outcomes,relative_effect_95CI,n_participants_studies,GRADE,effect_statistic,n_participants,n_studies,CI_lower,CI_upper,effect_size,warnings
+https://doi.org/10.1002/14651858.CD004786.pub5,04 November 2016,Intervention,Cochrane Acute Respiratory Infections Group,"Keywords
+
+
+Medical Subject Headings (MeSH) Keywords
+
+Acute Disease;
+Developing Countries;
+Fluid Therapy [adverse effects, methods, *standards];
+Hyponatremia [etiology];
+Meningitis, Bacterial [complications, *therapy];
+Randomized Controlled Trials as Topic;
+
+
+
+Medical Subject Headings Check Words
+
+Child;
+Humans;
+Infant;
+
+
+
+",Fluid therapy for acute bacterial meningitis,"Ian K Maconochie, Soumyadeep Bhaumik",Review - Intervention,TRUE,NA,Maintenance fluids versus restricted fluids for acute bacterial meningitis,paediatric patients with acute bacterial meningitis  ,shospital inpatient department  ,restricted fluids," Acute bacterial meningitis remains a disease with high mortality and morbidity rates. However, with prompt and adequate antimicrobial and supportive treatment, the chances for survival have improved, especially among infants and children. Careful management of fluid and electrolyte balance is an important supportive therapy. Both over‐ and under‐hydration are associated with adverse outcomes. This is the latest update of a review first published in 2005 and updated in 2008 and 2014.  ", To evaluate treatment of acute bacterial meningitis with differing volumes of initial fluid administration (up to 72 hours after first presentation) and the effects on death and neurological sequelae.  ," For this 2016 update we searched the following databases up to March 2016: the Cochrane Acute Respiratory Infections Group's Specialised Register, CENTRAL, MEDLINE, CINAHL, Global Health, and Web of Science.  "," For this 2016 update we searched the following databases up to March 2016: the Cochrane Acute Respiratory Infections Group's Specialised Register, CENTRAL, MEDLINE, CINAHL, Global Health, and Web of Science.  Selection criteria Randomised controlled trials (RCTs) of differing volumes of fluid given in the initial management of bacterial meningitis were eligible for inclusion.  "," All four of the original review authors extracted data and assessed trials for quality in the first publication of this review (one author, ROW, has passed away since the original review; see Acknowledgements). The current authors combined data for meta‐analysis using risk ratios (RRs) for dichotomous data or mean difference (MD) for continuous data. We used a fixed‐effect statistical model. We assessed the overall quality of evidence using the GRADE approach.  "," We included three trials with a total of 420 children; there were no trials in adult populations. The largest of the three trials was conducted in settings with high mortality rates and was judged to have low risk of bias for all domains, except performance bias which was high risk. The other two smaller trials were not of high quality.The meta‐analysis found no significant difference between the maintenance‐fluid and restricted‐fluid groups in number of deaths (RR 0.82, 95% confidence interval (CI) 0.53 to 1.27; 407 participants; low quality of evidence) or acute severe neurological sequelae (RR 0.67, 95% CI 0.41 to 1.08; 407 participants; low quality of evidence). However, when neurological sequelae were defined further, there was a statistically significant difference in favour of the maintenance‐fluid group for spasticity (RR 0.50, 95% CI 0.27 to 0.93; 357 participants); and seizures at both 72 hours (RR 0.59, 95% CI 0.42 to 0.83; 357 participants) and 14 days (RR 0.19, 95% CI 0.04 to 0.88; 357 participants). There was very low quality of evidence favouring maintenance fluid over restrictive fluid for chronic severe neurological sequelae at three months follow‐up (RR 0.42, 95% CI 0.20 to 0.89; 351 participants).  ", The quality of evidence regarding fluid therapy in children with acute bacterial meningitis is low to very low and more RCTs need to be conducted. There is insufficient evidence to guide practice as to whether maintenance fluids should be chosen over restricted fluids in the treatment of acute bacterial meningitis.   ,1,TRUE,FALSE,1,Death ‐ all participants,RR 0.82  (0.53 to 1.27),407 (2 studies),"⊕⊕⊝⊝low1,2",RR,407,2,0.53,1.27,RR 0.82,Initializing
+https://doi.org/10.1002/14651858.CD004786.pub5,04 November 2016,Intervention,Cochrane Acute Respiratory Infections Group,"Keywords
+
+
+Medical Subject Headings (MeSH) Keywords
+
+Acute Disease;
+Developing Countries;
+Fluid Therapy [adverse effects, methods, *standards];
+Hyponatremia [etiology];
+Meningitis, Bacterial [complications, *therapy];
+Randomized Controlled Trials as Topic;
+
+
+
+Medical Subject Headings Check Words
+
+Child;
+Humans;
+Infant;
+
+
+
+",Fluid therapy for acute bacterial meningitis,"Ian K Maconochie, Soumyadeep Bhaumik",Review - Intervention,TRUE,NA,Maintenance fluids versus restricted fluids for acute bacterial meningitis,paediatric patients with acute bacterial meningitis  ,shospital inpatient department  ,restricted fluids," Acute bacterial meningitis remains a disease with high mortality and morbidity rates. However, with prompt and adequate antimicrobial and supportive treatment, the chances for survival have improved, especially among infants and children. Careful management of fluid and electrolyte balance is an important supportive therapy. Both over‐ and under‐hydration are associated with adverse outcomes. This is the latest update of a review first published in 2005 and updated in 2008 and 2014.  ", To evaluate treatment of acute bacterial meningitis with differing volumes of initial fluid administration (up to 72 hours after first presentation) and the effects on death and neurological sequelae.  ," For this 2016 update we searched the following databases up to March 2016: the Cochrane Acute Respiratory Infections Group's Specialised Register, CENTRAL, MEDLINE, CINAHL, Global Health, and Web of Science.  "," For this 2016 update we searched the following databases up to March 2016: the Cochrane Acute Respiratory Infections Group's Specialised Register, CENTRAL, MEDLINE, CINAHL, Global Health, and Web of Science.  Selection criteria Randomised controlled trials (RCTs) of differing volumes of fluid given in the initial management of bacterial meningitis were eligible for inclusion.  "," All four of the original review authors extracted data and assessed trials for quality in the first publication of this review (one author, ROW, has passed away since the original review; see Acknowledgements). The current authors combined data for meta‐analysis using risk ratios (RRs) for dichotomous data or mean difference (MD) for continuous data. We used a fixed‐effect statistical model. We assessed the overall quality of evidence using the GRADE approach.  "," We included three trials with a total of 420 children; there were no trials in adult populations. The largest of the three trials was conducted in settings with high mortality rates and was judged to have low risk of bias for all domains, except performance bias which was high risk. The other two smaller trials were not of high quality.The meta‐analysis found no significant difference between the maintenance‐fluid and restricted‐fluid groups in number of deaths (RR 0.82, 95% confidence interval (CI) 0.53 to 1.27; 407 participants; low quality of evidence) or acute severe neurological sequelae (RR 0.67, 95% CI 0.41 to 1.08; 407 participants; low quality of evidence). However, when neurological sequelae were defined further, there was a statistically significant difference in favour of the maintenance‐fluid group for spasticity (RR 0.50, 95% CI 0.27 to 0.93; 357 participants); and seizures at both 72 hours (RR 0.59, 95% CI 0.42 to 0.83; 357 participants) and 14 days (RR 0.19, 95% CI 0.04 to 0.88; 357 participants). There was very low quality of evidence favouring maintenance fluid over restrictive fluid for chronic severe neurological sequelae at three months follow‐up (RR 0.42, 95% CI 0.20 to 0.89; 351 participants).  ", The quality of evidence regarding fluid therapy in children with acute bacterial meningitis is low to very low and more RCTs need to be conducted. There is insufficient evidence to guide practice as to whether maintenance fluids should be chosen over restricted fluids in the treatment of acute bacterial meningitis.   ,1,TRUE,FALSE,2,Death ‐ all participants,RR 0.82  (0.53 to 1.27),407 (2 studies),153 per 1000  (99 to 237),RR,407,2,0.53,1.27,RR 0.82,Initializing
+https://doi.org/10.1002/14651858.CD004786.pub5,04 November 2016,Intervention,Cochrane Acute Respiratory Infections Group,"Keywords
+
+
+Medical Subject Headings (MeSH) Keywords
+
+Acute Disease;
+Developing Countries;
+Fluid Therapy [adverse effects, methods, *standards];
+Hyponatremia [etiology];
+Meningitis, Bacterial [complications, *therapy];
+Randomized Controlled Trials as Topic;
+
+
+
+Medical Subject Headings Check Words
+
+Child;
+Humans;
+Infant;
+
+
+
+",Fluid therapy for acute bacterial meningitis,"Ian K Maconochie, Soumyadeep Bhaumik",Review - Intervention,TRUE,NA,Maintenance fluids versus restricted fluids for acute bacterial meningitis,paediatric patients with acute bacterial meningitis  ,shospital inpatient department  ,restricted fluids," Acute bacterial meningitis remains a disease with high mortality and morbidity rates. However, with prompt and adequate antimicrobial and supportive treatment, the chances for survival have improved, especially among infants and children. Careful management of fluid and electrolyte balance is an important supportive therapy. Both over‐ and under‐hydration are associated with adverse outcomes. This is the latest update of a review first published in 2005 and updated in 2008 and 2014.  ", To evaluate treatment of acute bacterial meningitis with differing volumes of initial fluid administration (up to 72 hours after first presentation) and the effects on death and neurological sequelae.  ," For this 2016 update we searched the following databases up to March 2016: the Cochrane Acute Respiratory Infections Group's Specialised Register, CENTRAL, MEDLINE, CINAHL, Global Health, and Web of Science.  "," For this 2016 update we searched the following databases up to March 2016: the Cochrane Acute Respiratory Infections Group's Specialised Register, CENTRAL, MEDLINE, CINAHL, Global Health, and Web of Science.  Selection criteria Randomised controlled trials (RCTs) of differing volumes of fluid given in the initial management of bacterial meningitis were eligible for inclusion.  "," All four of the original review authors extracted data and assessed trials for quality in the first publication of this review (one author, ROW, has passed away since the original review; see Acknowledgements). The current authors combined data for meta‐analysis using risk ratios (RRs) for dichotomous data or mean difference (MD) for continuous data. We used a fixed‐effect statistical model. We assessed the overall quality of evidence using the GRADE approach.  "," We included three trials with a total of 420 children; there were no trials in adult populations. The largest of the three trials was conducted in settings with high mortality rates and was judged to have low risk of bias for all domains, except performance bias which was high risk. The other two smaller trials were not of high quality.The meta‐analysis found no significant difference between the maintenance‐fluid and restricted‐fluid groups in number of deaths (RR 0.82, 95% confidence interval (CI) 0.53 to 1.27; 407 participants; low quality of evidence) or acute severe neurological sequelae (RR 0.67, 95% CI 0.41 to 1.08; 407 participants; low quality of evidence). However, when neurological sequelae were defined further, there was a statistically significant difference in favour of the maintenance‐fluid group for spasticity (RR 0.50, 95% CI 0.27 to 0.93; 357 participants); and seizures at both 72 hours (RR 0.59, 95% CI 0.42 to 0.83; 357 participants) and 14 days (RR 0.19, 95% CI 0.04 to 0.88; 357 participants). There was very low quality of evidence favouring maintenance fluid over restrictive fluid for chronic severe neurological sequelae at three months follow‐up (RR 0.42, 95% CI 0.20 to 0.89; 351 participants).  ", The quality of evidence regarding fluid therapy in children with acute bacterial meningitis is low to very low and more RCTs need to be conducted. There is insufficient evidence to guide practice as to whether maintenance fluids should be chosen over restricted fluids in the treatment of acute bacterial meningitis.   ,1,TRUE,FALSE,3,Death ‐ all participants,RR 0.82  (0.53 to 1.27),407 (2 studies),Moderate risk population,RR,407,2,0.53,1.27,RR 0.82,Initializing
+https://doi.org/10.1002/14651858.CD004786.pub5,04 November 2016,Intervention,Cochrane Acute Respiratory Infections Group,"Keywords
+
+
+Medical Subject Headings (MeSH) Keywords
+
+Acute Disease;
+Developing Countries;
+Fluid Therapy [adverse effects, methods, *standards];
+Hyponatremia [etiology];
+Meningitis, Bacterial [complications, *therapy];
+Randomized Controlled Trials as Topic;
+
+
+
+Medical Subject Headings Check Words
+
+Child;
+Humans;
+Infant;
+
+
+
+",Fluid therapy for acute bacterial meningitis,"Ian K Maconochie, Soumyadeep Bhaumik",Review - Intervention,TRUE,NA,Maintenance fluids versus restricted fluids for acute bacterial meningitis,paediatric patients with acute bacterial meningitis  ,shospital inpatient department  ,restricted fluids," Acute bacterial meningitis remains a disease with high mortality and morbidity rates. However, with prompt and adequate antimicrobial and supportive treatment, the chances for survival have improved, especially among infants and children. Careful management of fluid and electrolyte balance is an important supportive therapy. Both over‐ and under‐hydration are associated with adverse outcomes. This is the latest update of a review first published in 2005 and updated in 2008 and 2014.  ", To evaluate treatment of acute bacterial meningitis with differing volumes of initial fluid administration (up to 72 hours after first presentation) and the effects on death and neurological sequelae.  ," For this 2016 update we searched the following databases up to March 2016: the Cochrane Acute Respiratory Infections Group's Specialised Register, CENTRAL, MEDLINE, CINAHL, Global Health, and Web of Science.  "," For this 2016 update we searched the following databases up to March 2016: the Cochrane Acute Respiratory Infections Group's Specialised Register, CENTRAL, MEDLINE, CINAHL, Global Health, and Web of Science.  Selection criteria Randomised controlled trials (RCTs) of differing volumes of fluid given in the initial management of bacterial meningitis were eligible for inclusion.  "," All four of the original review authors extracted data and assessed trials for quality in the first publication of this review (one author, ROW, has passed away since the original review; see Acknowledgements). The current authors combined data for meta‐analysis using risk ratios (RRs) for dichotomous data or mean difference (MD) for continuous data. We used a fixed‐effect statistical model. We assessed the overall quality of evidence using the GRADE approach.  "," We included three trials with a total of 420 children; there were no trials in adult populations. The largest of the three trials was conducted in settings with high mortality rates and was judged to have low risk of bias for all domains, except performance bias which was high risk. The other two smaller trials were not of high quality.The meta‐analysis found no significant difference between the maintenance‐fluid and restricted‐fluid groups in number of deaths (RR 0.82, 95% confidence interval (CI) 0.53 to 1.27; 407 participants; low quality of evidence) or acute severe neurological sequelae (RR 0.67, 95% CI 0.41 to 1.08; 407 participants; low quality of evidence). However, when neurological sequelae were defined further, there was a statistically significant difference in favour of the maintenance‐fluid group for spasticity (RR 0.50, 95% CI 0.27 to 0.93; 357 participants); and seizures at both 72 hours (RR 0.59, 95% CI 0.42 to 0.83; 357 participants) and 14 days (RR 0.19, 95% CI 0.04 to 0.88; 357 participants). There was very low quality of evidence favouring maintenance fluid over restrictive fluid for chronic severe neurological sequelae at three months follow‐up (RR 0.42, 95% CI 0.20 to 0.89; 351 participants).  ", The quality of evidence regarding fluid therapy in children with acute bacterial meningitis is low to very low and more RCTs need to be conducted. There is insufficient evidence to guide practice as to whether maintenance fluids should be chosen over restricted fluids in the treatment of acute bacterial meningitis.   ,1,TRUE,FALSE,4,Death ‐ all participants,RR 0.82  (0.53 to 1.27),407 (2 studies),175 per 1000  (113 to 271),RR,407,2,0.53,1.27,RR 0.82,Initializing
+https://doi.org/10.1002/14651858.CD004786.pub5,04 November 2016,Intervention,Cochrane Acute Respiratory Infections Group,"Keywords
+
+
+Medical Subject Headings (MeSH) Keywords
+
+Acute Disease;
+Developing Countries;
+Fluid Therapy [adverse effects, methods, *standards];
+Hyponatremia [etiology];
+Meningitis, Bacterial [complications, *therapy];
+Randomized Controlled Trials as Topic;
+
+
+
+Medical Subject Headings Check Words
+
+Child;
+Humans;
+Infant;
+
+
+
+",Fluid therapy for acute bacterial meningitis,"Ian K Maconochie, Soumyadeep Bhaumik",Review - Intervention,TRUE,NA,Maintenance fluids versus restricted fluids for acute bacterial meningitis,paediatric patients with acute bacterial meningitis  ,shospital inpatient department  ,restricted fluids," Acute bacterial meningitis remains a disease with high mortality and morbidity rates. However, with prompt and adequate antimicrobial and supportive treatment, the chances for survival have improved, especially among infants and children. Careful management of fluid and electrolyte balance is an important supportive therapy. Both over‐ and under‐hydration are associated with adverse outcomes. This is the latest update of a review first published in 2005 and updated in 2008 and 2014.  ", To evaluate treatment of acute bacterial meningitis with differing volumes of initial fluid administration (up to 72 hours after first presentation) and the effects on death and neurological sequelae.  ," For this 2016 update we searched the following databases up to March 2016: the Cochrane Acute Respiratory Infections Group's Specialised Register, CENTRAL, MEDLINE, CINAHL, Global Health, and Web of Science.  "," For this 2016 update we searched the following databases up to March 2016: the Cochrane Acute Respiratory Infections Group's Specialised Register, CENTRAL, MEDLINE, CINAHL, Global Health, and Web of Science.  Selection criteria Randomised controlled trials (RCTs) of differing volumes of fluid given in the initial management of bacterial meningitis were eligible for inclusion.  "," All four of the original review authors extracted data and assessed trials for quality in the first publication of this review (one author, ROW, has passed away since the original review; see Acknowledgements). The current authors combined data for meta‐analysis using risk ratios (RRs) for dichotomous data or mean difference (MD) for continuous data. We used a fixed‐effect statistical model. We assessed the overall quality of evidence using the GRADE approach.  "," We included three trials with a total of 420 children; there were no trials in adult populations. The largest of the three trials was conducted in settings with high mortality rates and was judged to have low risk of bias for all domains, except performance bias which was high risk. The other two smaller trials were not of high quality.The meta‐analysis found no significant difference between the maintenance‐fluid and restricted‐fluid groups in number of deaths (RR 0.82, 95% confidence interval (CI) 0.53 to 1.27; 407 participants; low quality of evidence) or acute severe neurological sequelae (RR 0.67, 95% CI 0.41 to 1.08; 407 participants; low quality of evidence). However, when neurological sequelae were defined further, there was a statistically significant difference in favour of the maintenance‐fluid group for spasticity (RR 0.50, 95% CI 0.27 to 0.93; 357 participants); and seizures at both 72 hours (RR 0.59, 95% CI 0.42 to 0.83; 357 participants) and 14 days (RR 0.19, 95% CI 0.04 to 0.88; 357 participants). There was very low quality of evidence favouring maintenance fluid over restrictive fluid for chronic severe neurological sequelae at three months follow‐up (RR 0.42, 95% CI 0.20 to 0.89; 351 participants).  ", The quality of evidence regarding fluid therapy in children with acute bacterial meningitis is low to very low and more RCTs need to be conducted. There is insufficient evidence to guide practice as to whether maintenance fluids should be chosen over restricted fluids in the treatment of acute bacterial meningitis.   ,1,TRUE,FALSE,5,Severe neurological sequelae ‐ acute (within the first 4 weeks),RR 0.67  (0.41 to 1.08),407 (2 studies),"⊕⊕⊝⊝low1,2",RR,407,2,0.41,1.08,RR 0.67,Initializing
+https://doi.org/10.1002/14651858.CD004786.pub5,04 November 2016,Intervention,Cochrane Acute Respiratory Infections Group,"Keywords
+
+
+Medical Subject Headings (MeSH) Keywords
+
+Acute Disease;
+Developing Countries;
+Fluid Therapy [adverse effects, methods, *standards];
+Hyponatremia [etiology];
+Meningitis, Bacterial [complications, *therapy];
+Randomized Controlled Trials as Topic;
+
+
+
+Medical Subject Headings Check Words
+
+Child;
+Humans;
+Infant;
+
+
+
+",Fluid therapy for acute bacterial meningitis,"Ian K Maconochie, Soumyadeep Bhaumik",Review - Intervention,TRUE,NA,Maintenance fluids versus restricted fluids for acute bacterial meningitis,paediatric patients with acute bacterial meningitis  ,shospital inpatient department  ,restricted fluids," Acute bacterial meningitis remains a disease with high mortality and morbidity rates. However, with prompt and adequate antimicrobial and supportive treatment, the chances for survival have improved, especially among infants and children. Careful management of fluid and electrolyte balance is an important supportive therapy. Both over‐ and under‐hydration are associated with adverse outcomes. This is the latest update of a review first published in 2005 and updated in 2008 and 2014.  ", To evaluate treatment of acute bacterial meningitis with differing volumes of initial fluid administration (up to 72 hours after first presentation) and the effects on death and neurological sequelae.  ," For this 2016 update we searched the following databases up to March 2016: the Cochrane Acute Respiratory Infections Group's Specialised Register, CENTRAL, MEDLINE, CINAHL, Global Health, and Web of Science.  "," For this 2016 update we searched the following databases up to March 2016: the Cochrane Acute Respiratory Infections Group's Specialised Register, CENTRAL, MEDLINE, CINAHL, Global Health, and Web of Science.  Selection criteria Randomised controlled trials (RCTs) of differing volumes of fluid given in the initial management of bacterial meningitis were eligible for inclusion.  "," All four of the original review authors extracted data and assessed trials for quality in the first publication of this review (one author, ROW, has passed away since the original review; see Acknowledgements). The current authors combined data for meta‐analysis using risk ratios (RRs) for dichotomous data or mean difference (MD) for continuous data. We used a fixed‐effect statistical model. We assessed the overall quality of evidence using the GRADE approach.  "," We included three trials with a total of 420 children; there were no trials in adult populations. The largest of the three trials was conducted in settings with high mortality rates and was judged to have low risk of bias for all domains, except performance bias which was high risk. The other two smaller trials were not of high quality.The meta‐analysis found no significant difference between the maintenance‐fluid and restricted‐fluid groups in number of deaths (RR 0.82, 95% confidence interval (CI) 0.53 to 1.27; 407 participants; low quality of evidence) or acute severe neurological sequelae (RR 0.67, 95% CI 0.41 to 1.08; 407 participants; low quality of evidence). However, when neurological sequelae were defined further, there was a statistically significant difference in favour of the maintenance‐fluid group for spasticity (RR 0.50, 95% CI 0.27 to 0.93; 357 participants); and seizures at both 72 hours (RR 0.59, 95% CI 0.42 to 0.83; 357 participants) and 14 days (RR 0.19, 95% CI 0.04 to 0.88; 357 participants). There was very low quality of evidence favouring maintenance fluid over restrictive fluid for chronic severe neurological sequelae at three months follow‐up (RR 0.42, 95% CI 0.20 to 0.89; 351 participants).  ", The quality of evidence regarding fluid therapy in children with acute bacterial meningitis is low to very low and more RCTs need to be conducted. There is insufficient evidence to guide practice as to whether maintenance fluids should be chosen over restricted fluids in the treatment of acute bacterial meningitis.   ,1,TRUE,FALSE,6,Severe neurological sequelae ‐ acute (within the first 4 weeks),RR 0.67  (0.41 to 1.08),407 (2 studies),118 per 1000  (72 to 191),RR,407,2,0.41,1.08,RR 0.67,Initializing
+https://doi.org/10.1002/14651858.CD004786.pub5,04 November 2016,Intervention,Cochrane Acute Respiratory Infections Group,"Keywords
+
+
+Medical Subject Headings (MeSH) Keywords
+
+Acute Disease;
+Developing Countries;
+Fluid Therapy [adverse effects, methods, *standards];
+Hyponatremia [etiology];
+Meningitis, Bacterial [complications, *therapy];
+Randomized Controlled Trials as Topic;
+
+
+
+Medical Subject Headings Check Words
+
+Child;
+Humans;
+Infant;
+
+
+
+",Fluid therapy for acute bacterial meningitis,"Ian K Maconochie, Soumyadeep Bhaumik",Review - Intervention,TRUE,NA,Maintenance fluids versus restricted fluids for acute bacterial meningitis,paediatric patients with acute bacterial meningitis  ,shospital inpatient department  ,restricted fluids," Acute bacterial meningitis remains a disease with high mortality and morbidity rates. However, with prompt and adequate antimicrobial and supportive treatment, the chances for survival have improved, especially among infants and children. Careful management of fluid and electrolyte balance is an important supportive therapy. Both over‐ and under‐hydration are associated with adverse outcomes. This is the latest update of a review first published in 2005 and updated in 2008 and 2014.  ", To evaluate treatment of acute bacterial meningitis with differing volumes of initial fluid administration (up to 72 hours after first presentation) and the effects on death and neurological sequelae.  ," For this 2016 update we searched the following databases up to March 2016: the Cochrane Acute Respiratory Infections Group's Specialised Register, CENTRAL, MEDLINE, CINAHL, Global Health, and Web of Science.  "," For this 2016 update we searched the following databases up to March 2016: the Cochrane Acute Respiratory Infections Group's Specialised Register, CENTRAL, MEDLINE, CINAHL, Global Health, and Web of Science.  Selection criteria Randomised controlled trials (RCTs) of differing volumes of fluid given in the initial management of bacterial meningitis were eligible for inclusion.  "," All four of the original review authors extracted data and assessed trials for quality in the first publication of this review (one author, ROW, has passed away since the original review; see Acknowledgements). The current authors combined data for meta‐analysis using risk ratios (RRs) for dichotomous data or mean difference (MD) for continuous data. We used a fixed‐effect statistical model. We assessed the overall quality of evidence using the GRADE approach.  "," We included three trials with a total of 420 children; there were no trials in adult populations. The largest of the three trials was conducted in settings with high mortality rates and was judged to have low risk of bias for all domains, except performance bias which was high risk. The other two smaller trials were not of high quality.The meta‐analysis found no significant difference between the maintenance‐fluid and restricted‐fluid groups in number of deaths (RR 0.82, 95% confidence interval (CI) 0.53 to 1.27; 407 participants; low quality of evidence) or acute severe neurological sequelae (RR 0.67, 95% CI 0.41 to 1.08; 407 participants; low quality of evidence). However, when neurological sequelae were defined further, there was a statistically significant difference in favour of the maintenance‐fluid group for spasticity (RR 0.50, 95% CI 0.27 to 0.93; 357 participants); and seizures at both 72 hours (RR 0.59, 95% CI 0.42 to 0.83; 357 participants) and 14 days (RR 0.19, 95% CI 0.04 to 0.88; 357 participants). There was very low quality of evidence favouring maintenance fluid over restrictive fluid for chronic severe neurological sequelae at three months follow‐up (RR 0.42, 95% CI 0.20 to 0.89; 351 participants).  ", The quality of evidence regarding fluid therapy in children with acute bacterial meningitis is low to very low and more RCTs need to be conducted. There is insufficient evidence to guide practice as to whether maintenance fluids should be chosen over restricted fluids in the treatment of acute bacterial meningitis.   ,1,TRUE,FALSE,7,Severe neurological sequelae ‐ acute (within the first 4 weeks),RR 0.67  (0.41 to 1.08),407 (2 studies),Moderate risk population,RR,407,2,0.41,1.08,RR 0.67,Initializing
+https://doi.org/10.1002/14651858.CD004786.pub5,04 November 2016,Intervention,Cochrane Acute Respiratory Infections Group,"Keywords
+
+
+Medical Subject Headings (MeSH) Keywords
+
+Acute Disease;
+Developing Countries;
+Fluid Therapy [adverse effects, methods, *standards];
+Hyponatremia [etiology];
+Meningitis, Bacterial [complications, *therapy];
+Randomized Controlled Trials as Topic;
+
+
+
+Medical Subject Headings Check Words
+
+Child;
+Humans;
+Infant;
+
+
+
+",Fluid therapy for acute bacterial meningitis,"Ian K Maconochie, Soumyadeep Bhaumik",Review - Intervention,TRUE,NA,Maintenance fluids versus restricted fluids for acute bacterial meningitis,paediatric patients with acute bacterial meningitis  ,shospital inpatient department  ,restricted fluids," Acute bacterial meningitis remains a disease with high mortality and morbidity rates. However, with prompt and adequate antimicrobial and supportive treatment, the chances for survival have improved, especially among infants and children. Careful management of fluid and electrolyte balance is an important supportive therapy. Both over‐ and under‐hydration are associated with adverse outcomes. This is the latest update of a review first published in 2005 and updated in 2008 and 2014.  ", To evaluate treatment of acute bacterial meningitis with differing volumes of initial fluid administration (up to 72 hours after first presentation) and the effects on death and neurological sequelae.  ," For this 2016 update we searched the following databases up to March 2016: the Cochrane Acute Respiratory Infections Group's Specialised Register, CENTRAL, MEDLINE, CINAHL, Global Health, and Web of Science.  "," For this 2016 update we searched the following databases up to March 2016: the Cochrane Acute Respiratory Infections Group's Specialised Register, CENTRAL, MEDLINE, CINAHL, Global Health, and Web of Science.  Selection criteria Randomised controlled trials (RCTs) of differing volumes of fluid given in the initial management of bacterial meningitis were eligible for inclusion.  "," All four of the original review authors extracted data and assessed trials for quality in the first publication of this review (one author, ROW, has passed away since the original review; see Acknowledgements). The current authors combined data for meta‐analysis using risk ratios (RRs) for dichotomous data or mean difference (MD) for continuous data. We used a fixed‐effect statistical model. We assessed the overall quality of evidence using the GRADE approach.  "," We included three trials with a total of 420 children; there were no trials in adult populations. The largest of the three trials was conducted in settings with high mortality rates and was judged to have low risk of bias for all domains, except performance bias which was high risk. The other two smaller trials were not of high quality.The meta‐analysis found no significant difference between the maintenance‐fluid and restricted‐fluid groups in number of deaths (RR 0.82, 95% confidence interval (CI) 0.53 to 1.27; 407 participants; low quality of evidence) or acute severe neurological sequelae (RR 0.67, 95% CI 0.41 to 1.08; 407 participants; low quality of evidence). However, when neurological sequelae were defined further, there was a statistically significant difference in favour of the maintenance‐fluid group for spasticity (RR 0.50, 95% CI 0.27 to 0.93; 357 participants); and seizures at both 72 hours (RR 0.59, 95% CI 0.42 to 0.83; 357 participants) and 14 days (RR 0.19, 95% CI 0.04 to 0.88; 357 participants). There was very low quality of evidence favouring maintenance fluid over restrictive fluid for chronic severe neurological sequelae at three months follow‐up (RR 0.42, 95% CI 0.20 to 0.89; 351 participants).  ", The quality of evidence regarding fluid therapy in children with acute bacterial meningitis is low to very low and more RCTs need to be conducted. There is insufficient evidence to guide practice as to whether maintenance fluids should be chosen over restricted fluids in the treatment of acute bacterial meningitis.   ,1,TRUE,FALSE,8,Severe neurological sequelae ‐ acute (within the first 4 weeks),RR 0.67  (0.41 to 1.08),407 (2 studies),169 per 1000  (103 to 272),RR,407,2,0.41,1.08,RR 0.67,Initializing
+https://doi.org/10.1002/14651858.CD004786.pub5,04 November 2016,Intervention,Cochrane Acute Respiratory Infections Group,"Keywords
+
+
+Medical Subject Headings (MeSH) Keywords
+
+Acute Disease;
+Developing Countries;
+Fluid Therapy [adverse effects, methods, *standards];
+Hyponatremia [etiology];
+Meningitis, Bacterial [complications, *therapy];
+Randomized Controlled Trials as Topic;
+
+
+
+Medical Subject Headings Check Words
+
+Child;
+Humans;
+Infant;
+
+
+
+",Fluid therapy for acute bacterial meningitis,"Ian K Maconochie, Soumyadeep Bhaumik",Review - Intervention,TRUE,NA,Maintenance fluids versus restricted fluids for acute bacterial meningitis,paediatric patients with acute bacterial meningitis  ,shospital inpatient department  ,restricted fluids," Acute bacterial meningitis remains a disease with high mortality and morbidity rates. However, with prompt and adequate antimicrobial and supportive treatment, the chances for survival have improved, especially among infants and children. Careful management of fluid and electrolyte balance is an important supportive therapy. Both over‐ and under‐hydration are associated with adverse outcomes. This is the latest update of a review first published in 2005 and updated in 2008 and 2014.  ", To evaluate treatment of acute bacterial meningitis with differing volumes of initial fluid administration (up to 72 hours after first presentation) and the effects on death and neurological sequelae.  ," For this 2016 update we searched the following databases up to March 2016: the Cochrane Acute Respiratory Infections Group's Specialised Register, CENTRAL, MEDLINE, CINAHL, Global Health, and Web of Science.  "," For this 2016 update we searched the following databases up to March 2016: the Cochrane Acute Respiratory Infections Group's Specialised Register, CENTRAL, MEDLINE, CINAHL, Global Health, and Web of Science.  Selection criteria Randomised controlled trials (RCTs) of differing volumes of fluid given in the initial management of bacterial meningitis were eligible for inclusion.  "," All four of the original review authors extracted data and assessed trials for quality in the first publication of this review (one author, ROW, has passed away since the original review; see Acknowledgements). The current authors combined data for meta‐analysis using risk ratios (RRs) for dichotomous data or mean difference (MD) for continuous data. We used a fixed‐effect statistical model. We assessed the overall quality of evidence using the GRADE approach.  "," We included three trials with a total of 420 children; there were no trials in adult populations. The largest of the three trials was conducted in settings with high mortality rates and was judged to have low risk of bias for all domains, except performance bias which was high risk. The other two smaller trials were not of high quality.The meta‐analysis found no significant difference between the maintenance‐fluid and restricted‐fluid groups in number of deaths (RR 0.82, 95% confidence interval (CI) 0.53 to 1.27; 407 participants; low quality of evidence) or acute severe neurological sequelae (RR 0.67, 95% CI 0.41 to 1.08; 407 participants; low quality of evidence). However, when neurological sequelae were defined further, there was a statistically significant difference in favour of the maintenance‐fluid group for spasticity (RR 0.50, 95% CI 0.27 to 0.93; 357 participants); and seizures at both 72 hours (RR 0.59, 95% CI 0.42 to 0.83; 357 participants) and 14 days (RR 0.19, 95% CI 0.04 to 0.88; 357 participants). There was very low quality of evidence favouring maintenance fluid over restrictive fluid for chronic severe neurological sequelae at three months follow‐up (RR 0.42, 95% CI 0.20 to 0.89; 351 participants).  ", The quality of evidence regarding fluid therapy in children with acute bacterial meningitis is low to very low and more RCTs need to be conducted. There is insufficient evidence to guide practice as to whether maintenance fluids should be chosen over restricted fluids in the treatment of acute bacterial meningitis.   ,1,TRUE,FALSE,9,Severe neurological sequelae ‐ chronic (after the first 4 weeks),RR 0.42  (0.20 to 0.89),351 (1 study),"⊕⊝⊝⊝very low3,4",RR,351,1,0.20,0.89,RR 0.42,Initializing
+https://doi.org/10.1002/14651858.CD004786.pub5,04 November 2016,Intervention,Cochrane Acute Respiratory Infections Group,"Keywords
+
+
+Medical Subject Headings (MeSH) Keywords
+
+Acute Disease;
+Developing Countries;
+Fluid Therapy [adverse effects, methods, *standards];
+Hyponatremia [etiology];
+Meningitis, Bacterial [complications, *therapy];
+Randomized Controlled Trials as Topic;
+
+
+
+Medical Subject Headings Check Words
+
+Child;
+Humans;
+Infant;
+
+
+
+",Fluid therapy for acute bacterial meningitis,"Ian K Maconochie, Soumyadeep Bhaumik",Review - Intervention,TRUE,NA,Maintenance fluids versus restricted fluids for acute bacterial meningitis,paediatric patients with acute bacterial meningitis  ,shospital inpatient department  ,restricted fluids," Acute bacterial meningitis remains a disease with high mortality and morbidity rates. However, with prompt and adequate antimicrobial and supportive treatment, the chances for survival have improved, especially among infants and children. Careful management of fluid and electrolyte balance is an important supportive therapy. Both over‐ and under‐hydration are associated with adverse outcomes. This is the latest update of a review first published in 2005 and updated in 2008 and 2014.  ", To evaluate treatment of acute bacterial meningitis with differing volumes of initial fluid administration (up to 72 hours after first presentation) and the effects on death and neurological sequelae.  ," For this 2016 update we searched the following databases up to March 2016: the Cochrane Acute Respiratory Infections Group's Specialised Register, CENTRAL, MEDLINE, CINAHL, Global Health, and Web of Science.  "," For this 2016 update we searched the following databases up to March 2016: the Cochrane Acute Respiratory Infections Group's Specialised Register, CENTRAL, MEDLINE, CINAHL, Global Health, and Web of Science.  Selection criteria Randomised controlled trials (RCTs) of differing volumes of fluid given in the initial management of bacterial meningitis were eligible for inclusion.  "," All four of the original review authors extracted data and assessed trials for quality in the first publication of this review (one author, ROW, has passed away since the original review; see Acknowledgements). The current authors combined data for meta‐analysis using risk ratios (RRs) for dichotomous data or mean difference (MD) for continuous data. We used a fixed‐effect statistical model. We assessed the overall quality of evidence using the GRADE approach.  "," We included three trials with a total of 420 children; there were no trials in adult populations. The largest of the three trials was conducted in settings with high mortality rates and was judged to have low risk of bias for all domains, except performance bias which was high risk. The other two smaller trials were not of high quality.The meta‐analysis found no significant difference between the maintenance‐fluid and restricted‐fluid groups in number of deaths (RR 0.82, 95% confidence interval (CI) 0.53 to 1.27; 407 participants; low quality of evidence) or acute severe neurological sequelae (RR 0.67, 95% CI 0.41 to 1.08; 407 participants; low quality of evidence). However, when neurological sequelae were defined further, there was a statistically significant difference in favour of the maintenance‐fluid group for spasticity (RR 0.50, 95% CI 0.27 to 0.93; 357 participants); and seizures at both 72 hours (RR 0.59, 95% CI 0.42 to 0.83; 357 participants) and 14 days (RR 0.19, 95% CI 0.04 to 0.88; 357 participants). There was very low quality of evidence favouring maintenance fluid over restrictive fluid for chronic severe neurological sequelae at three months follow‐up (RR 0.42, 95% CI 0.20 to 0.89; 351 participants).  ", The quality of evidence regarding fluid therapy in children with acute bacterial meningitis is low to very low and more RCTs need to be conducted. There is insufficient evidence to guide practice as to whether maintenance fluids should be chosen over restricted fluids in the treatment of acute bacterial meningitis.   ,1,TRUE,FALSE,10,Severe neurological sequelae ‐ chronic (after the first 4 weeks),RR 0.42  (0.20 to 0.89),351 (1 study),51 per 1000  (24 to 108),RR,351,1,0.20,0.89,RR 0.42,Initializing
+https://doi.org/10.1002/14651858.CD004786.pub5,04 November 2016,Intervention,Cochrane Acute Respiratory Infections Group,"Keywords
+
+
+Medical Subject Headings (MeSH) Keywords
+
+Acute Disease;
+Developing Countries;
+Fluid Therapy [adverse effects, methods, *standards];
+Hyponatremia [etiology];
+Meningitis, Bacterial [complications, *therapy];
+Randomized Controlled Trials as Topic;
+
+
+
+Medical Subject Headings Check Words
+
+Child;
+Humans;
+Infant;
+
+
+
+",Fluid therapy for acute bacterial meningitis,"Ian K Maconochie, Soumyadeep Bhaumik",Review - Intervention,TRUE,NA,Maintenance fluids versus restricted fluids for acute bacterial meningitis,paediatric patients with acute bacterial meningitis  ,shospital inpatient department  ,restricted fluids," Acute bacterial meningitis remains a disease with high mortality and morbidity rates. However, with prompt and adequate antimicrobial and supportive treatment, the chances for survival have improved, especially among infants and children. Careful management of fluid and electrolyte balance is an important supportive therapy. Both over‐ and under‐hydration are associated with adverse outcomes. This is the latest update of a review first published in 2005 and updated in 2008 and 2014.  ", To evaluate treatment of acute bacterial meningitis with differing volumes of initial fluid administration (up to 72 hours after first presentation) and the effects on death and neurological sequelae.  ," For this 2016 update we searched the following databases up to March 2016: the Cochrane Acute Respiratory Infections Group's Specialised Register, CENTRAL, MEDLINE, CINAHL, Global Health, and Web of Science.  "," For this 2016 update we searched the following databases up to March 2016: the Cochrane Acute Respiratory Infections Group's Specialised Register, CENTRAL, MEDLINE, CINAHL, Global Health, and Web of Science.  Selection criteria Randomised controlled trials (RCTs) of differing volumes of fluid given in the initial management of bacterial meningitis were eligible for inclusion.  "," All four of the original review authors extracted data and assessed trials for quality in the first publication of this review (one author, ROW, has passed away since the original review; see Acknowledgements). The current authors combined data for meta‐analysis using risk ratios (RRs) for dichotomous data or mean difference (MD) for continuous data. We used a fixed‐effect statistical model. We assessed the overall quality of evidence using the GRADE approach.  "," We included three trials with a total of 420 children; there were no trials in adult populations. The largest of the three trials was conducted in settings with high mortality rates and was judged to have low risk of bias for all domains, except performance bias which was high risk. The other two smaller trials were not of high quality.The meta‐analysis found no significant difference between the maintenance‐fluid and restricted‐fluid groups in number of deaths (RR 0.82, 95% confidence interval (CI) 0.53 to 1.27; 407 participants; low quality of evidence) or acute severe neurological sequelae (RR 0.67, 95% CI 0.41 to 1.08; 407 participants; low quality of evidence). However, when neurological sequelae were defined further, there was a statistically significant difference in favour of the maintenance‐fluid group for spasticity (RR 0.50, 95% CI 0.27 to 0.93; 357 participants); and seizures at both 72 hours (RR 0.59, 95% CI 0.42 to 0.83; 357 participants) and 14 days (RR 0.19, 95% CI 0.04 to 0.88; 357 participants). There was very low quality of evidence favouring maintenance fluid over restrictive fluid for chronic severe neurological sequelae at three months follow‐up (RR 0.42, 95% CI 0.20 to 0.89; 351 participants).  ", The quality of evidence regarding fluid therapy in children with acute bacterial meningitis is low to very low and more RCTs need to be conducted. There is insufficient evidence to guide practice as to whether maintenance fluids should be chosen over restricted fluids in the treatment of acute bacterial meningitis.   ,1,TRUE,FALSE,11,Severe neurological sequelae ‐ chronic (after the first 4 weeks),RR 0.42  (0.20 to 0.89),351 (1 study),Moderate risk population,RR,351,1,0.20,0.89,RR 0.42,Initializing
+https://doi.org/10.1002/14651858.CD004786.pub5,04 November 2016,Intervention,Cochrane Acute Respiratory Infections Group,"Keywords
+
+
+Medical Subject Headings (MeSH) Keywords
+
+Acute Disease;
+Developing Countries;
+Fluid Therapy [adverse effects, methods, *standards];
+Hyponatremia [etiology];
+Meningitis, Bacterial [complications, *therapy];
+Randomized Controlled Trials as Topic;
+
+
+
+Medical Subject Headings Check Words
+
+Child;
+Humans;
+Infant;
+
+
+
+",Fluid therapy for acute bacterial meningitis,"Ian K Maconochie, Soumyadeep Bhaumik",Review - Intervention,TRUE,NA,Maintenance fluids versus restricted fluids for acute bacterial meningitis,paediatric patients with acute bacterial meningitis  ,shospital inpatient department  ,restricted fluids," Acute bacterial meningitis remains a disease with high mortality and morbidity rates. However, with prompt and adequate antimicrobial and supportive treatment, the chances for survival have improved, especially among infants and children. Careful management of fluid and electrolyte balance is an important supportive therapy. Both over‐ and under‐hydration are associated with adverse outcomes. This is the latest update of a review first published in 2005 and updated in 2008 and 2014.  ", To evaluate treatment of acute bacterial meningitis with differing volumes of initial fluid administration (up to 72 hours after first presentation) and the effects on death and neurological sequelae.  ," For this 2016 update we searched the following databases up to March 2016: the Cochrane Acute Respiratory Infections Group's Specialised Register, CENTRAL, MEDLINE, CINAHL, Global Health, and Web of Science.  "," For this 2016 update we searched the following databases up to March 2016: the Cochrane Acute Respiratory Infections Group's Specialised Register, CENTRAL, MEDLINE, CINAHL, Global Health, and Web of Science.  Selection criteria Randomised controlled trials (RCTs) of differing volumes of fluid given in the initial management of bacterial meningitis were eligible for inclusion.  "," All four of the original review authors extracted data and assessed trials for quality in the first publication of this review (one author, ROW, has passed away since the original review; see Acknowledgements). The current authors combined data for meta‐analysis using risk ratios (RRs) for dichotomous data or mean difference (MD) for continuous data. We used a fixed‐effect statistical model. We assessed the overall quality of evidence using the GRADE approach.  "," We included three trials with a total of 420 children; there were no trials in adult populations. The largest of the three trials was conducted in settings with high mortality rates and was judged to have low risk of bias for all domains, except performance bias which was high risk. The other two smaller trials were not of high quality.The meta‐analysis found no significant difference between the maintenance‐fluid and restricted‐fluid groups in number of deaths (RR 0.82, 95% confidence interval (CI) 0.53 to 1.27; 407 participants; low quality of evidence) or acute severe neurological sequelae (RR 0.67, 95% CI 0.41 to 1.08; 407 participants; low quality of evidence). However, when neurological sequelae were defined further, there was a statistically significant difference in favour of the maintenance‐fluid group for spasticity (RR 0.50, 95% CI 0.27 to 0.93; 357 participants); and seizures at both 72 hours (RR 0.59, 95% CI 0.42 to 0.83; 357 participants) and 14 days (RR 0.19, 95% CI 0.04 to 0.88; 357 participants). There was very low quality of evidence favouring maintenance fluid over restrictive fluid for chronic severe neurological sequelae at three months follow‐up (RR 0.42, 95% CI 0.20 to 0.89; 351 participants).  ", The quality of evidence regarding fluid therapy in children with acute bacterial meningitis is low to very low and more RCTs need to be conducted. There is insufficient evidence to guide practice as to whether maintenance fluids should be chosen over restricted fluids in the treatment of acute bacterial meningitis.   ,1,TRUE,FALSE,12,Severe neurological sequelae ‐ chronic (after the first 4 weeks),RR 0.42  (0.20 to 0.89),351 (1 study),51 per 1000  (24 to 108),RR,351,1,0.20,0.89,RR 0.42,Initializing

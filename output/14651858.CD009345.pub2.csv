@@ -1,0 +1,253 @@
+doi,publication_date,review_type,review_group,review_mesh_keywords,title,authors,publish_type,is_most_recent_version,url_most_most_version,main_comparison_of_review,main_comparison_population,main_comparison_setting,main_comparison_comparsion_type,background,objectives,search_methods,selection_criteria,data_coll_analysis,main_results,conclusions,summaryTable_count,GRADE_somewhere_in_the_text,is_paywalled,id_measure,Outcomes,relative_effect_95CI,n_participants_studies,GRADE,Comments,effect_statistic,n_participants,n_studies,CI_lower,CI_upper,effect_size,warnings
+https://doi.org/10.1002/14651858.CD009345.pub2,29 November 2015,Intervention,Cochrane Acute Respiratory Infections Group,"Keywords
+
+
+Medical Subject Headings (MeSH) Keywords
+
+Common Cold [*drug therapy];
+Histamine Antagonists [*therapeutic use];
+Randomized Controlled Trials as Topic;
+Time Factors;
+
+
+
+Medical Subject Headings Check Words
+
+Adult;
+Child;
+Humans;
+
+
+
+",Antihistamines for the common cold,"An IM De Sutter, Avadhesh Saraswat, Mieke L van Driel",Review - Intervention,TRUE,NA,Antihistamines compared to placebo for the common cold,patients with the common cold,sambulatory care,placebo," The common cold is an upper respiratory tract infection, most commonly caused by a rhinovirus. It affects people of all age groups and although in most cases it is self limiting, the common cold still causes significant morbidity. Antihistamines are commonly offered over the counter to relieve symptoms for patients affected by the common cold, however there is not much evidence of their efficacy.  ", To assess the effects of antihistamines on the common cold. ," We searched CENTRAL (2015, Issue 6), MEDLINE (1948 to July week 4, 2015), EMBASE (2010 to August 2015), CINAHL (1981 to August 2015), LILACS (1982 to August 2015) and Biosis Previews (1985 to August 2015).  "," We searched CENTRAL (2015, Issue 6), MEDLINE (1948 to July week 4, 2015), EMBASE (2010 to August 2015), CINAHL (1981 to August 2015), LILACS (1982 to August 2015) and Biosis Previews (1985 to August 2015).  Selection criteria We selected randomised controlled trials (RCTs) using antihistamines as monotherapy for the common cold. We excluded any studies with combination therapy or using antihistamines in patients with an allergic component in their illness.  ", Two authors independently assessed trial quality and extracted data. We collected adverse effects information from the included trials.  ," We included 18 RCTs, which were reported in 17 publications (one publication reports on two trials) with 4342 participants (of which 212 were children) suffering from the common cold, both naturally occurring and experimentally induced. The interventions consisted of an antihistamine as monotherapy compared with placebo. In adults there was a short‐term beneficial effect of antihistamines on severity of overall symptoms: on day one or two of treatment 45% had a beneficial effect with antihistamines versus 38% with placebo (odds ratio (OR) 0.74, 95% confidence interval (CI) 0.60 to 0.92). However, there was no difference between antihistamines and placebo in the mid term (three to four days) to long term (six to 10 days). When evaluating individual symptoms such as nasal congestion, rhinorrhoea and sneezing, there was some beneficial effect of the sedating antihistamines compared to placebo (e.g. rhinorrhoea on day three: mean difference (MD) ‐0.23, 95% CI ‐0.39 to ‐0.06 on a four‐ or five‐point severity scale; sneezing on day three: MD ‐0.35, 95% CI ‐0.49 to ‐0.20 on a four‐point severity scale), but this effect is clinically non‐significant. Adverse events such as sedation were more commonly reported with sedating antihistamines although the differences were not statistically significant. Only two trials included children and the results were conflicting. The majority of the trials had a low risk of bias although some lacked sufficient trial quality information.  "," Antihistamines have a limited short‐term (days one and two of treatment) beneficial effect on severity of overall symptoms but not in the mid to long term. There is no clinically significant effect on nasal obstruction, rhinorrhoea or sneezing. Although side effects are more common with sedating antihistamines, the difference is not statistically significant. There is no evidence of effectiveness of antihistamines in children.   ",2,TRUE,FALSE,1,Change in severity of overall symptoms: short‐term  Subjective severity score Follow‐up: 1 to 2 days,OR 0.74  (0.60 to 0.92),1490 (3 studies),⊕⊕⊕⊝moderate1,—,OR,1490,3,0.60,0.92,OR 0.74,Initializing
+https://doi.org/10.1002/14651858.CD009345.pub2,29 November 2015,Intervention,Cochrane Acute Respiratory Infections Group,"Keywords
+
+
+Medical Subject Headings (MeSH) Keywords
+
+Common Cold [*drug therapy];
+Histamine Antagonists [*therapeutic use];
+Randomized Controlled Trials as Topic;
+Time Factors;
+
+
+
+Medical Subject Headings Check Words
+
+Adult;
+Child;
+Humans;
+
+
+
+",Antihistamines for the common cold,"An IM De Sutter, Avadhesh Saraswat, Mieke L van Driel",Review - Intervention,TRUE,NA,Antihistamines compared to placebo for the common cold,patients with the common cold,sambulatory care,placebo," The common cold is an upper respiratory tract infection, most commonly caused by a rhinovirus. It affects people of all age groups and although in most cases it is self limiting, the common cold still causes significant morbidity. Antihistamines are commonly offered over the counter to relieve symptoms for patients affected by the common cold, however there is not much evidence of their efficacy.  ", To assess the effects of antihistamines on the common cold. ," We searched CENTRAL (2015, Issue 6), MEDLINE (1948 to July week 4, 2015), EMBASE (2010 to August 2015), CINAHL (1981 to August 2015), LILACS (1982 to August 2015) and Biosis Previews (1985 to August 2015).  "," We searched CENTRAL (2015, Issue 6), MEDLINE (1948 to July week 4, 2015), EMBASE (2010 to August 2015), CINAHL (1981 to August 2015), LILACS (1982 to August 2015) and Biosis Previews (1985 to August 2015).  Selection criteria We selected randomised controlled trials (RCTs) using antihistamines as monotherapy for the common cold. We excluded any studies with combination therapy or using antihistamines in patients with an allergic component in their illness.  ", Two authors independently assessed trial quality and extracted data. We collected adverse effects information from the included trials.  ," We included 18 RCTs, which were reported in 17 publications (one publication reports on two trials) with 4342 participants (of which 212 were children) suffering from the common cold, both naturally occurring and experimentally induced. The interventions consisted of an antihistamine as monotherapy compared with placebo. In adults there was a short‐term beneficial effect of antihistamines on severity of overall symptoms: on day one or two of treatment 45% had a beneficial effect with antihistamines versus 38% with placebo (odds ratio (OR) 0.74, 95% confidence interval (CI) 0.60 to 0.92). However, there was no difference between antihistamines and placebo in the mid term (three to four days) to long term (six to 10 days). When evaluating individual symptoms such as nasal congestion, rhinorrhoea and sneezing, there was some beneficial effect of the sedating antihistamines compared to placebo (e.g. rhinorrhoea on day three: mean difference (MD) ‐0.23, 95% CI ‐0.39 to ‐0.06 on a four‐ or five‐point severity scale; sneezing on day three: MD ‐0.35, 95% CI ‐0.49 to ‐0.20 on a four‐point severity scale), but this effect is clinically non‐significant. Adverse events such as sedation were more commonly reported with sedating antihistamines although the differences were not statistically significant. Only two trials included children and the results were conflicting. The majority of the trials had a low risk of bias although some lacked sufficient trial quality information.  "," Antihistamines have a limited short‐term (days one and two of treatment) beneficial effect on severity of overall symptoms but not in the mid to long term. There is no clinically significant effect on nasal obstruction, rhinorrhoea or sneezing. Although side effects are more common with sedating antihistamines, the difference is not statistically significant. There is no evidence of effectiveness of antihistamines in children.   ",2,TRUE,FALSE,2,Change in severity of overall symptoms: short‐term  Subjective severity score Follow‐up: 1 to 2 days,OR 0.74  (0.60 to 0.92),1490 (3 studies),⊕⊕⊕⊝moderate1,550 per 1000  (498 to 603),OR,1490,3,0.60,0.92,OR 0.74,Initializing
+https://doi.org/10.1002/14651858.CD009345.pub2,29 November 2015,Intervention,Cochrane Acute Respiratory Infections Group,"Keywords
+
+
+Medical Subject Headings (MeSH) Keywords
+
+Common Cold [*drug therapy];
+Histamine Antagonists [*therapeutic use];
+Randomized Controlled Trials as Topic;
+Time Factors;
+
+
+
+Medical Subject Headings Check Words
+
+Adult;
+Child;
+Humans;
+
+
+
+",Antihistamines for the common cold,"An IM De Sutter, Avadhesh Saraswat, Mieke L van Driel",Review - Intervention,TRUE,NA,Antihistamines compared to placebo for the common cold,patients with the common cold,sambulatory care,placebo," The common cold is an upper respiratory tract infection, most commonly caused by a rhinovirus. It affects people of all age groups and although in most cases it is self limiting, the common cold still causes significant morbidity. Antihistamines are commonly offered over the counter to relieve symptoms for patients affected by the common cold, however there is not much evidence of their efficacy.  ", To assess the effects of antihistamines on the common cold. ," We searched CENTRAL (2015, Issue 6), MEDLINE (1948 to July week 4, 2015), EMBASE (2010 to August 2015), CINAHL (1981 to August 2015), LILACS (1982 to August 2015) and Biosis Previews (1985 to August 2015).  "," We searched CENTRAL (2015, Issue 6), MEDLINE (1948 to July week 4, 2015), EMBASE (2010 to August 2015), CINAHL (1981 to August 2015), LILACS (1982 to August 2015) and Biosis Previews (1985 to August 2015).  Selection criteria We selected randomised controlled trials (RCTs) using antihistamines as monotherapy for the common cold. We excluded any studies with combination therapy or using antihistamines in patients with an allergic component in their illness.  ", Two authors independently assessed trial quality and extracted data. We collected adverse effects information from the included trials.  ," We included 18 RCTs, which were reported in 17 publications (one publication reports on two trials) with 4342 participants (of which 212 were children) suffering from the common cold, both naturally occurring and experimentally induced. The interventions consisted of an antihistamine as monotherapy compared with placebo. In adults there was a short‐term beneficial effect of antihistamines on severity of overall symptoms: on day one or two of treatment 45% had a beneficial effect with antihistamines versus 38% with placebo (odds ratio (OR) 0.74, 95% confidence interval (CI) 0.60 to 0.92). However, there was no difference between antihistamines and placebo in the mid term (three to four days) to long term (six to 10 days). When evaluating individual symptoms such as nasal congestion, rhinorrhoea and sneezing, there was some beneficial effect of the sedating antihistamines compared to placebo (e.g. rhinorrhoea on day three: mean difference (MD) ‐0.23, 95% CI ‐0.39 to ‐0.06 on a four‐ or five‐point severity scale; sneezing on day three: MD ‐0.35, 95% CI ‐0.49 to ‐0.20 on a four‐point severity scale), but this effect is clinically non‐significant. Adverse events such as sedation were more commonly reported with sedating antihistamines although the differences were not statistically significant. Only two trials included children and the results were conflicting. The majority of the trials had a low risk of bias although some lacked sufficient trial quality information.  "," Antihistamines have a limited short‐term (days one and two of treatment) beneficial effect on severity of overall symptoms but not in the mid to long term. There is no clinically significant effect on nasal obstruction, rhinorrhoea or sneezing. Although side effects are more common with sedating antihistamines, the difference is not statistically significant. There is no evidence of effectiveness of antihistamines in children.   ",2,TRUE,FALSE,3,Change in severity of overall symptoms: short‐term  Subjective severity score Follow‐up: 1 to 2 days,OR 0.74  (0.60 to 0.92),1490 (3 studies),⊕⊕⊕⊝moderate1,Moderate,OR,1490,3,0.60,0.92,OR 0.74,Initializing
+https://doi.org/10.1002/14651858.CD009345.pub2,29 November 2015,Intervention,Cochrane Acute Respiratory Infections Group,"Keywords
+
+
+Medical Subject Headings (MeSH) Keywords
+
+Common Cold [*drug therapy];
+Histamine Antagonists [*therapeutic use];
+Randomized Controlled Trials as Topic;
+Time Factors;
+
+
+
+Medical Subject Headings Check Words
+
+Adult;
+Child;
+Humans;
+
+
+
+",Antihistamines for the common cold,"An IM De Sutter, Avadhesh Saraswat, Mieke L van Driel",Review - Intervention,TRUE,NA,Antihistamines compared to placebo for the common cold,patients with the common cold,sambulatory care,placebo," The common cold is an upper respiratory tract infection, most commonly caused by a rhinovirus. It affects people of all age groups and although in most cases it is self limiting, the common cold still causes significant morbidity. Antihistamines are commonly offered over the counter to relieve symptoms for patients affected by the common cold, however there is not much evidence of their efficacy.  ", To assess the effects of antihistamines on the common cold. ," We searched CENTRAL (2015, Issue 6), MEDLINE (1948 to July week 4, 2015), EMBASE (2010 to August 2015), CINAHL (1981 to August 2015), LILACS (1982 to August 2015) and Biosis Previews (1985 to August 2015).  "," We searched CENTRAL (2015, Issue 6), MEDLINE (1948 to July week 4, 2015), EMBASE (2010 to August 2015), CINAHL (1981 to August 2015), LILACS (1982 to August 2015) and Biosis Previews (1985 to August 2015).  Selection criteria We selected randomised controlled trials (RCTs) using antihistamines as monotherapy for the common cold. We excluded any studies with combination therapy or using antihistamines in patients with an allergic component in their illness.  ", Two authors independently assessed trial quality and extracted data. We collected adverse effects information from the included trials.  ," We included 18 RCTs, which were reported in 17 publications (one publication reports on two trials) with 4342 participants (of which 212 were children) suffering from the common cold, both naturally occurring and experimentally induced. The interventions consisted of an antihistamine as monotherapy compared with placebo. In adults there was a short‐term beneficial effect of antihistamines on severity of overall symptoms: on day one or two of treatment 45% had a beneficial effect with antihistamines versus 38% with placebo (odds ratio (OR) 0.74, 95% confidence interval (CI) 0.60 to 0.92). However, there was no difference between antihistamines and placebo in the mid term (three to four days) to long term (six to 10 days). When evaluating individual symptoms such as nasal congestion, rhinorrhoea and sneezing, there was some beneficial effect of the sedating antihistamines compared to placebo (e.g. rhinorrhoea on day three: mean difference (MD) ‐0.23, 95% CI ‐0.39 to ‐0.06 on a four‐ or five‐point severity scale; sneezing on day three: MD ‐0.35, 95% CI ‐0.49 to ‐0.20 on a four‐point severity scale), but this effect is clinically non‐significant. Adverse events such as sedation were more commonly reported with sedating antihistamines although the differences were not statistically significant. Only two trials included children and the results were conflicting. The majority of the trials had a low risk of bias although some lacked sufficient trial quality information.  "," Antihistamines have a limited short‐term (days one and two of treatment) beneficial effect on severity of overall symptoms but not in the mid to long term. There is no clinically significant effect on nasal obstruction, rhinorrhoea or sneezing. Although side effects are more common with sedating antihistamines, the difference is not statistically significant. There is no evidence of effectiveness of antihistamines in children.   ",2,TRUE,FALSE,4,Change in severity of overall symptoms: short‐term  Subjective severity score Follow‐up: 1 to 2 days,OR 0.74  (0.60 to 0.92),1490 (3 studies),⊕⊕⊕⊝moderate1,526 per 1000  (474 to 580),OR,1490,3,0.60,0.92,OR 0.74,Initializing
+https://doi.org/10.1002/14651858.CD009345.pub2,29 November 2015,Intervention,Cochrane Acute Respiratory Infections Group,"Keywords
+
+
+Medical Subject Headings (MeSH) Keywords
+
+Common Cold [*drug therapy];
+Histamine Antagonists [*therapeutic use];
+Randomized Controlled Trials as Topic;
+Time Factors;
+
+
+
+Medical Subject Headings Check Words
+
+Adult;
+Child;
+Humans;
+
+
+
+",Antihistamines for the common cold,"An IM De Sutter, Avadhesh Saraswat, Mieke L van Driel",Review - Intervention,TRUE,NA,Antihistamines compared to placebo for the common cold,patients with the common cold,sambulatory care,placebo," The common cold is an upper respiratory tract infection, most commonly caused by a rhinovirus. It affects people of all age groups and although in most cases it is self limiting, the common cold still causes significant morbidity. Antihistamines are commonly offered over the counter to relieve symptoms for patients affected by the common cold, however there is not much evidence of their efficacy.  ", To assess the effects of antihistamines on the common cold. ," We searched CENTRAL (2015, Issue 6), MEDLINE (1948 to July week 4, 2015), EMBASE (2010 to August 2015), CINAHL (1981 to August 2015), LILACS (1982 to August 2015) and Biosis Previews (1985 to August 2015).  "," We searched CENTRAL (2015, Issue 6), MEDLINE (1948 to July week 4, 2015), EMBASE (2010 to August 2015), CINAHL (1981 to August 2015), LILACS (1982 to August 2015) and Biosis Previews (1985 to August 2015).  Selection criteria We selected randomised controlled trials (RCTs) using antihistamines as monotherapy for the common cold. We excluded any studies with combination therapy or using antihistamines in patients with an allergic component in their illness.  ", Two authors independently assessed trial quality and extracted data. We collected adverse effects information from the included trials.  ," We included 18 RCTs, which were reported in 17 publications (one publication reports on two trials) with 4342 participants (of which 212 were children) suffering from the common cold, both naturally occurring and experimentally induced. The interventions consisted of an antihistamine as monotherapy compared with placebo. In adults there was a short‐term beneficial effect of antihistamines on severity of overall symptoms: on day one or two of treatment 45% had a beneficial effect with antihistamines versus 38% with placebo (odds ratio (OR) 0.74, 95% confidence interval (CI) 0.60 to 0.92). However, there was no difference between antihistamines and placebo in the mid term (three to four days) to long term (six to 10 days). When evaluating individual symptoms such as nasal congestion, rhinorrhoea and sneezing, there was some beneficial effect of the sedating antihistamines compared to placebo (e.g. rhinorrhoea on day three: mean difference (MD) ‐0.23, 95% CI ‐0.39 to ‐0.06 on a four‐ or five‐point severity scale; sneezing on day three: MD ‐0.35, 95% CI ‐0.49 to ‐0.20 on a four‐point severity scale), but this effect is clinically non‐significant. Adverse events such as sedation were more commonly reported with sedating antihistamines although the differences were not statistically significant. Only two trials included children and the results were conflicting. The majority of the trials had a low risk of bias although some lacked sufficient trial quality information.  "," Antihistamines have a limited short‐term (days one and two of treatment) beneficial effect on severity of overall symptoms but not in the mid to long term. There is no clinically significant effect on nasal obstruction, rhinorrhoea or sneezing. Although side effects are more common with sedating antihistamines, the difference is not statistically significant. There is no evidence of effectiveness of antihistamines in children.   ",2,TRUE,FALSE,5,Change in severity of overall symptoms: intermediate‐term (3 to 4 days)  Subjective severity score Follow‐up: 3 to 4 days,OR 1.19  (0.67 to 2.11),234 (1 study),⊕⊕⊕⊕high,—,OR,234,1,0.67,2.11,OR 1.19,Initializing
+https://doi.org/10.1002/14651858.CD009345.pub2,29 November 2015,Intervention,Cochrane Acute Respiratory Infections Group,"Keywords
+
+
+Medical Subject Headings (MeSH) Keywords
+
+Common Cold [*drug therapy];
+Histamine Antagonists [*therapeutic use];
+Randomized Controlled Trials as Topic;
+Time Factors;
+
+
+
+Medical Subject Headings Check Words
+
+Adult;
+Child;
+Humans;
+
+
+
+",Antihistamines for the common cold,"An IM De Sutter, Avadhesh Saraswat, Mieke L van Driel",Review - Intervention,TRUE,NA,Antihistamines compared to placebo for the common cold,patients with the common cold,sambulatory care,placebo," The common cold is an upper respiratory tract infection, most commonly caused by a rhinovirus. It affects people of all age groups and although in most cases it is self limiting, the common cold still causes significant morbidity. Antihistamines are commonly offered over the counter to relieve symptoms for patients affected by the common cold, however there is not much evidence of their efficacy.  ", To assess the effects of antihistamines on the common cold. ," We searched CENTRAL (2015, Issue 6), MEDLINE (1948 to July week 4, 2015), EMBASE (2010 to August 2015), CINAHL (1981 to August 2015), LILACS (1982 to August 2015) and Biosis Previews (1985 to August 2015).  "," We searched CENTRAL (2015, Issue 6), MEDLINE (1948 to July week 4, 2015), EMBASE (2010 to August 2015), CINAHL (1981 to August 2015), LILACS (1982 to August 2015) and Biosis Previews (1985 to August 2015).  Selection criteria We selected randomised controlled trials (RCTs) using antihistamines as monotherapy for the common cold. We excluded any studies with combination therapy or using antihistamines in patients with an allergic component in their illness.  ", Two authors independently assessed trial quality and extracted data. We collected adverse effects information from the included trials.  ," We included 18 RCTs, which were reported in 17 publications (one publication reports on two trials) with 4342 participants (of which 212 were children) suffering from the common cold, both naturally occurring and experimentally induced. The interventions consisted of an antihistamine as monotherapy compared with placebo. In adults there was a short‐term beneficial effect of antihistamines on severity of overall symptoms: on day one or two of treatment 45% had a beneficial effect with antihistamines versus 38% with placebo (odds ratio (OR) 0.74, 95% confidence interval (CI) 0.60 to 0.92). However, there was no difference between antihistamines and placebo in the mid term (three to four days) to long term (six to 10 days). When evaluating individual symptoms such as nasal congestion, rhinorrhoea and sneezing, there was some beneficial effect of the sedating antihistamines compared to placebo (e.g. rhinorrhoea on day three: mean difference (MD) ‐0.23, 95% CI ‐0.39 to ‐0.06 on a four‐ or five‐point severity scale; sneezing on day three: MD ‐0.35, 95% CI ‐0.49 to ‐0.20 on a four‐point severity scale), but this effect is clinically non‐significant. Adverse events such as sedation were more commonly reported with sedating antihistamines although the differences were not statistically significant. Only two trials included children and the results were conflicting. The majority of the trials had a low risk of bias although some lacked sufficient trial quality information.  "," Antihistamines have a limited short‐term (days one and two of treatment) beneficial effect on severity of overall symptoms but not in the mid to long term. There is no clinically significant effect on nasal obstruction, rhinorrhoea or sneezing. Although side effects are more common with sedating antihistamines, the difference is not statistically significant. There is no evidence of effectiveness of antihistamines in children.   ",2,TRUE,FALSE,6,Change in severity of overall symptoms: intermediate‐term (3 to 4 days)  Subjective severity score Follow‐up: 3 to 4 days,OR 1.19  (0.67 to 2.11),234 (1 study),⊕⊕⊕⊕high,739 per 1000  (615 to 834),OR,234,1,0.67,2.11,OR 1.19,Initializing
+https://doi.org/10.1002/14651858.CD009345.pub2,29 November 2015,Intervention,Cochrane Acute Respiratory Infections Group,"Keywords
+
+
+Medical Subject Headings (MeSH) Keywords
+
+Common Cold [*drug therapy];
+Histamine Antagonists [*therapeutic use];
+Randomized Controlled Trials as Topic;
+Time Factors;
+
+
+
+Medical Subject Headings Check Words
+
+Adult;
+Child;
+Humans;
+
+
+
+",Antihistamines for the common cold,"An IM De Sutter, Avadhesh Saraswat, Mieke L van Driel",Review - Intervention,TRUE,NA,Antihistamines compared to placebo for the common cold,patients with the common cold,sambulatory care,placebo," The common cold is an upper respiratory tract infection, most commonly caused by a rhinovirus. It affects people of all age groups and although in most cases it is self limiting, the common cold still causes significant morbidity. Antihistamines are commonly offered over the counter to relieve symptoms for patients affected by the common cold, however there is not much evidence of their efficacy.  ", To assess the effects of antihistamines on the common cold. ," We searched CENTRAL (2015, Issue 6), MEDLINE (1948 to July week 4, 2015), EMBASE (2010 to August 2015), CINAHL (1981 to August 2015), LILACS (1982 to August 2015) and Biosis Previews (1985 to August 2015).  "," We searched CENTRAL (2015, Issue 6), MEDLINE (1948 to July week 4, 2015), EMBASE (2010 to August 2015), CINAHL (1981 to August 2015), LILACS (1982 to August 2015) and Biosis Previews (1985 to August 2015).  Selection criteria We selected randomised controlled trials (RCTs) using antihistamines as monotherapy for the common cold. We excluded any studies with combination therapy or using antihistamines in patients with an allergic component in their illness.  ", Two authors independently assessed trial quality and extracted data. We collected adverse effects information from the included trials.  ," We included 18 RCTs, which were reported in 17 publications (one publication reports on two trials) with 4342 participants (of which 212 were children) suffering from the common cold, both naturally occurring and experimentally induced. The interventions consisted of an antihistamine as monotherapy compared with placebo. In adults there was a short‐term beneficial effect of antihistamines on severity of overall symptoms: on day one or two of treatment 45% had a beneficial effect with antihistamines versus 38% with placebo (odds ratio (OR) 0.74, 95% confidence interval (CI) 0.60 to 0.92). However, there was no difference between antihistamines and placebo in the mid term (three to four days) to long term (six to 10 days). When evaluating individual symptoms such as nasal congestion, rhinorrhoea and sneezing, there was some beneficial effect of the sedating antihistamines compared to placebo (e.g. rhinorrhoea on day three: mean difference (MD) ‐0.23, 95% CI ‐0.39 to ‐0.06 on a four‐ or five‐point severity scale; sneezing on day three: MD ‐0.35, 95% CI ‐0.49 to ‐0.20 on a four‐point severity scale), but this effect is clinically non‐significant. Adverse events such as sedation were more commonly reported with sedating antihistamines although the differences were not statistically significant. Only two trials included children and the results were conflicting. The majority of the trials had a low risk of bias although some lacked sufficient trial quality information.  "," Antihistamines have a limited short‐term (days one and two of treatment) beneficial effect on severity of overall symptoms but not in the mid to long term. There is no clinically significant effect on nasal obstruction, rhinorrhoea or sneezing. Although side effects are more common with sedating antihistamines, the difference is not statistically significant. There is no evidence of effectiveness of antihistamines in children.   ",2,TRUE,FALSE,7,Change in severity of overall symptoms: intermediate‐term (3 to 4 days)  Subjective severity score Follow‐up: 3 to 4 days,OR 1.19  (0.67 to 2.11),234 (1 study),⊕⊕⊕⊕high,Moderate,OR,234,1,0.67,2.11,OR 1.19,Initializing
+https://doi.org/10.1002/14651858.CD009345.pub2,29 November 2015,Intervention,Cochrane Acute Respiratory Infections Group,"Keywords
+
+
+Medical Subject Headings (MeSH) Keywords
+
+Common Cold [*drug therapy];
+Histamine Antagonists [*therapeutic use];
+Randomized Controlled Trials as Topic;
+Time Factors;
+
+
+
+Medical Subject Headings Check Words
+
+Adult;
+Child;
+Humans;
+
+
+
+",Antihistamines for the common cold,"An IM De Sutter, Avadhesh Saraswat, Mieke L van Driel",Review - Intervention,TRUE,NA,Antihistamines compared to placebo for the common cold,patients with the common cold,sambulatory care,placebo," The common cold is an upper respiratory tract infection, most commonly caused by a rhinovirus. It affects people of all age groups and although in most cases it is self limiting, the common cold still causes significant morbidity. Antihistamines are commonly offered over the counter to relieve symptoms for patients affected by the common cold, however there is not much evidence of their efficacy.  ", To assess the effects of antihistamines on the common cold. ," We searched CENTRAL (2015, Issue 6), MEDLINE (1948 to July week 4, 2015), EMBASE (2010 to August 2015), CINAHL (1981 to August 2015), LILACS (1982 to August 2015) and Biosis Previews (1985 to August 2015).  "," We searched CENTRAL (2015, Issue 6), MEDLINE (1948 to July week 4, 2015), EMBASE (2010 to August 2015), CINAHL (1981 to August 2015), LILACS (1982 to August 2015) and Biosis Previews (1985 to August 2015).  Selection criteria We selected randomised controlled trials (RCTs) using antihistamines as monotherapy for the common cold. We excluded any studies with combination therapy or using antihistamines in patients with an allergic component in their illness.  ", Two authors independently assessed trial quality and extracted data. We collected adverse effects information from the included trials.  ," We included 18 RCTs, which were reported in 17 publications (one publication reports on two trials) with 4342 participants (of which 212 were children) suffering from the common cold, both naturally occurring and experimentally induced. The interventions consisted of an antihistamine as monotherapy compared with placebo. In adults there was a short‐term beneficial effect of antihistamines on severity of overall symptoms: on day one or two of treatment 45% had a beneficial effect with antihistamines versus 38% with placebo (odds ratio (OR) 0.74, 95% confidence interval (CI) 0.60 to 0.92). However, there was no difference between antihistamines and placebo in the mid term (three to four days) to long term (six to 10 days). When evaluating individual symptoms such as nasal congestion, rhinorrhoea and sneezing, there was some beneficial effect of the sedating antihistamines compared to placebo (e.g. rhinorrhoea on day three: mean difference (MD) ‐0.23, 95% CI ‐0.39 to ‐0.06 on a four‐ or five‐point severity scale; sneezing on day three: MD ‐0.35, 95% CI ‐0.49 to ‐0.20 on a four‐point severity scale), but this effect is clinically non‐significant. Adverse events such as sedation were more commonly reported with sedating antihistamines although the differences were not statistically significant. Only two trials included children and the results were conflicting. The majority of the trials had a low risk of bias although some lacked sufficient trial quality information.  "," Antihistamines have a limited short‐term (days one and two of treatment) beneficial effect on severity of overall symptoms but not in the mid to long term. There is no clinically significant effect on nasal obstruction, rhinorrhoea or sneezing. Although side effects are more common with sedating antihistamines, the difference is not statistically significant. There is no evidence of effectiveness of antihistamines in children.   ",2,TRUE,FALSE,8,Change in severity of overall symptoms: intermediate‐term (3 to 4 days)  Subjective severity score Follow‐up: 3 to 4 days,OR 1.19  (0.67 to 2.11),234 (1 study),⊕⊕⊕⊕high,739 per 1000  (614 to 834),OR,234,1,0.67,2.11,OR 1.19,Initializing
+https://doi.org/10.1002/14651858.CD009345.pub2,29 November 2015,Intervention,Cochrane Acute Respiratory Infections Group,"Keywords
+
+
+Medical Subject Headings (MeSH) Keywords
+
+Common Cold [*drug therapy];
+Histamine Antagonists [*therapeutic use];
+Randomized Controlled Trials as Topic;
+Time Factors;
+
+
+
+Medical Subject Headings Check Words
+
+Adult;
+Child;
+Humans;
+
+
+
+",Antihistamines for the common cold,"An IM De Sutter, Avadhesh Saraswat, Mieke L van Driel",Review - Intervention,TRUE,NA,Antihistamines compared to placebo for the common cold,patients with the common cold,sambulatory care,placebo," The common cold is an upper respiratory tract infection, most commonly caused by a rhinovirus. It affects people of all age groups and although in most cases it is self limiting, the common cold still causes significant morbidity. Antihistamines are commonly offered over the counter to relieve symptoms for patients affected by the common cold, however there is not much evidence of their efficacy.  ", To assess the effects of antihistamines on the common cold. ," We searched CENTRAL (2015, Issue 6), MEDLINE (1948 to July week 4, 2015), EMBASE (2010 to August 2015), CINAHL (1981 to August 2015), LILACS (1982 to August 2015) and Biosis Previews (1985 to August 2015).  "," We searched CENTRAL (2015, Issue 6), MEDLINE (1948 to July week 4, 2015), EMBASE (2010 to August 2015), CINAHL (1981 to August 2015), LILACS (1982 to August 2015) and Biosis Previews (1985 to August 2015).  Selection criteria We selected randomised controlled trials (RCTs) using antihistamines as monotherapy for the common cold. We excluded any studies with combination therapy or using antihistamines in patients with an allergic component in their illness.  ", Two authors independently assessed trial quality and extracted data. We collected adverse effects information from the included trials.  ," We included 18 RCTs, which were reported in 17 publications (one publication reports on two trials) with 4342 participants (of which 212 were children) suffering from the common cold, both naturally occurring and experimentally induced. The interventions consisted of an antihistamine as monotherapy compared with placebo. In adults there was a short‐term beneficial effect of antihistamines on severity of overall symptoms: on day one or two of treatment 45% had a beneficial effect with antihistamines versus 38% with placebo (odds ratio (OR) 0.74, 95% confidence interval (CI) 0.60 to 0.92). However, there was no difference between antihistamines and placebo in the mid term (three to four days) to long term (six to 10 days). When evaluating individual symptoms such as nasal congestion, rhinorrhoea and sneezing, there was some beneficial effect of the sedating antihistamines compared to placebo (e.g. rhinorrhoea on day three: mean difference (MD) ‐0.23, 95% CI ‐0.39 to ‐0.06 on a four‐ or five‐point severity scale; sneezing on day three: MD ‐0.35, 95% CI ‐0.49 to ‐0.20 on a four‐point severity scale), but this effect is clinically non‐significant. Adverse events such as sedation were more commonly reported with sedating antihistamines although the differences were not statistically significant. Only two trials included children and the results were conflicting. The majority of the trials had a low risk of bias although some lacked sufficient trial quality information.  "," Antihistamines have a limited short‐term (days one and two of treatment) beneficial effect on severity of overall symptoms but not in the mid to long term. There is no clinically significant effect on nasal obstruction, rhinorrhoea or sneezing. Although side effects are more common with sedating antihistamines, the difference is not statistically significant. There is no evidence of effectiveness of antihistamines in children.   ",2,TRUE,FALSE,9,Change in severity of overall symptoms: long‐term (6 to 10 days)  Subjective severity score Follow‐up: 6 to 10 days,OR 0.71  (0.41 to 1.22),1551 (3 studies),⊕⊕⊕⊕high,—,OR,1551,3,0.41,1.22,OR 0.71,Initializing
+https://doi.org/10.1002/14651858.CD009345.pub2,29 November 2015,Intervention,Cochrane Acute Respiratory Infections Group,"Keywords
+
+
+Medical Subject Headings (MeSH) Keywords
+
+Common Cold [*drug therapy];
+Histamine Antagonists [*therapeutic use];
+Randomized Controlled Trials as Topic;
+Time Factors;
+
+
+
+Medical Subject Headings Check Words
+
+Adult;
+Child;
+Humans;
+
+
+
+",Antihistamines for the common cold,"An IM De Sutter, Avadhesh Saraswat, Mieke L van Driel",Review - Intervention,TRUE,NA,Antihistamines compared to placebo for the common cold,patients with the common cold,sambulatory care,placebo," The common cold is an upper respiratory tract infection, most commonly caused by a rhinovirus. It affects people of all age groups and although in most cases it is self limiting, the common cold still causes significant morbidity. Antihistamines are commonly offered over the counter to relieve symptoms for patients affected by the common cold, however there is not much evidence of their efficacy.  ", To assess the effects of antihistamines on the common cold. ," We searched CENTRAL (2015, Issue 6), MEDLINE (1948 to July week 4, 2015), EMBASE (2010 to August 2015), CINAHL (1981 to August 2015), LILACS (1982 to August 2015) and Biosis Previews (1985 to August 2015).  "," We searched CENTRAL (2015, Issue 6), MEDLINE (1948 to July week 4, 2015), EMBASE (2010 to August 2015), CINAHL (1981 to August 2015), LILACS (1982 to August 2015) and Biosis Previews (1985 to August 2015).  Selection criteria We selected randomised controlled trials (RCTs) using antihistamines as monotherapy for the common cold. We excluded any studies with combination therapy or using antihistamines in patients with an allergic component in their illness.  ", Two authors independently assessed trial quality and extracted data. We collected adverse effects information from the included trials.  ," We included 18 RCTs, which were reported in 17 publications (one publication reports on two trials) with 4342 participants (of which 212 were children) suffering from the common cold, both naturally occurring and experimentally induced. The interventions consisted of an antihistamine as monotherapy compared with placebo. In adults there was a short‐term beneficial effect of antihistamines on severity of overall symptoms: on day one or two of treatment 45% had a beneficial effect with antihistamines versus 38% with placebo (odds ratio (OR) 0.74, 95% confidence interval (CI) 0.60 to 0.92). However, there was no difference between antihistamines and placebo in the mid term (three to four days) to long term (six to 10 days). When evaluating individual symptoms such as nasal congestion, rhinorrhoea and sneezing, there was some beneficial effect of the sedating antihistamines compared to placebo (e.g. rhinorrhoea on day three: mean difference (MD) ‐0.23, 95% CI ‐0.39 to ‐0.06 on a four‐ or five‐point severity scale; sneezing on day three: MD ‐0.35, 95% CI ‐0.49 to ‐0.20 on a four‐point severity scale), but this effect is clinically non‐significant. Adverse events such as sedation were more commonly reported with sedating antihistamines although the differences were not statistically significant. Only two trials included children and the results were conflicting. The majority of the trials had a low risk of bias although some lacked sufficient trial quality information.  "," Antihistamines have a limited short‐term (days one and two of treatment) beneficial effect on severity of overall symptoms but not in the mid to long term. There is no clinically significant effect on nasal obstruction, rhinorrhoea or sneezing. Although side effects are more common with sedating antihistamines, the difference is not statistically significant. There is no evidence of effectiveness of antihistamines in children.   ",2,TRUE,FALSE,10,Change in severity of overall symptoms: long‐term (6 to 10 days)  Subjective severity score Follow‐up: 6 to 10 days,OR 0.71  (0.41 to 1.22),1551 (3 studies),⊕⊕⊕⊕high,231 per 1000  (148 to 340),OR,1551,3,0.41,1.22,OR 0.71,Initializing
+https://doi.org/10.1002/14651858.CD009345.pub2,29 November 2015,Intervention,Cochrane Acute Respiratory Infections Group,"Keywords
+
+
+Medical Subject Headings (MeSH) Keywords
+
+Common Cold [*drug therapy];
+Histamine Antagonists [*therapeutic use];
+Randomized Controlled Trials as Topic;
+Time Factors;
+
+
+
+Medical Subject Headings Check Words
+
+Adult;
+Child;
+Humans;
+
+
+
+",Antihistamines for the common cold,"An IM De Sutter, Avadhesh Saraswat, Mieke L van Driel",Review - Intervention,TRUE,NA,Antihistamines compared to placebo for the common cold,patients with the common cold,sambulatory care,placebo," The common cold is an upper respiratory tract infection, most commonly caused by a rhinovirus. It affects people of all age groups and although in most cases it is self limiting, the common cold still causes significant morbidity. Antihistamines are commonly offered over the counter to relieve symptoms for patients affected by the common cold, however there is not much evidence of their efficacy.  ", To assess the effects of antihistamines on the common cold. ," We searched CENTRAL (2015, Issue 6), MEDLINE (1948 to July week 4, 2015), EMBASE (2010 to August 2015), CINAHL (1981 to August 2015), LILACS (1982 to August 2015) and Biosis Previews (1985 to August 2015).  "," We searched CENTRAL (2015, Issue 6), MEDLINE (1948 to July week 4, 2015), EMBASE (2010 to August 2015), CINAHL (1981 to August 2015), LILACS (1982 to August 2015) and Biosis Previews (1985 to August 2015).  Selection criteria We selected randomised controlled trials (RCTs) using antihistamines as monotherapy for the common cold. We excluded any studies with combination therapy or using antihistamines in patients with an allergic component in their illness.  ", Two authors independently assessed trial quality and extracted data. We collected adverse effects information from the included trials.  ," We included 18 RCTs, which were reported in 17 publications (one publication reports on two trials) with 4342 participants (of which 212 were children) suffering from the common cold, both naturally occurring and experimentally induced. The interventions consisted of an antihistamine as monotherapy compared with placebo. In adults there was a short‐term beneficial effect of antihistamines on severity of overall symptoms: on day one or two of treatment 45% had a beneficial effect with antihistamines versus 38% with placebo (odds ratio (OR) 0.74, 95% confidence interval (CI) 0.60 to 0.92). However, there was no difference between antihistamines and placebo in the mid term (three to four days) to long term (six to 10 days). When evaluating individual symptoms such as nasal congestion, rhinorrhoea and sneezing, there was some beneficial effect of the sedating antihistamines compared to placebo (e.g. rhinorrhoea on day three: mean difference (MD) ‐0.23, 95% CI ‐0.39 to ‐0.06 on a four‐ or five‐point severity scale; sneezing on day three: MD ‐0.35, 95% CI ‐0.49 to ‐0.20 on a four‐point severity scale), but this effect is clinically non‐significant. Adverse events such as sedation were more commonly reported with sedating antihistamines although the differences were not statistically significant. Only two trials included children and the results were conflicting. The majority of the trials had a low risk of bias although some lacked sufficient trial quality information.  "," Antihistamines have a limited short‐term (days one and two of treatment) beneficial effect on severity of overall symptoms but not in the mid to long term. There is no clinically significant effect on nasal obstruction, rhinorrhoea or sneezing. Although side effects are more common with sedating antihistamines, the difference is not statistically significant. There is no evidence of effectiveness of antihistamines in children.   ",2,TRUE,FALSE,11,Change in severity of overall symptoms: long‐term (6 to 10 days)  Subjective severity score Follow‐up: 6 to 10 days,OR 0.71  (0.41 to 1.22),1551 (3 studies),⊕⊕⊕⊕high,Moderate,OR,1551,3,0.41,1.22,OR 0.71,Initializing
+https://doi.org/10.1002/14651858.CD009345.pub2,29 November 2015,Intervention,Cochrane Acute Respiratory Infections Group,"Keywords
+
+
+Medical Subject Headings (MeSH) Keywords
+
+Common Cold [*drug therapy];
+Histamine Antagonists [*therapeutic use];
+Randomized Controlled Trials as Topic;
+Time Factors;
+
+
+
+Medical Subject Headings Check Words
+
+Adult;
+Child;
+Humans;
+
+
+
+",Antihistamines for the common cold,"An IM De Sutter, Avadhesh Saraswat, Mieke L van Driel",Review - Intervention,TRUE,NA,Antihistamines compared to placebo for the common cold,patients with the common cold,sambulatory care,placebo," The common cold is an upper respiratory tract infection, most commonly caused by a rhinovirus. It affects people of all age groups and although in most cases it is self limiting, the common cold still causes significant morbidity. Antihistamines are commonly offered over the counter to relieve symptoms for patients affected by the common cold, however there is not much evidence of their efficacy.  ", To assess the effects of antihistamines on the common cold. ," We searched CENTRAL (2015, Issue 6), MEDLINE (1948 to July week 4, 2015), EMBASE (2010 to August 2015), CINAHL (1981 to August 2015), LILACS (1982 to August 2015) and Biosis Previews (1985 to August 2015).  "," We searched CENTRAL (2015, Issue 6), MEDLINE (1948 to July week 4, 2015), EMBASE (2010 to August 2015), CINAHL (1981 to August 2015), LILACS (1982 to August 2015) and Biosis Previews (1985 to August 2015).  Selection criteria We selected randomised controlled trials (RCTs) using antihistamines as monotherapy for the common cold. We excluded any studies with combination therapy or using antihistamines in patients with an allergic component in their illness.  ", Two authors independently assessed trial quality and extracted data. We collected adverse effects information from the included trials.  ," We included 18 RCTs, which were reported in 17 publications (one publication reports on two trials) with 4342 participants (of which 212 were children) suffering from the common cold, both naturally occurring and experimentally induced. The interventions consisted of an antihistamine as monotherapy compared with placebo. In adults there was a short‐term beneficial effect of antihistamines on severity of overall symptoms: on day one or two of treatment 45% had a beneficial effect with antihistamines versus 38% with placebo (odds ratio (OR) 0.74, 95% confidence interval (CI) 0.60 to 0.92). However, there was no difference between antihistamines and placebo in the mid term (three to four days) to long term (six to 10 days). When evaluating individual symptoms such as nasal congestion, rhinorrhoea and sneezing, there was some beneficial effect of the sedating antihistamines compared to placebo (e.g. rhinorrhoea on day three: mean difference (MD) ‐0.23, 95% CI ‐0.39 to ‐0.06 on a four‐ or five‐point severity scale; sneezing on day three: MD ‐0.35, 95% CI ‐0.49 to ‐0.20 on a four‐point severity scale), but this effect is clinically non‐significant. Adverse events such as sedation were more commonly reported with sedating antihistamines although the differences were not statistically significant. Only two trials included children and the results were conflicting. The majority of the trials had a low risk of bias although some lacked sufficient trial quality information.  "," Antihistamines have a limited short‐term (days one and two of treatment) beneficial effect on severity of overall symptoms but not in the mid to long term. There is no clinically significant effect on nasal obstruction, rhinorrhoea or sneezing. Although side effects are more common with sedating antihistamines, the difference is not statistically significant. There is no evidence of effectiveness of antihistamines in children.   ",2,TRUE,FALSE,12,Change in severity of overall symptoms: long‐term (6 to 10 days)  Subjective severity score Follow‐up: 6 to 10 days,OR 0.71  (0.41 to 1.22),1551 (3 studies),⊕⊕⊕⊕high,287 per 1000  (189 to 409),OR,1551,3,0.41,1.22,OR 0.71,Initializing

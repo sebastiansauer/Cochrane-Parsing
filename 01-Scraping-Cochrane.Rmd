@@ -141,6 +141,11 @@ test_review <- parse_review(mindfulness_url, overwrite = TRUE)
 
 ## Loop
 
+```{r}
+  # init count:
+  count_reviews <<- 1
+```
+
 
 ```{r}
 dois_jh1 <-
@@ -150,7 +155,6 @@ dois_jh1 <-
 
 review_jh1 <- 
   dois_jh1 %>% 
-  slice(1) %>% 
   map_dfr(parse_review, .id = "id_review")
 ```
 

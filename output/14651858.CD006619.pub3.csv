@@ -1,0 +1,27 @@
+doi,publication_date,review_type,review_group,review_mesh_keywords,title,authors,publish_type,is_most_recent_version,url_most_most_version,main_comparison_of_review,main_comparison_population,main_comparison_setting,main_comparison_comparsion_type,background,objectives,search_methods,selection_criteria,data_coll_analysis,main_results,conclusions,summaryTable_count,GRADE_somewhere_in_the_text,is_paywalled,id_measure,Outcomes,relative_effect_95CI,n_participants_studies,n_participants,n_studies,GRADE,Comments,effect_statistic,CI_lower,CI_upper,effect_size,warnings
+https://doi.org/10.1002/14651858.CD006619.pub3,10 October 2013,Intervention,Cochrane Acute Respiratory Infections Group,"Keywords
+
+
+Medical Subject Headings (MeSH) Keywords
+
+Adrenergic alpha‐Agonists [*administration & dosage];
+Adrenergic beta‐Agonists [*administration & dosage];
+Croup [*drug therapy];
+Epinephrine [*administration & dosage];
+Length of Stay;
+Nebulizers and Vaporizers;
+Racepinephrine [administration & dosage];
+Randomized Controlled Trials as Topic;
+
+
+
+Medical Subject Headings Check Words
+
+Child;
+Child, Preschool;
+Humans;
+Infant;
+
+
+
+",Nebulized epinephrine for croup in children,"Candice Bjornson, Kelly Russell, Ben Vandermeer, Terry P Klassen, David W Johnson",Review - Intervention,TRUE,NA,NA,NA,NA,NA," Croup is a common childhood illness characterized by barky cough, stridor, hoarseness and respiratory distress. Children with severe croup are at risk for intubation. Nebulized epinephrine may prevent intubation.  "," To assess the efficacy (measured by croup scores, rate of intubation and health care utilization such as rate of hospitalization) and safety (frequency and severity of side effects) of nebulized epinephrine versus placebo in children with croup, evaluated in an emergency department (ED) or hospital setting.  "," We searched CENTRAL 2013, Issue 6, MEDLINE (1966 to June week 3, 2013), EMBASE (1980 to July 2013), Web of Science (1974 to July 2013), CINAHL (1982 to July 2013) and Scopus (1996 to July 2013).  "," We searched CENTRAL 2013, Issue 6, MEDLINE (1966 to June week 3, 2013), EMBASE (1980 to July 2013), Web of Science (1974 to July 2013), CINAHL (1982 to July 2013) and Scopus (1996 to July 2013).  Selection criteria Randomized controlled trials (RCTs) or quasi‐RCTs of children with croup evaluated in an ED or admitted to hospital. Comparisons were: nebulized epinephrine versus placebo, racemic nebulized epinephrine versus L‐epinephrine (an isomer) and nebulized epinephrine delivered by intermittent positive pressure breathing (IPPB) versus nebulized epinephrine without IPPB. Primary outcome was change in croup score post‐treatment. Secondary outcomes were rate and duration of intubation and hospitalization, croup return visit, parental anxiety and side effects.  "," Two authors independently identified potentially relevant studies by title and abstract (when available) and examined relevant studies using a priori inclusion criteria, followed by methodological quality assessment. One author extracted data while the second checked accuracy. We use the standard methodological procedures expected by the Cochrane Collaboration.  "," Eight studies (225 participants) were included. In general, children included in the studies were young (average age less than two years in the majority of included studies). Severity of croup was described as moderate to severe in all included studies. Six studies took place in the inpatient setting, one in the ED and one setting was not specified. Six of the eight studies were deemed to have a low risk of bias and the risk of bias was unclear in the remaining two studies.  Nebulized epinephrine was associated with croup score improvement 30 minutes post‐treatment (three RCTs, standardized mean difference (SMD) ‐0.94; 95% confidence interval (CI) ‐1.37 to ‐0.51; I2 statistic = 0%). This effect was not significant two and six hours post‐treatment. Nebulized epinephrine was associated with significantly shorter hospital stay than placebo (one RCT, MD ‐32.0 hours; 95% CI ‐59.1 to ‐4.9). Comparing racemic and L‐epinephrine, no difference in croup score was found after 30 minutes (SMD 0.33; 95% CI ‐0.42 to 1.08). After two hours, L‐epinephrine showed significant reduction compared with racemic epinephrine (one RCT, SMD 0.87; 95% CI 0.09 to 1.65). There was no significant difference in croup score between administration of nebulized epinephrine via IPPB versus nebulization alone at 30 minutes (one RCT, SMD ‐0.14; 95% CI ‐1.24 to 0.95) or two hours (SMD ‐0.72; 95% CI ‐1.86 to 0.42). None of the studies sought or reported data on adverse effects.  "," Nebulized epinephrine is associated with clinically and statistically significant transient reduction of symptoms of croup 30 minutes post‐treatment. Evidence does not favor racemic epinephrine or L‐epinephrine, or IPPB over simple nebulization. The authors note that data and analyses were limited by the small number of relevant studies and total number of participants and thus most outcomes contained data from very few or even single studies.   ",0,FALSE,FALSE,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,Initializing | No (zero) summary sections detected | No (zero) summary sections detected | No (zero) summary sections detected | No SoF table detected

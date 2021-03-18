@@ -1,0 +1,115 @@
+doi,publication_date,review_type,review_group,review_mesh_keywords,title,authors,publish_type,is_most_recent_version,url_most_most_version,main_comparison_of_review,main_comparison_population,main_comparison_setting,main_comparison_comparsion_type,background,objectives,search_methods,selection_criteria,data_coll_analysis,main_results,conclusions,summaryTable_count,GRADE_somewhere_in_the_text,is_paywalled,id_measure,Outcomes,relative_effect_95CI,n_participants_studies,Comments,effect_statistic,n_participants,n_studies,CI_lower,CI_upper,effect_size,warnings
+https://doi.org/10.1002/14651858.CD000023.pub4,05 November 2013,Intervention,Cochrane Acute Respiratory Infections Group,"Keywords
+
+
+Medical Subject Headings (MeSH) Keywords
+
+Anti‐Bacterial Agents [*therapeutic use];
+Pharyngitis [*drug therapy];
+Randomized Controlled Trials as Topic;
+Rheumatic Fever [prevention & control];
+
+
+
+Medical Subject Headings Check Words
+
+Humans;
+
+
+
+",Antibiotics for sore throat,"Anneliese Spinks, Paul P Glasziou, Chris B Del Mar",Review - Intervention,TRUE,NA,Antibiotics compared with placebo for sore throat,patients presenting with sore throat  ,scommunity  ,placebo," Sore throat is a common reason for people to present for medical care. Although it remits spontaneously, primary care doctors commonly prescribe antibiotics for it.  ", To assess the benefits of antibiotics for sore throat for patients in primary care settings.  ," We searched CENTRAL 2013, Issue 6, MEDLINE (January 1966 to July week 1, 2013) and EMBASE (January 1990 to July 2013).  "," We searched CENTRAL 2013, Issue 6, MEDLINE (January 1966 to July week 1, 2013) and EMBASE (January 1990 to July 2013).  Selection criteria Randomised controlled trials (RCTs) or quasi‐RCTs of antibiotics versus control assessing typical sore throat symptoms or complications.  ", Two review authors independently screened studies for inclusion and extracted data. We resolved differences in opinion by discussion. We contacted trial authors from three studies for additional information.  ," We included 27 trials with 12,835 cases of sore throat. We did not identify any new trials in this 2013 update.  1. Symptoms Throat soreness and fever were reduced by about half by using antibiotics. The greatest difference was seen at day three. The number needed to treat to benefit (NNTB) to prevent one sore throat at day three was less than six; at week one it was 21.  2. Non‐suppurative complications The trend was antibiotics protecting against acute glomerulonephritis but there were too few cases to be sure. Several studies found antibiotics reduced acute rheumatic fever by more than two‐thirds within one month (risk ratio (RR) 0.27; 95% confidence interval (CI) 0.12 to 0.60).  3. Suppurative complications Antibiotics reduced the incidence of acute otitis media within 14 days (RR 0.30; 95% CI 0.15 to 0.58); acute sinusitis within 14 days (RR 0.48; 95% CI 0.08 to 2.76); and quinsy within two months (RR 0.15; 95% CI 0.05 to 0.47) compared to those taking placebo.  4. Subgroup analyses of symptom reduction Antibiotics were more effective against symptoms at day three (RR 0.58; 95% CI 0.48 to 0.71) if throat swabs were positive for Streptococcus, compared to RR 0.78; 95% CI 0.63 to 0.97 if negative. Similarly at week one the RR was 0.29 (95% CI 0.12 to 0.70) for positive and 0.73 (95% CI 0.50 to 1.07) for negative Streptococcus swabs.  "," Antibiotics confer relative benefits in the treatment of sore throat. However, the absolute benefits are modest. Protecting sore throat sufferers against suppurative and non‐suppurative complications in high‐income countries requires treating many with antibiotics for one to benefit. This NNTB may be lower in low‐income countries. Antibiotics shorten the duration of symptoms by about 16 hours overall.   ",1,TRUE,FALSE,1,Sore throat: day 3,0.68 to 0.76,3621 (15),,"NA",3621,NA,NA,NA,to 0.76,Initializing
+https://doi.org/10.1002/14651858.CD000023.pub4,05 November 2013,Intervention,Cochrane Acute Respiratory Infections Group,"Keywords
+
+
+Medical Subject Headings (MeSH) Keywords
+
+Anti‐Bacterial Agents [*therapeutic use];
+Pharyngitis [*drug therapy];
+Randomized Controlled Trials as Topic;
+Rheumatic Fever [prevention & control];
+
+
+
+Medical Subject Headings Check Words
+
+Humans;
+
+
+
+",Antibiotics for sore throat,"Anneliese Spinks, Paul P Glasziou, Chris B Del Mar",Review - Intervention,TRUE,NA,Antibiotics compared with placebo for sore throat,patients presenting with sore throat  ,scommunity  ,placebo," Sore throat is a common reason for people to present for medical care. Although it remits spontaneously, primary care doctors commonly prescribe antibiotics for it.  ", To assess the benefits of antibiotics for sore throat for patients in primary care settings.  ," We searched CENTRAL 2013, Issue 6, MEDLINE (January 1966 to July week 1, 2013) and EMBASE (January 1990 to July 2013).  "," We searched CENTRAL 2013, Issue 6, MEDLINE (January 1966 to July week 1, 2013) and EMBASE (January 1990 to July 2013).  Selection criteria Randomised controlled trials (RCTs) or quasi‐RCTs of antibiotics versus control assessing typical sore throat symptoms or complications.  ", Two review authors independently screened studies for inclusion and extracted data. We resolved differences in opinion by discussion. We contacted trial authors from three studies for additional information.  ," We included 27 trials with 12,835 cases of sore throat. We did not identify any new trials in this 2013 update.  1. Symptoms Throat soreness and fever were reduced by about half by using antibiotics. The greatest difference was seen at day three. The number needed to treat to benefit (NNTB) to prevent one sore throat at day three was less than six; at week one it was 21.  2. Non‐suppurative complications The trend was antibiotics protecting against acute glomerulonephritis but there were too few cases to be sure. Several studies found antibiotics reduced acute rheumatic fever by more than two‐thirds within one month (risk ratio (RR) 0.27; 95% confidence interval (CI) 0.12 to 0.60).  3. Suppurative complications Antibiotics reduced the incidence of acute otitis media within 14 days (RR 0.30; 95% CI 0.15 to 0.58); acute sinusitis within 14 days (RR 0.48; 95% CI 0.08 to 2.76); and quinsy within two months (RR 0.15; 95% CI 0.05 to 0.47) compared to those taking placebo.  4. Subgroup analyses of symptom reduction Antibiotics were more effective against symptoms at day three (RR 0.58; 95% CI 0.48 to 0.71) if throat swabs were positive for Streptococcus, compared to RR 0.78; 95% CI 0.63 to 0.97 if negative. Similarly at week one the RR was 0.29 (95% CI 0.12 to 0.70) for positive and 0.73 (95% CI 0.50 to 1.07) for negative Streptococcus swabs.  "," Antibiotics confer relative benefits in the treatment of sore throat. However, the absolute benefits are modest. Protecting sore throat sufferers against suppurative and non‐suppurative complications in high‐income countries requires treating many with antibiotics for one to benefit. This NNTB may be lower in low‐income countries. Antibiotics shorten the duration of symptoms by about 16 hours overall.   ",1,TRUE,FALSE,2,Sore throat: day 7,0.55 to 0.76,2974 (13),,"NA",2974,NA,NA,NA,to 0.76,Initializing
+https://doi.org/10.1002/14651858.CD000023.pub4,05 November 2013,Intervention,Cochrane Acute Respiratory Infections Group,"Keywords
+
+
+Medical Subject Headings (MeSH) Keywords
+
+Anti‐Bacterial Agents [*therapeutic use];
+Pharyngitis [*drug therapy];
+Randomized Controlled Trials as Topic;
+Rheumatic Fever [prevention & control];
+
+
+
+Medical Subject Headings Check Words
+
+Humans;
+
+
+
+",Antibiotics for sore throat,"Anneliese Spinks, Paul P Glasziou, Chris B Del Mar",Review - Intervention,TRUE,NA,Antibiotics compared with placebo for sore throat,patients presenting with sore throat  ,scommunity  ,placebo," Sore throat is a common reason for people to present for medical care. Although it remits spontaneously, primary care doctors commonly prescribe antibiotics for it.  ", To assess the benefits of antibiotics for sore throat for patients in primary care settings.  ," We searched CENTRAL 2013, Issue 6, MEDLINE (January 1966 to July week 1, 2013) and EMBASE (January 1990 to July 2013).  "," We searched CENTRAL 2013, Issue 6, MEDLINE (January 1966 to July week 1, 2013) and EMBASE (January 1990 to July 2013).  Selection criteria Randomised controlled trials (RCTs) or quasi‐RCTs of antibiotics versus control assessing typical sore throat symptoms or complications.  ", Two review authors independently screened studies for inclusion and extracted data. We resolved differences in opinion by discussion. We contacted trial authors from three studies for additional information.  ," We included 27 trials with 12,835 cases of sore throat. We did not identify any new trials in this 2013 update.  1. Symptoms Throat soreness and fever were reduced by about half by using antibiotics. The greatest difference was seen at day three. The number needed to treat to benefit (NNTB) to prevent one sore throat at day three was less than six; at week one it was 21.  2. Non‐suppurative complications The trend was antibiotics protecting against acute glomerulonephritis but there were too few cases to be sure. Several studies found antibiotics reduced acute rheumatic fever by more than two‐thirds within one month (risk ratio (RR) 0.27; 95% confidence interval (CI) 0.12 to 0.60).  3. Suppurative complications Antibiotics reduced the incidence of acute otitis media within 14 days (RR 0.30; 95% CI 0.15 to 0.58); acute sinusitis within 14 days (RR 0.48; 95% CI 0.08 to 2.76); and quinsy within two months (RR 0.15; 95% CI 0.05 to 0.47) compared to those taking placebo.  4. Subgroup analyses of symptom reduction Antibiotics were more effective against symptoms at day three (RR 0.58; 95% CI 0.48 to 0.71) if throat swabs were positive for Streptococcus, compared to RR 0.78; 95% CI 0.63 to 0.97 if negative. Similarly at week one the RR was 0.29 (95% CI 0.12 to 0.70) for positive and 0.73 (95% CI 0.50 to 1.07) for negative Streptococcus swabs.  "," Antibiotics confer relative benefits in the treatment of sore throat. However, the absolute benefits are modest. Protecting sore throat sufferers against suppurative and non‐suppurative complications in high‐income countries requires treating many with antibiotics for one to benefit. This NNTB may be lower in low‐income countries. Antibiotics shorten the duration of symptoms by about 16 hours overall.   ",1,TRUE,FALSE,3,Rheumatic fever,0.18 to 0.44,"10,101 (16)",Based largely on risk in pre‐1960 trials,"NA",10101,NA,NA,NA,to 0.44,Initializing
+https://doi.org/10.1002/14651858.CD000023.pub4,05 November 2013,Intervention,Cochrane Acute Respiratory Infections Group,"Keywords
+
+
+Medical Subject Headings (MeSH) Keywords
+
+Anti‐Bacterial Agents [*therapeutic use];
+Pharyngitis [*drug therapy];
+Randomized Controlled Trials as Topic;
+Rheumatic Fever [prevention & control];
+
+
+
+Medical Subject Headings Check Words
+
+Humans;
+
+
+
+",Antibiotics for sore throat,"Anneliese Spinks, Paul P Glasziou, Chris B Del Mar",Review - Intervention,TRUE,NA,Antibiotics compared with placebo for sore throat,patients presenting with sore throat  ,scommunity  ,placebo," Sore throat is a common reason for people to present for medical care. Although it remits spontaneously, primary care doctors commonly prescribe antibiotics for it.  ", To assess the benefits of antibiotics for sore throat for patients in primary care settings.  ," We searched CENTRAL 2013, Issue 6, MEDLINE (January 1966 to July week 1, 2013) and EMBASE (January 1990 to July 2013).  "," We searched CENTRAL 2013, Issue 6, MEDLINE (January 1966 to July week 1, 2013) and EMBASE (January 1990 to July 2013).  Selection criteria Randomised controlled trials (RCTs) or quasi‐RCTs of antibiotics versus control assessing typical sore throat symptoms or complications.  ", Two review authors independently screened studies for inclusion and extracted data. We resolved differences in opinion by discussion. We contacted trial authors from three studies for additional information.  ," We included 27 trials with 12,835 cases of sore throat. We did not identify any new trials in this 2013 update.  1. Symptoms Throat soreness and fever were reduced by about half by using antibiotics. The greatest difference was seen at day three. The number needed to treat to benefit (NNTB) to prevent one sore throat at day three was less than six; at week one it was 21.  2. Non‐suppurative complications The trend was antibiotics protecting against acute glomerulonephritis but there were too few cases to be sure. Several studies found antibiotics reduced acute rheumatic fever by more than two‐thirds within one month (risk ratio (RR) 0.27; 95% confidence interval (CI) 0.12 to 0.60).  3. Suppurative complications Antibiotics reduced the incidence of acute otitis media within 14 days (RR 0.30; 95% CI 0.15 to 0.58); acute sinusitis within 14 days (RR 0.48; 95% CI 0.08 to 2.76); and quinsy within two months (RR 0.15; 95% CI 0.05 to 0.47) compared to those taking placebo.  4. Subgroup analyses of symptom reduction Antibiotics were more effective against symptoms at day three (RR 0.58; 95% CI 0.48 to 0.71) if throat swabs were positive for Streptococcus, compared to RR 0.78; 95% CI 0.63 to 0.97 if negative. Similarly at week one the RR was 0.29 (95% CI 0.12 to 0.70) for positive and 0.73 (95% CI 0.50 to 1.07) for negative Streptococcus swabs.  "," Antibiotics confer relative benefits in the treatment of sore throat. However, the absolute benefits are modest. Protecting sore throat sufferers against suppurative and non‐suppurative complications in high‐income countries requires treating many with antibiotics for one to benefit. This NNTB may be lower in low‐income countries. Antibiotics shorten the duration of symptoms by about 16 hours overall.   ",1,TRUE,FALSE,4,Glomerulonephritis,0.07 to 1.32,5147 (10),Sparse data: 2 cases only,"NA",5147,NA,NA,NA,to 1.32,Initializing
+https://doi.org/10.1002/14651858.CD000023.pub4,05 November 2013,Intervention,Cochrane Acute Respiratory Infections Group,"Keywords
+
+
+Medical Subject Headings (MeSH) Keywords
+
+Anti‐Bacterial Agents [*therapeutic use];
+Pharyngitis [*drug therapy];
+Randomized Controlled Trials as Topic;
+Rheumatic Fever [prevention & control];
+
+
+
+Medical Subject Headings Check Words
+
+Humans;
+
+
+
+",Antibiotics for sore throat,"Anneliese Spinks, Paul P Glasziou, Chris B Del Mar",Review - Intervention,TRUE,NA,Antibiotics compared with placebo for sore throat,patients presenting with sore throat  ,scommunity  ,placebo," Sore throat is a common reason for people to present for medical care. Although it remits spontaneously, primary care doctors commonly prescribe antibiotics for it.  ", To assess the benefits of antibiotics for sore throat for patients in primary care settings.  ," We searched CENTRAL 2013, Issue 6, MEDLINE (January 1966 to July week 1, 2013) and EMBASE (January 1990 to July 2013).  "," We searched CENTRAL 2013, Issue 6, MEDLINE (January 1966 to July week 1, 2013) and EMBASE (January 1990 to July 2013).  Selection criteria Randomised controlled trials (RCTs) or quasi‐RCTs of antibiotics versus control assessing typical sore throat symptoms or complications.  ", Two review authors independently screened studies for inclusion and extracted data. We resolved differences in opinion by discussion. We contacted trial authors from three studies for additional information.  ," We included 27 trials with 12,835 cases of sore throat. We did not identify any new trials in this 2013 update.  1. Symptoms Throat soreness and fever were reduced by about half by using antibiotics. The greatest difference was seen at day three. The number needed to treat to benefit (NNTB) to prevent one sore throat at day three was less than six; at week one it was 21.  2. Non‐suppurative complications The trend was antibiotics protecting against acute glomerulonephritis but there were too few cases to be sure. Several studies found antibiotics reduced acute rheumatic fever by more than two‐thirds within one month (risk ratio (RR) 0.27; 95% confidence interval (CI) 0.12 to 0.60).  3. Suppurative complications Antibiotics reduced the incidence of acute otitis media within 14 days (RR 0.30; 95% CI 0.15 to 0.58); acute sinusitis within 14 days (RR 0.48; 95% CI 0.08 to 2.76); and quinsy within two months (RR 0.15; 95% CI 0.05 to 0.47) compared to those taking placebo.  4. Subgroup analyses of symptom reduction Antibiotics were more effective against symptoms at day three (RR 0.58; 95% CI 0.48 to 0.71) if throat swabs were positive for Streptococcus, compared to RR 0.78; 95% CI 0.63 to 0.97 if negative. Similarly at week one the RR was 0.29 (95% CI 0.12 to 0.70) for positive and 0.73 (95% CI 0.50 to 1.07) for negative Streptococcus swabs.  "," Antibiotics confer relative benefits in the treatment of sore throat. However, the absolute benefits are modest. Protecting sore throat sufferers against suppurative and non‐suppurative complications in high‐income countries requires treating many with antibiotics for one to benefit. This NNTB may be lower in low‐income countries. Antibiotics shorten the duration of symptoms by about 16 hours overall.   ",1,TRUE,FALSE,5,Quinsy,0.05 to 0.39,2433 (8),,"NA",2433,NA,NA,NA,to 0.39,Initializing
+https://doi.org/10.1002/14651858.CD000023.pub4,05 November 2013,Intervention,Cochrane Acute Respiratory Infections Group,"Keywords
+
+
+Medical Subject Headings (MeSH) Keywords
+
+Anti‐Bacterial Agents [*therapeutic use];
+Pharyngitis [*drug therapy];
+Randomized Controlled Trials as Topic;
+Rheumatic Fever [prevention & control];
+
+
+
+Medical Subject Headings Check Words
+
+Humans;
+
+
+
+",Antibiotics for sore throat,"Anneliese Spinks, Paul P Glasziou, Chris B Del Mar",Review - Intervention,TRUE,NA,Antibiotics compared with placebo for sore throat,patients presenting with sore throat  ,scommunity  ,placebo," Sore throat is a common reason for people to present for medical care. Although it remits spontaneously, primary care doctors commonly prescribe antibiotics for it.  ", To assess the benefits of antibiotics for sore throat for patients in primary care settings.  ," We searched CENTRAL 2013, Issue 6, MEDLINE (January 1966 to July week 1, 2013) and EMBASE (January 1990 to July 2013).  "," We searched CENTRAL 2013, Issue 6, MEDLINE (January 1966 to July week 1, 2013) and EMBASE (January 1990 to July 2013).  Selection criteria Randomised controlled trials (RCTs) or quasi‐RCTs of antibiotics versus control assessing typical sore throat symptoms or complications.  ", Two review authors independently screened studies for inclusion and extracted data. We resolved differences in opinion by discussion. We contacted trial authors from three studies for additional information.  ," We included 27 trials with 12,835 cases of sore throat. We did not identify any new trials in this 2013 update.  1. Symptoms Throat soreness and fever were reduced by about half by using antibiotics. The greatest difference was seen at day three. The number needed to treat to benefit (NNTB) to prevent one sore throat at day three was less than six; at week one it was 21.  2. Non‐suppurative complications The trend was antibiotics protecting against acute glomerulonephritis but there were too few cases to be sure. Several studies found antibiotics reduced acute rheumatic fever by more than two‐thirds within one month (risk ratio (RR) 0.27; 95% confidence interval (CI) 0.12 to 0.60).  3. Suppurative complications Antibiotics reduced the incidence of acute otitis media within 14 days (RR 0.30; 95% CI 0.15 to 0.58); acute sinusitis within 14 days (RR 0.48; 95% CI 0.08 to 2.76); and quinsy within two months (RR 0.15; 95% CI 0.05 to 0.47) compared to those taking placebo.  4. Subgroup analyses of symptom reduction Antibiotics were more effective against symptoms at day three (RR 0.58; 95% CI 0.48 to 0.71) if throat swabs were positive for Streptococcus, compared to RR 0.78; 95% CI 0.63 to 0.97 if negative. Similarly at week one the RR was 0.29 (95% CI 0.12 to 0.70) for positive and 0.73 (95% CI 0.50 to 1.07) for negative Streptococcus swabs.  "," Antibiotics confer relative benefits in the treatment of sore throat. However, the absolute benefits are modest. Protecting sore throat sufferers against suppurative and non‐suppurative complications in high‐income countries requires treating many with antibiotics for one to benefit. This NNTB may be lower in low‐income countries. Antibiotics shorten the duration of symptoms by about 16 hours overall.   ",1,TRUE,FALSE,6,Otitis media,0.15 to 0.52,3760 (11),,"NA",3760,NA,NA,NA,to 0.52,Initializing
