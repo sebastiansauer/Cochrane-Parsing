@@ -746,32 +746,7 @@ concat_tables <- function(page_content,
     
   }
   
-  
-  # reformat abstract list to df:
-  # abstract_df <-
-  #   abstract_review %>% 
-  #   map_df(1)
-  # 
-  # # reformat metadata list to df:
-  # metadata_review_df <- 
-  #   metadata_review %>% 
-  #   map_df(1)
-  
-  
-  # check if there is (at least) one summary table:
-  #summary_table_count <- get_nr_of_summary_tables(page_content) 
-  
-  #stopifnot(length(summary_table_count) != 0)  # stop if the object is not well defined
-  
-  
-  
-  
-  
-  
-  # if (is.na(metadata_summaryTable)) {
-  #   metadata_summaryTable_df <- create_empty_df(names_vec = get_summarytab_metadata_colnames())
-  # }
-  
+
   if (is.na(summarytable)) {
     summarytable <- create_empty_df(names_vec = c(get_summarytab_colnames(),
                                                   get_summarytab_metadata_colnames()
@@ -789,11 +764,10 @@ concat_tables <- function(page_content,
     output_table %>% 
     bind_cols(info_page)
   
-  
-  
-  # add review metadata:
-  output_table3 <-    
-    metadata_review %>% 
+
+  # add review metadata such as doi, title, author:
+  output_table3 <-
+    metadata_review %>%
     bind_cols(output_table2)
   
   
@@ -806,22 +780,23 @@ concat_tables <- function(page_content,
   
   # drop unused cols:
   if (drop_unused_cols) {
-    output_table3 <- 
+    output_table4 <- 
       output_table3 %>% 
       select(-starts_with("X"))
   }
   
   
   # add warnings
-  output_table6 <-
-    output_table3 %>% 
+  output_table5 <-
+    output_table4 %>% 
     mutate(warnings = str_c(warning_df$type, collapse = " | "))
   
   
   # sort columns:
-  output_table7 <-
-    output_table6 %>% 
-    select(doi, 
+  output_table6 <-
+    output_table5 %>% 
+    select(
+      doi, 
            
            publication_date,
            review_type,
@@ -843,7 +818,7 @@ concat_tables <- function(page_content,
            conclusions,
            everything())
   
-  output <- output_table7
+  output <- output_table6
   
   if (verbose) print(output)
   
@@ -926,18 +901,13 @@ parse_review_parts <- function(
       abstract_review = review$abstract
       #metadata_summaryTable = NA
     )
-    
-    
-    output <- review
+ 
+       output <- review
     
     if (final_table) output <- review$final_table
-    
-    
+ 
     return(output)
-    
-    # xxx
-    
-  
+ 
     } else {
     # begin regular parsing:
 
@@ -1029,7 +999,8 @@ write_parsed_review_to_file <- function(review_url,
 #init()
 
 parse_review <- function(review_url,
-                         overwrite = TRUE) {
+                         verbose = TRUE,
+                         overwrite_file = TRUE) {
   
   if (verbose) writeLines(glue::glue("______Now starting with review number {count_reviews}______\n"))
   
@@ -1037,13 +1008,14 @@ parse_review <- function(review_url,
   review_url_cochrane <- build_cochrane_url_from_doi(review_url)
   
   review_parsed_parts <- parse_review_parts(review_url_cochrane, 
-                                            overwrite = overwrite)
+                                            overwrite = overwrite_file)
   write_parsed_review_to_file(review_url = review_url_cochrane,
                               review = review_parsed_parts,
-                              overwrite = overwrite)
+                              overwrite = overwrite_file)
   
+  #if (!exists(x = count_reviews))
 
-  count_reviews <- count_reviews + 1
+  count_reviews <<- count_reviews + 1
   
   
 }

@@ -8,8 +8,11 @@ get_summary_table_metadata <- function(page_content,
                                        table_number = 1,
                                        verbose = TRUE) {
   
+  
+  writeLines("Start parsing SoF Table for metadata.\n")
+  
   # run only if at least one such tables exists:
-  #nr_summaryOfFindingsTable <- get_nr_of_summary_tables(page_content, verbose = FALSE)
+  nr_summaryOfFindingsTable <- get_nr_of_summary_tables(page_content, verbose = FALSE)
   
   
   

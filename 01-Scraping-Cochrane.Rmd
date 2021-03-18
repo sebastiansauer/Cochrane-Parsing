@@ -43,6 +43,10 @@ source("data/dois-reviews.R")
 dois_list <- readxl::read_xlsx("data/doi-list-reviewer.xlsx")
 dois_jh <- dois_list %>% 
   filter(reviewer == "JH")
+
+dois_hw <- dois_list %>% 
+  filter(reviewer == "HW") %>% 
+  pull(url)
 ```
 
 
@@ -132,14 +136,23 @@ review <- list()
 ## Test it
 
 ```{r test-parse-review}
-test_review <- parse_review(dois_jh1[1], overwrite = TRUE)
+test_review <- parse_review(dois_hw[50], overwrite = TRUE)
 test_review <- parse_review(review_url, overwrite = TRUE)
 test_review <- parse_review(mindfulness_url, overwrite = TRUE)
 ```
 
 
 
+## init
+
+```{r}
+count_reviews <<- 1
+```
+
+
 ## Loop
+
+### JH
 
 ```{r}
   # init count:
@@ -159,6 +172,18 @@ review_jh1 <-
 ```
 
 
+
+### HW
+
+```{r}
+reviews_parsed_hw <-
+  dois_hw %>% 
+  map_dfr(parse_review, .id = "id_review")
+```
+
+
+
+# Write to Disk
 
 ```{r}
 writexl::write_xlsx(review_jh1, path = "output/reviews_jh1.xlsx")
