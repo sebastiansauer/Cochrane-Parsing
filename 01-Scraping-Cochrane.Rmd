@@ -137,7 +137,7 @@ review <- list()
 ## Test it
 
 ```{r test-parse-review}
-test_review <- parse_review(, overwrite = TRUE)
+test_review <- parse_review(review_url, overwrite = TRUE)
 test_review <- parse_review(review_url, overwrite = TRUE)
 test_review <- parse_review(mindfulness_url, overwrite = TRUE)
 ```
@@ -164,12 +164,13 @@ count_reviews <<- 1
 ```{r}
 dois_jh1 <-
   dois_jh %>% 
-  slice(51:100) %>% 
+  slice(80:100) %>% 
   pull(url) 
 
 review_jh1 <- 
   dois_jh1 %>% 
-  map_dfr(parse_review, .id = "id_review", output_dir = "output/hw")
+  map_dfr(parse_review, .id = "id_review", output_dir = "output/jh",
+          overwrite_file = FALSE)
 ```
 
 

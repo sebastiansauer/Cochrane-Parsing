@@ -393,6 +393,8 @@ check_if_review_file_exists <- function(review_url,
   
   if (length(output_dir) == 0) stop("Please specify output directory.")
   
+  writeLines("Checking if output file already exists.")
+  
   # use doi to check whether output file exists
   file_path <- glue::glue("{output_dir}/{review_url}.csv") %>% 
     sanitize_review_url() 
@@ -402,7 +404,7 @@ check_if_review_file_exists <- function(review_url,
   # check if output file exists:
   output_file_exists <- file.exists(file_path)
   
-  if (verbose) writeLines(glue::glue("Output file exists: {file_path}\n"))
+  if (verbose & output_file_exists) writeLines(glue::glue("Output file exists: {file_path}\n"))
   
   return(output_file_exists)
   
@@ -1013,7 +1015,7 @@ write_parsed_review_to_file <- function(review_url,
   
   # check if we should overwrite it, otherwise stop (if output  file already exists):
   if (output_file_exists & !overwrite) {
-    writeLines(glue::glue("Output file exists. NOT overwriting: {file_path}\n"))
+    writeLines(glue::glue("Output file exists. NOT overwriting.\n"))
   } else {
     
     file_path <- glue::glue("{output_dir}/{review_url}.csv") %>% 
@@ -1046,6 +1048,7 @@ parse_review <- function(review_url,
                          overwrite_file = TRUE) {
   
   if (verbose) writeLines(glue::glue("______Now starting with review number ((( {count_reviews} )))______\n"))
+  if (verbose) writeLines(glue::glue("______Now review with url ((( {review_url} )))______\n"))
   
   
   review_url_cochrane <- build_cochrane_url_from_doi(review_url)

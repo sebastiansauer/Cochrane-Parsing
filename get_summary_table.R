@@ -204,6 +204,8 @@ get_summary_table <- function(page_content,
       html_table(fill = TRUE)
     
     
+
+    
     # find column in which the outcome variables are mentioned:
     col_Outcomes <- 
       summaryOfFindingsTable %>% 
@@ -218,10 +220,6 @@ get_summary_table <- function(page_content,
         bind_rows(raise_warning(type = "too many columns at `col_Outcomes`",
                                 critical = FALSE))
       
-      # output <- create_empty_df(names_vec = get_all_colnames())
-      # output$doi <- review_url
-      # output$warning <- warning_df$type
-      # 
       col_Outcomes <- col_Outcomes[1]
       
       writeLines(glue::glue("Too many columns at `col_Outcomes`. Taking the first one. Might by wrong!\n"))
@@ -229,7 +227,18 @@ get_summary_table <- function(page_content,
       #return(output)
     }
     
+    if (length(col_Outcomes) == 0) {
+      warning_df <<- 
+        warning_df %>% 
+        bind_rows(raise_warning(type = "no columns at `col_Outcomes`",
+                                critical = FALSE))
+      
+      col_Outcomes <- "NO_COL_OUTCOME"
+      
+    }
+    
     names(summaryOfFindingsTable)[col_Outcomes] <- "Outcomes"
+    
     
     
     # add id column:
@@ -245,10 +254,25 @@ get_summary_table <- function(page_content,
       pull(id_measure) %>% 
       max()
     
+    # define header rows:
     # we'll need this table further down below:
     summaryOfFindingsTable <-
       summaryOfFindingsTable %>% 
       mutate(header_row = row_number() <= header_rows) 
+    
+    # find column with GRADE rating:
+    # "Quality of the evidence (GRADE)"
+    col_GRADE <-
+      summaryOfFindingsTable %>% 
+      filter(header_row == TRUE) %>% 
+      map(~ str_detect(., pattern = "Quality of the evidence (GRADE)$|(GRADE)")) %>% 
+      map_lgl(~ any(. == TRUE)) %>% 
+      which() %>% 
+      names()
+    
+    if (verbose) writeLines("Col_GRADE found.")
+    
+    
     
     # delete unneeded header rows:
     summaryOfFindingsTable2 <-
@@ -268,32 +292,40 @@ get_summary_table <- function(page_content,
       filter(!identical_cells_across_cols)  
     
     
+    # 2nd attempt to find GRADE cols.
     # find columns where GRADES are shown:
-    col_GRADES <- 
+    # take the columns with the most hits
+     
+    if (length(col_GRADE) != 1) {
+    col_GRADE <- 
       summaryOfFindingsTable3 %>% 
       map( ~ str_detect(.x, pattern = "⊕|⊝")) %>% 
-      map_lgl( ~ any(. == TRUE)) %>% 
-      keep(.p = . == TRUE) %>% 
-      names()
+      map_dfr( ~ sum(. == TRUE))  %>%
+      pivot_longer(everything()) %>% 
+      filter(value == max(value)) %>% 
+      select(name) %>% 
+      pull()
     
-    # if there are multiple such cols, take the first one and raise error:
-    
+    # if there are STILL multiple such cols, take the first one and raise error:
     if (length(col_GRADES) > 1) {
       warning_df <<-
         warning_df %>% 
-        bind_rows(raise_warning(type = "Multiple cols foung at `col_GRADES`. Taking the first one. Might be wrong!"))
+        bind_rows(raise_warning(type = "Multiple cols found at `col_GRADES`. Taking the first one. Might be wrong!"))
       
       col_GRADES <- col_grades[1]
     }
+    }
+    
+    
     
     # rename:
     summaryOfFindingsTable4 <-
       summaryOfFindingsTable3 %>% 
-      rename(GRADE := {col_GRADES}) 
+      rename(GRADE := {col_GRADE}) 
     
     
     # find the effect statistic used:
-    effect_statistic <- "SMD|RR|OR|MD|[M|m]ean.+[S|s]core"
+    effect_statistic <- "HR|SMD|RR|OR|MD|[M|m]ean.+[S|s]core"
     
     effect_statistic_per_outcome <- 
       summaryOfFindingsTable4 %>% 
@@ -314,7 +346,6 @@ get_summary_table <- function(page_content,
     
     
     
-    # what's this???
     # BUG???
     summaryOfFindingsTable5 <-
       summaryOfFindingsTable4 %>% 
@@ -322,7 +353,6 @@ get_summary_table <- function(page_content,
     
     
     # find column where number of participants and number of studies are noted for each outcome:
-    #n_of_trials_string <- "of [Pp]articipants[[:space:]]*\\([Ss]tudies\\)|"
     n_of_trials_string2 <- "([Ss]tudies)|[Pp]articipants"
     
     
@@ -363,7 +393,7 @@ get_summary_table <- function(page_content,
       summaryOfFindingsTable6 <-
         summaryOfFindingsTable5 %>% 
         mutate(n_participants_studies = NA)  
-    } else { 
+    } else {  # if everything's ok:
       
       summaryOfFindingsTable6 <-
         summaryOfFindingsTable5 %>% 
