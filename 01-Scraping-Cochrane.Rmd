@@ -29,7 +29,8 @@ library(rvest)  # web scraping
 library(xml2)  # web scraping
 library(stringr)  # string manipulation
 library(printr)  # print dfs as tables
-
+library(glue)  # glueing
+library(rcrossref)  # citation coutn
 update_geom_font_defaults(font_rc)
 ```
 
@@ -163,12 +164,12 @@ count_reviews <<- 1
 ```{r}
 dois_jh1 <-
   dois_jh %>% 
-  slice(1:50) %>% 
+  slice(51:100) %>% 
   pull(url) 
 
 review_jh1 <- 
   dois_jh1 %>% 
-  map_dfr(parse_review, .id = "id_review")
+  map_dfr(parse_review, .id = "id_review", output_dir = "output/hw")
 ```
 
 
@@ -184,7 +185,7 @@ writexl::write_xlsx(review_jh1, path = "output/reviews_jh1.xlsx")
 ```{r}
 reviews_parsed_hw <-
   dois_hw %>% 
-  #magrittr::extract(49:50) %>% 
+  magrittr::extract(49:50) %>% 
   map_dfr(parse_review, output_dir = "output/hw")
 ```
 

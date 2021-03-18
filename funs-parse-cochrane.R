@@ -55,7 +55,8 @@ get_summarytab_colnames <- function() {
     "effect_statistic",
     "CI_lower",
     "CI_upper",
-    "effect_size"
+    "effect_size",
+    "is_significant"
   )
   
   return(summarytab1_colnames)
@@ -265,6 +266,29 @@ parse_n_subj_n_studies <- function(n_participants_studies,
   
 }
 
+
+
+get_number_of_citations <- function(review_url, 
+                                    verbose = TRUE) {
+  
+  delete_string <- "http[s]*://www.cochranelibrary.com/cdsr/doi/"
+  delete_string2 <- "http[s]*://[dx.]*doi.org/"
+  
+  sanitized_url <- str_remove(review_url,
+                       delete_string) %>% 
+    str_remove(delete_string2) %>% 
+    str_remove("/full")
+ 
+  
+  count <- rcrossref::cr_citation_count(doi = sanitized_url)$count
+  
+  
+  
+  if (verbose) writeLines(glue::glue("This review has been cited {count} times."))
+  
+  return(count)
+  
+}
 
 
 
@@ -611,6 +635,9 @@ get_review_metadata <- function(page_content, verbose = TRUE){
                             critical = FALSE))
   
   
+  citation_count <- get_number_of_citations(review_doi)
+  
+  
   output <- tibble(title = title_publication,
                  doi = review_doi,
                  authors = authors,
@@ -619,7 +646,8 @@ get_review_metadata <- function(page_content, verbose = TRUE){
                  url_most_most_version = url_most_most_version,
                  summaryTable_count = summaryTable_count,
                  GRADE_somewhere_in_the_text = GRADE_somewhere_in_the_text,
-                 is_paywalled = is_paywalled
+                 is_paywalled = is_paywalled,
+                 citation_count = citation_count
                  #warning = str_c(warning_df$type, collapse = " - ")
   )
   
@@ -797,26 +825,26 @@ concat_tables <- function(page_content,
     output_table5 %>% 
     select(
       doi, 
-           
-           publication_date,
-           review_type,
-           review_group,
-           review_mesh_keywords,
-           
-           title, 
-           authors, 
-           publish_type, 
-           is_most_recent_version, 
-           url_most_most_version,
-           starts_with("main_comp"),
-           background,
-           objectives,
-           search_methods,
-           selection_criteria,
-           data_coll_analysis,
-           main_results,
-           conclusions,
-           everything())
+      publication_date,
+      review_type,
+      review_group,
+      review_mesh_keywords,
+      citation_count,
+      
+      title, 
+      authors, 
+      publish_type, 
+      is_most_recent_version, 
+      url_most_most_version,
+      starts_with("main_comp"),
+      background,
+      objectives,
+      search_methods,
+      selection_criteria,
+      data_coll_analysis,
+      main_results,
+      conclusions,
+      everything())
   
   output <- output_table6
   
