@@ -85,6 +85,7 @@ review_url <- mindfulness_url
 
 ```{r}
 source("funs-parse-cochrane.R")
+source("get_summary_table.R")
 ```
 
 
