@@ -15,36 +15,7 @@ get_summary_table_metadata <- function(page_content,
   nr_summaryOfFindingsTable <- get_nr_of_summary_tables(page_content, verbose = FALSE)
   
   
-  
-  # stop if critical warning has been raised earlier on:
-  # if (any(warning_df$critical == TRUE)) {
-  #   
-  #   warning_df <<-
-  #     warning_df %>% 
-  #     bind_rows(raise_warning(type = "Critical warning at begin of SoF table Meta Data function",
-  #                             critical = TRUE))
-  #   
-  #   output <- create_empty_df(names_vec = get_summarytab_metadata_colnames())
-  #   
-  #   writeLines("Stopping reading the summary table metadata, as critical warning has been raised earlier on")
-  #   
-  #   return(output)
-  #   
-  # }
-  # 
-  # 
-  # if (nr_summaryOfFindingsTable == 0) {
-  #   print("No (zero) summary tables detected! This function cannot report metadata of SoF tables.\n")
-  #   
-  #   
-  #   warning_df <<-
-  #     warning_df %>% 
-  #     bind_rows(raise_warning(type = "no summary table detected. Cannot read its metadata",
-  #                             critical = FALSE))
-  #   
-  #   output <- create_empty_df(names_vec = get_summarytab_metadata_colnames())
-  #   
-  # } else {  # more than zero SoF tables, and no critical warning:
+
   
   paste0("Number of summary tables detected: ", nr_summaryOfFindingsTable, "\n")
   
@@ -307,12 +278,12 @@ get_summary_table <- function(page_content,
       pull()
     
     # if there are STILL multiple such cols, take the first one and raise error:
-    if (length(col_GRADES) > 1) {
+    if (length(col_GRADE) > 1) {
       warning_df <<-
         warning_df %>% 
         bind_rows(raise_warning(type = "Multiple cols found at `col_GRADES`. Taking the first one. Might be wrong!"))
       
-      col_GRADES <- col_grades[1]
+      col_GRADE <- col_grades[1]
     }
     }
     
@@ -541,6 +512,8 @@ get_summary_table <- function(page_content,
     
   }
   
+  
+  if (verbose) writeLines("Finished parsing SoF Table.\n")
   
   return(output)
   
