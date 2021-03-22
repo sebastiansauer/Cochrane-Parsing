@@ -977,12 +977,17 @@ concat_tables <- function(page_content,
 
 write_parsed_review_to_csv_file <- function(review_url,
                                         review,
+                                        reviewer = "?",
                                         output_dir = "output",
                                         overwrite = TRUE){
   
   writeLines("Now writing file to disk.\n")
   
-  output_file_exists <- check_if_review_file_exists(review_url)
+  if (reviewer != "?") output_dir <- glue("output/{reviewer}")
+  
+  
+  output_file_exists <- check_if_review_file_exists(review_url,
+                                                    output_dir = output_dir)
   
   # check if we should overwrite it, otherwise stop (if output  file already exists):
   if (output_file_exists & !overwrite) {
@@ -1030,12 +1035,21 @@ parse_review <- function(review_url,
                     user_agent = "Sebastian Sauer - sebastiansauer1@gmail.com")
 
   
+  # parse all parts
   review_parsed_parts <- parse_review_parts(review_url_cochrane, 
                                             reviewer = reviewer,
                                             overwrite = overwrite_file)
+  
+  # add warnings:
+  review_parsed_parts <-  
+    review_parsed_parts %>% 
+    mutate(warnings = str_c(warning_df$type, collapse = " | "))
+  
+  
   write_parsed_review_to_csv_file(review_url = review_url_cochrane,
                               review = review_parsed_parts,
                               output_dir = output_dir,
+                              reviewer = reviewer,
                               overwrite = overwrite_file)
   
   #if (!exists(x = count_reviews))

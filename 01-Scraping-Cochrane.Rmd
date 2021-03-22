@@ -51,8 +51,25 @@ conflict_prefer("filter", "dplyr")
 
 
 ```{r}
-source("data/dois-reviews.R")
 dois_list <- readxl::read_xlsx("data/doi-list-reviewer.xlsx")
+```
+
+
+
+## Check
+ 
+```{r}
+dois_list %>% 
+  count(reviewer)
+```
+
+
+
+
+## Subsamples of reviewers
+
+
+```{r}
 dois_jh <- dois_list %>% 
   filter(reviewer == "JH")
 
@@ -176,8 +193,8 @@ review <- list()
 
 ```{r test-parse-review}
 test_review <- parse_review(bad_url, overwrite = TRUE,
-                            reviewer = "np",
-                            output_dir = "output/np")
+                            reviewer = "?",
+                            output_dir = "output")
 test_review <- parse_review(review_url, overwrite = TRUE)
 test_review <- parse_review(mindfulness_url, overwrite = TRUE)
 ```
@@ -187,61 +204,15 @@ test_review <- parse_review(mindfulness_url, overwrite = TRUE)
 ## init
 
 ```{r}
-count_reviews <<- 1
-table_number <<- 1
+count_reviews <- 1
+table_number <- 1
 overwrite <- FALSE
 verbose <- TRUE
+reviewer <- "ss"
 ```
 
 
 
-
-# Read to disk
-
-Test one:
-
-```{r}
-read_page_content_to_disk(review_url = mindfulness_url)
-```
-
-
-Parse all to disk, according to name of reviewer:
-
-
-## Test it
-```{r}
-dois_by_reviewer_sample_test <- 
-dois_by_reviewer_sample %>% 
-  slice(1)
-
-page_page_content_to_disk(review_url = dois_by_reviewer_sample_test$url[1],
-                          output_dir = glue(
-                            "output/}dois_by_reviewer_sample_test$reviewer[1]}")
-
-
-```
-
-
-## Loop
-
-<!-- ### Test loop -->
-
-<!-- ```{r} -->
-<!-- map2(.x = dois_by_reviewer_sample_test$url, -->
-<!--      .y = dois_by_reviewer_sample_test$reviewer,  -->
-<!--      .f = ~ read_page_content_to_disk(review_url = .x, -->
-<!--                                        output_dir = glue("output/{.y}"))) -->
-<!-- ``` -->
-
-
-<!-- ### Loop with n=50 -->
-
-<!-- ```{r} -->
-<!-- map2(.x = dois_by_reviewer_sample$url, -->
-<!--      .y = dois_by_reviewer_sample$reviewer,  -->
-<!--      .f = ~ read_page_content_to_disk(review_url = .x, -->
-<!--                                        output_dir = glue("output/{.y}"))) -->
-<!-- ``` -->
 
 
 
@@ -259,12 +230,25 @@ page_page_content_to_disk(review_url = dois_by_reviewer_sample_test$url[1],
 
 ## Loop
 
-### JH
+
+### all
+
+
 
 ```{r}
-  # init count:
-  count_reviews <<- 1
+count_reviews <- 1
+map2_dfr(.x = dois_by_reviewer_sample$url,
+     .y = dois_by_reviewer_sample$reviewer,
+     .f = ~ parse_review(review_url = .x,
+                        reviewer = .y,
+                        overwrite = FALSE,
+                        output_dir = glue("output/{.y}")))
+  
 ```
+
+
+
+### JH
 
 
 ```{r}
@@ -326,6 +310,32 @@ reviews_parsed_hw
 
 ```{r}
 writexl::write_xlsx(reviews_parsed_hw, path = "output/hw/reviews_hw.xlsx")
+```
+
+
+
+### ss
+
+
+
+```{r}
+dois_ss <- 
+  dois_by_reviewer_sample %>% 
+  filter(str_detect(reviewer, "SS")) %>% 
+  #slice(5:50) %>% 
+  pull(url)
+
+review_ss <- 
+  dois_ss %>% 
+  map_dfr(parse_review, .id = "id_review", output_dir = "output/ss",
+          overwrite_file = FALSE,
+          reviewer = "ss")
+```
+
+
+
+```{r}
+writexl::write_xlsx(review_ss, path = "output/ss/reviews_ss.xlsx")
 ```
 
 

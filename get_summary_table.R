@@ -107,6 +107,7 @@ get_summary_table_metadata <- function(page_content,
 
 get_summary_table <- function(page_content, 
                               table_number = 1, 
+                              drop_unused_cols = TRUE,
                               # set to TRUE if only the first outcome should be parsed:
                               first_outcome_only = FALSE,
                               verbose = TRUE) {
@@ -180,7 +181,7 @@ get_summary_table <- function(page_content,
     # find column in which the outcome variables are mentioned:
     col_Outcomes <- 
       summaryOfFindingsTable %>% 
-      map(~ str_detect(., pattern = "^Outcome[s]*$")) %>% 
+      map(~ str_detect(., pattern = "^Outcome[s]*|Outcome[s]$")) %>% 
       map_lgl(~ any(. == TRUE)) %>% 
       which()
     
@@ -506,6 +507,12 @@ get_summary_table <- function(page_content,
     
     if (first_outcome_only) {
       output <- slice(output, 1)
+    }
+    
+    if (drop_unused_cols) {
+      output <- 
+        output %>% 
+        select(-starts_with("X"))
     }
     
     

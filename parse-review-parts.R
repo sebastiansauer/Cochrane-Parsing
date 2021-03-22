@@ -14,9 +14,162 @@ parse_review_parts <- function(
   verbose = TRUE, ...) {
   
   
+  
+  parse_individual_parts <- function(review_url) {
+    
+    
+    # else, start normal work:
+    init_new_review()
+    
+    
+    
+    
+    if (verbose) cat(paste0("**Starting to parse the review with this doi: ", review_url, "**\n"))
+    
+    # if review should not be taken vom from rds file, but read from html page:
+    # read html page, must be sanitized! (see function for that):
+    safe_page_content <- safely_read_html(review_url)  
+    
+    
+    
+    # on error, stop:
+    if (!is.null(safe_page_content$error)) {
+      
+      warning_df <<-
+        warning_df %>% 
+        bind_rows(
+          raise_warning(type = safe_page_content$error$message,
+                        critical = TRUE))
+      
+      output <- create_empty_df(names_vec = get_all_colnames())
+      #output$warnings <- safe_page_content$error$message
+      output$doi <- review_url
+      output$warnings <- str_c(warning_df$type, collapse =  " - ")
+      
+      writeLines("Error 404 on reading full review page. Stopping this review.\n")
+      
+      return(output)
+      
+      
+      
+      
+    
+      } else {  # else parse regularly:
+      
+      # close url:
+      # if (verbose) writeLines("Closing Url.\n")
+      # url <- url(review_url, "rb")
+      # close(url)
+      
+      page_content <- safe_page_content$result
+      
+      # parse info page, must be sanitized! (see function for that):
+      info_page <- get_review_info_page(review_url)
+      
+      output <- info_page
+      
+      # read metadata:
+      
+      metadata <- get_review_metadata(page_content,
+                                      reviewer = reviewer)
+      
+      output <-
+        output %>% 
+        bind_rows(metadata)
+      
+      # read abstract:
+      abstract <- get_abstract(page_content)
+      
+      output <-
+        output %>% 
+        bind_rows(abstract)
+      
+      # check if there' a critical warning, in which case we stop parsing:
+      # if (any(warning_df$critical == TRUE)) {
+      #   
+      #   
+      #   writeLines(glue::glue("STOPPING parsing. Critical warning has been raised: {str_c(warning_df$type, collapse = ' | ')}"))
+      #   
+      #   final_table <- concat_tables(
+      #     info_page = info_page,
+      #     page_content = page_content,
+      #     summarytable = create_empty_df(names_vec = get_summarytab_colnames()),
+      #     metadata_review =  metadata,
+      #     abstract_review = abstract
+      #     #metadata_summaryTable = NA
+      #   )
+      #   
+      #   output <- final_table
+      #   
+      #   return(output)
+      #   
+      #   
+      # } 
+      # continue regular parsing:
+      
+      safely_get_nr_of_summary <- safely(get_nr_of_summary_tables)
+      safe_summaryTable_count <- safely_get_nr_of_summary(page_content)
+      
+      # on error.
+      if (!is.null(safe_summaryTable_count$error)) {
+        
+        summaryTable_count <- 0
+        summarytable <- create_empty_df(names_vec = get_summarytab_colnames())
+        
+        warning_df <<-
+          warning_df  %>% 
+          bind_cols(raise_warning(type = "Zero summary tables detected,
+                                  critical = FALSE"))
+        
+        return(output)
+        
+        
+      }  # no error in get_nr_of_summary, then read summary table:
+      
+      safe_get_summary_table <- safely(get_summary_table)
+      safe_summarytable1 <- safe_get_summary_table(page_content)
+      
+      # on error:
+      if (!is.null(summarytable1$error)) {
+        summarytable <- create_empty_df(names_vec = get_summarytab_colnames())
+        
+        warning_df <<-
+          warning_df  %>% 
+          bind_cols(raise_warning(type = "Zero summary tables detected,
+                                  critical = FALSE"))
+        
+
+      } else summarytable <- safe_summarytable$results
+        
+        output <- 
+          output %>% 
+          bind_cols(summarytable)
+        
+      }
+      
+      return(output)
+      
+    }
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  # initialize emptye output df:
+  
 
   # check if output CSV file exists, and if it should not be overwritten, skip the parsing:
   if (reviewer != "?") output_dir <- glue("output/{reviewer}/{review_url}")
+  
   output_file_exists <- check_if_review_file_exists(review_url,
                                                     output_dir = output_dir)
   if (output_file_exists & !overwrite) {
@@ -31,121 +184,49 @@ parse_review_parts <- function(
     
   }
   
+ # XXX
   
-  # else, start normal work:
-  init_new_review()
+  safely_parse_individual_parts <- safely(parse_individual_parts)
+  safe_output <- parse_individual_parts(review_url = review_url) 
   
-  # initialize emptye output df:
-  output <- create_empty_df(names_vec = get_all_colnames())
-  
-  if (verbose) cat(paste0("**Starting to parse the review with this doi: ", review_url, "**\n"))
-  
-  # if review should not be taken vom from rds file, but read from html page:
-  # read html page, must be sanitized! (see function for that):
-  safe_page_content <- safely_read_html(review_url)  
-  
-  
-  
-  # on error, stop:
-  if (!is.null(safe_page_content$error)) {
-    
-    warning_df <<-
-      warning_df %>% 
-      bind_rows(
-        raise_warning(type = safe_page_content$error$message,
-                      critical = TRUE))
+  if (!is.null(safe_output$error)) { 
     
     output <- create_empty_df(names_vec = get_all_colnames())
-    #output$warnings <- safe_page_content$error$message
-    output$doi <- review_url
-    output$warnings <- str_c(warning_df$type, collapse =  " - ")
+    warning_df <<-
+      warning_df %>% 
+      bind_rows(raise_warning(type = "parse_parts failed.",
+                              critical = FALSE))
+  } else {
     
-    writeLines("Error 404 on reading full review page. Stopping this review.\n")
-    
-    return(output)
-    
-    
-  } else {  # else parse regularly:
-    
-    # close url:
-    # if (verbose) writeLines("Closing Url.\n")
-    # url <- url(review_url, "rb")
-    # close(url)
-    
-    page_content <- safe_page_content$result
-    
-    # parse info page, must be sanitized! (see function for that):
-    info_page <- get_review_info_page(review_url)
-    
-    
+    output <- safe_output$result
+  }
+
+
  
-    
-    # read metadata:
-    metadata <- get_review_metadata(page_content,
-                                    reviewer = reviewer)
-    
-    # read abstract:
-    abstract <- get_abstract(page_content)
-    
-    # check if there' a critical warning, in which case we stop parsing:
-    if (any(warning_df$critical == TRUE)) {
+  
+      # #undebug(concat_tables)
+      # final_table <- concat_tables(
+      #   info_page = info_page,
+      #   page_content = page_content,
+      #   summarytable = summarytable1,
+      #   metadata_review =  metadata,
+      #   abstract_review = abstract
+      #   #metadata_summaryTable = review$summaryTable_metadata
+      # )
       
       
-      writeLines(glue::glue("STOPPING parsing. Critical warning has been raised: {str_c(warning_df$type, collapse = ' | ')}"))
-      
-      final_table <- concat_tables(
-        info_page = info_page,
-        page_content = page_content,
-        summarytable = NA,
-        metadata_review =  metadata,
-        abstract_review = abstract
-        #metadata_summaryTable = NA
-      )
-      
-      output <- review$final_table
-      
-      return(output)
-      
-    } else {
-      # continue regular parsing:
-      
-      summaryTable_count <- get_nr_of_summary_tables(page_content)
-      
-      # possibly_get_summary_table <- possibly(get_summary_table,
-      #                                        otherwise = stop_parsing_return_empty_df(
-      #                                          review_url = review_url,
-      #                                          error_message = "Error in `get_summary_table`"
-      #                                        ))
-      
-      summarytable1 <- get_summary_table(page_content)
-      
-      #review$summarytable1 <- possibly_get_summary_table(review$page_content)
-      #review$summaryTable_metadata <- get_summary_table_metadata(review$page_content)
-      
-      
-      #undebug(concat_tables)
-      final_table <- concat_tables(
-        info_page = info_page,
-        page_content = page_content,
-        summarytable = summarytable1,
-        metadata_review =  metadata,
-        abstract_review = abstract
-        #metadata_summaryTable = review$summaryTable_metadata
-      )
-      
-      
-      output <- final_table
+      # output <- final_table
       
       if (verbose) {
         print(output)
         writeLines("\n")
         writeLines(paste0("Review has been parsed.\n"))
       }
-    }
-  }
+    
+
   
   return(output)
-  
+
 }
 
 
