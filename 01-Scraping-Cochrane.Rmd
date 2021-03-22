@@ -30,8 +30,19 @@ library(xml2)  # web scraping
 library(stringr)  # string manipulation
 library(printr)  # print dfs as tables
 library(glue)  # glueing
-library(rcrossref)  # citation coutn
+library(rcrossref)  # citation count
+library(conflicted)
+library(glue)
+library(polite)
+library(tidytext)
 update_geom_font_defaults(font_rc)
+```
+
+
+Declare conflict preferences:
+
+```{r}
+conflict_prefer("filter", "dplyr")
 ```
 
 
@@ -49,6 +60,26 @@ dois_hw <- dois_list %>%
   filter(reviewer == "HW") %>% 
   pull(url)
 ```
+
+
+
+## Get sample for each reviewer
+
+```{r}
+dois_by_reviewer_sample <- 
+  dois_list %>% 
+  group_by(reviewer) %>% 
+  slice(1:50) %>% 
+  drop_na()
+```
+
+
+```{r}
+dois_by_reviewer_sample %>% 
+  count(reviewer)
+```
+
+
 
 
 
@@ -81,6 +112,10 @@ url_withdrawn <- "https://www.cochranelibrary.com/cdsr/doi/10.1002/14651858.CD00
 url_jh1 <- dois_jh[1]
 
 review_url <- mindfulness_url 
+
+url_np <- "https://www.cochranelibrary.com/cdsr/doi/10.1002/14651858.CD012137.pub2/full"
+
+url_404 <- "https://www.cochranelibrary.com/cdsr/doi/10.1002/14651858.CD007701.pub4/full"
 ```
 
 
@@ -137,7 +172,9 @@ review <- list()
 ## Test it
 
 ```{r test-parse-review}
-test_review <- parse_review(review_url, overwrite = TRUE)
+test_review <- parse_review(url_problem, overwrite = TRUE,
+                            reviewer = "np",
+                            output_dir = "output/np")
 test_review <- parse_review(review_url, overwrite = TRUE)
 test_review <- parse_review(mindfulness_url, overwrite = TRUE)
 ```
@@ -149,6 +186,69 @@ test_review <- parse_review(mindfulness_url, overwrite = TRUE)
 ```{r}
 count_reviews <<- 1
 ```
+
+
+
+
+# Read to disk
+
+Test one:
+
+```{r}
+read_page_content_to_disk(review_url = mindfulness_url)
+```
+
+
+Parse all to disk, according to name of reviewer:
+
+
+## Test it
+```{r}
+dois_by_reviewer_sample_test <- 
+dois_by_reviewer_sample %>% 
+  slice(1)
+
+page_page_content_to_disk(review_url = dois_by_reviewer_sample_test$url[1],
+                          output_dir = glue(
+                            "output/}dois_by_reviewer_sample_test$reviewer[1]}")
+
+
+```
+
+
+## Loop
+
+<!-- ### Test loop -->
+
+<!-- ```{r} -->
+<!-- map2(.x = dois_by_reviewer_sample_test$url, -->
+<!--      .y = dois_by_reviewer_sample_test$reviewer,  -->
+<!--      .f = ~ read_page_content_to_disk(review_url = .x, -->
+<!--                                        output_dir = glue("output/{.y}"))) -->
+<!-- ``` -->
+
+
+<!-- ### Loop with n=50 -->
+
+<!-- ```{r} -->
+<!-- map2(.x = dois_by_reviewer_sample$url, -->
+<!--      .y = dois_by_reviewer_sample$reviewer,  -->
+<!--      .f = ~ read_page_content_to_disk(review_url = .x, -->
+<!--                                        output_dir = glue("output/{.y}"))) -->
+<!-- ``` -->
+
+
+
+
+
+# Parse reviews
+
+
+
+
+
+
+
 
 
 ## Loop
@@ -170,6 +270,7 @@ dois_jh1 <-
 review_jh1 <- 
   dois_jh1 %>% 
   map_dfr(parse_review, .id = "id_review", output_dir = "output/jh",
+          reviewer = "jh",
           overwrite_file = FALSE)
 ```
 
@@ -178,6 +279,24 @@ review_jh1 <-
 ```{r}
 writexl::write_xlsx(review_jh1, path = "output/reviews_jh1.xlsx")
 ```
+
+
+### NP
+
+```{r}
+dois_np1 <- 
+  dois_by_reviewer_sample %>% 
+  filter(str_detect(reviewer, "NP")) %>% 
+  slice(5:50) %>% 
+  pull(url)
+
+review_np1 <- 
+  dois_np1 %>% 
+  map_dfr(parse_review, .id = "id_review", output_dir = "output/np",
+          overwrite_file = TRUE,
+          reviewer = "np")
+```
+
 
 
 

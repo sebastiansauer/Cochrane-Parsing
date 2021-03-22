@@ -77,6 +77,20 @@ get_summarytab_metadata_colnames <- function() {
   
 }
 
+get_infopage_colnames <- function() {
+  
+  infopage_colnames <- c(
+    "publication_date",
+    "review_type",
+    "review_group",
+    "review_mesh_keywords"
+  )
+  
+  return(infopage_colnames)  
+  
+}
+
+
 
 
 
@@ -113,7 +127,7 @@ raise_warning <- function(type,
   
   warning_df <-
     tibble(
-      type = type,
+      type = unlist(type),
       date = Sys.Date(),
       time = Sys.time(),
       critical = critical
@@ -268,6 +282,52 @@ parse_n_subj_n_studies <- function(n_participants_studies,
 
 
 
+
+
+get_conclusion_sentiment <- function(conclusion, verbose = TRUE) {
+  
+  
+  if (verbose) writeLines("Detecting emotionality of conclusions\n")
+  
+  
+  # get sentiment dict:
+  bing_sentiments <- get_sentiments("bing")
+  
+  # count pos and neg sentiment words:
+  pos_neg_count <- 
+    conclusion %>% 
+    str_squish() %>% 
+    tibble(text = .) %>% 
+    unnest_tokens(word, text) %>% 
+    inner_join(bing_sentiments) %>% 
+    count(sentiment)
+  
+  
+  emo_words_in_conclusion <- 
+    conclusion %>% 
+    str_squish() %>% 
+    tibble(text = .) %>% 
+    unnest_tokens(word, text) %>% 
+    inner_join(bing_sentiments) %>% 
+    summarise(emo_words = str_c(word, collapse = " - ")) %>% 
+    pull(emo_words)
+  
+  output <- 
+    tibble(
+      pos_neg_ratio = pos_neg_count$n[2]/pos_neg_count$n[1],
+      emo_count = sum(pos_neg_count$n),
+      emo_words_in_conclusion = emo_words_in_conclusion
+    )
+  
+  return(output)
+  
+}
+
+
+
+safely_read_html <- safely(read_html)
+
+
 get_number_of_citations <- function(review_url, 
                                     verbose = TRUE) {
   
@@ -389,22 +449,30 @@ get_nr_of_summary_tables <- function(page_content,
 
 check_if_review_file_exists <- function(review_url, 
                                         output_dir = "output",
+                                        file_type = "csv",
                                         verbose = TRUE) {
   
   if (length(output_dir) == 0) stop("Please specify output directory.")
   
-  writeLines("Checking if output file already exists.")
+
   
-  # use doi to check whether output file exists
-  file_path <- glue::glue("{output_dir}/{review_url}.csv") %>% 
+   # use doi to check whether output file exists
+  file_path <- glue::glue("{output_dir}/{review_url}.{file_type}") %>% 
     sanitize_review_url() 
   
   file_path <- file_path[1]
+  
+  writeLines(glue::glue("Checking if output file already exists: {file_path}\n"))
+  
+
   
   # check if output file exists:
   output_file_exists <- file.exists(file_path)
   
   if (verbose & output_file_exists) writeLines(glue::glue("Output file exists: {file_path}\n"))
+
+  if (verbose & !output_file_exists) writeLines(glue::glue("Output file does NOT exist: {file_path}\n"))
+  
   
   return(output_file_exists)
   
@@ -420,7 +488,31 @@ get_review_info_page <- function(review_url, verbose = TRUE) {
   infopage_url <- glue::glue("{review_url}/information") %>% 
     str_remove("/full")
   
-  page_content_info_page <- read_html(infopage_url)  
+  
+  safe_page_content_info_page <- safely_read_html(infopage_url) 
+  
+  # on error, stop:
+  if (!is.null(safe_page_content_info_page$error)) {
+    
+    warning_df <<-
+      warning_df %>% 
+      bind_cols(
+        raise_warning(type = safe_page_content_info_page$error$message,
+                      critical = TRUE))
+    
+    output <- create_empty_df(names_vec = get_infopage_colnames())
+    
+    writeLines("Error 404 on reading info review page.\n")
+    
+    return(output)
+    
+  }
+  
+  
+  
+  
+  url <- url(infopage_url, "rb")
+  close(url)
   
   info_publication <- 
     page_content_info_page %>% 
@@ -491,7 +583,9 @@ get_review_info_page <- function(review_url, verbose = TRUE) {
 
 
 
-get_review_metadata <- function(page_content, verbose = TRUE){
+get_review_metadata <- function(page_content, 
+                                reviewer = "?",
+                                verbose = TRUE){
   
   writeLines("Start parsing the review meta data\n")
   
@@ -642,6 +736,7 @@ get_review_metadata <- function(page_content, verbose = TRUE){
   
   output <- tibble(title = title_publication,
                  doi = review_doi,
+                 reviewer = reviewer,
                  authors = authors,
                  publish_type = publish_type,
                  is_most_recent_version = is_most_recent_version,
@@ -726,6 +821,10 @@ get_abstract <- function(page_content, verbose = TRUE) {
     conclusions_raw %>% str_remove_all("Authors' conclusions")
   
   
+  # add sentiment analysis of conclusion: 
+  conclusion_sentiments <- get_conclusion_sentiment(conclusions)
+  
+  
   output <- tibble(
     background = background,
     objectives = objectives,
@@ -734,7 +833,8 @@ get_abstract <- function(page_content, verbose = TRUE) {
     data_coll_analysis = data_coll_analysis,
     main_results = main_results,
     conclusions = conclusions
-  )
+  ) %>% 
+    bind_cols(conclusion_sentiments)
   
   if (verbose) print(output)
   
@@ -770,7 +870,7 @@ concat_tables <- function(page_content,
     
     output <- create_empty_df(names_vec = get_all_colnames())
     output$doi <- review_url
-    output$warning <- str_c(warning_df$type, collpase = " | ")
+    #output$warning <- str_c(warning_df$type, collpase = " | ")
     
     return(output)
     
@@ -827,6 +927,7 @@ concat_tables <- function(page_content,
     output_table5 %>% 
     select(
       doi, 
+      reviewer,
       publication_date,
       review_type,
       review_group,
@@ -838,7 +939,10 @@ concat_tables <- function(page_content,
       publish_type, 
       is_most_recent_version, 
       url_most_most_version,
+      
+      
       starts_with("main_comp"),
+      
       background,
       objectives,
       search_methods,
@@ -846,6 +950,11 @@ concat_tables <- function(page_content,
       data_coll_analysis,
       main_results,
       conclusions,
+      pos_neg_ratio,
+      emo_count,
+      emo_words_in_conclusion,
+      
+      
       everything())
   
   output <- output_table6
@@ -875,19 +984,26 @@ concat_tables <- function(page_content,
 
 parse_review_parts <- function(
   review_url,
+  reviewer = "?",
   overwrite = TRUE,
   final_table = TRUE,  # should the results be converted from list to df?
   verbose = TRUE, ...) {
   
   
-  # check if output file exists, and if so, skip the parsing:
-  output_file_exists <- check_if_review_file_exists(review_url)
+  # read_content_from_html <- function(review_url, verbose = TRUE) {
+  #   
+  #   
+  #   
+  # }
   
+  
+  # check if output CSV file exists, and if it should not be overwritten, skip the parsing:
+  output_file_exists <- check_if_review_file_exists(review_url)
   if (output_file_exists & !overwrite) {
     
     output <- create_empty_df(names_vec = get_all_colnames())
     output$doi <- review_url
-    output$warning <- "Output file already exists"
+    #output$warnings <- "Output file already exists"
     
     writeLines(glue::glue("Output file already exists. Skipping."))
     
@@ -899,97 +1015,135 @@ parse_review_parts <- function(
   # else, start normal work:
   init_new_review()
   
+  # initialize emptye output df:
   output <- create_empty_df(names_vec = get_all_colnames())
-  
-  #review <- list()
   
   if (verbose) cat(paste0("**Starting to parse the review with this doi: ", review_url, "**\n"))
   
- 
+  # if review should not be taken vom from rds file, but read from html page:
   # read html page, must be sanitized! (see function for that):
-  safely_read_html <- safely(read_html)
   safe_page_content <- safely_read_html(review_url)  
   
+  
+  
+  # on error, stop:
   if (!is.null(safe_page_content$error)) {
     
     warning_df <<-
       warning_df %>% 
-      raise_warning(type = safe_page_content$error,
-                    critical = TRUE)
+      bind_cols(
+        raise_warning(type = safe_page_content$error,
+                      critical = TRUE))
     
     output <- create_empty_df(names_vec = get_all_colnames())
     
+    writeLines("Error 404 on reading full review page. Stopping this review.\n")
+    
     return(output)
     
-  }
-    page_content <- safe_page_content$result
   
-  # parse info page, must be sanitized! (see function for that):
-  info_page <- get_review_info_page(review_url)
-  
-  
-  # read metadata:
-  metadata <- get_review_metadata(page_content)
-  
-  # read abstract:
-  abstract <- get_abstract(page_content)
-  
-  # check if there' a critical warning, in which case we stop parsing:
-  if (any(warning_df$critical == TRUE)) {
-
+    } else {  # else parse regularly:
     
-    writeLines(glue::glue("STOPPING parsing. Critical warning has been raised: {str_c(warning_df$type, collapse = ' | ')}"))
-    
-    final_table <- concat_tables(
-      info_page = info_page,
-      page_content = page_content,
-      summarytable = NA,
-      metadata_review =  metadata,
-      abstract_review = abstract
-      #metadata_summaryTable = NA
-    )
- 
-    output <- review$final_table
- 
-    return(output)
- 
-    } else {
-    # begin regular parsing:
-
-    summaryTable_count <- get_nr_of_summary_tables(page_content)
-    
-    # possibly_get_summary_table <- possibly(get_summary_table,
-    #                                        otherwise = stop_parsing_return_empty_df(
-    #                                          review_url = review_url,
-    #                                          error_message = "Error in `get_summary_table`"
-    #                                        ))
-    
-    summarytable1 <- get_summary_table(page_content)
-    
-    #review$summarytable1 <- possibly_get_summary_table(review$page_content)
-    #review$summaryTable_metadata <- get_summary_table_metadata(review$page_content)
+      # close url:
+      url <- url(review_url, "rb")
+      close(url)
+      
+      page_content <- safe_page_content$result
+      
+      # parse info page, must be sanitized! (see function for that):
+      info_page <- get_review_info_page(review_url)
     
     
-    #undebug(concat_tables)
-    final_table <- concat_tables(
-      info_page = info_page,
-      page_content = page_content,
-      summarytable = summarytable1,
-      metadata_review =  metadata,
-      abstract_review = abstract
-      #metadata_summaryTable = review$summaryTable_metadata
-    )
     
     
-   output <- final_table
+    # # if review should be read from disk (rds file):
+    # if (read_from_rds) {
+    #   
+    #   review_id_sanitized <- sanitize_review_url(review_url)
+    #   review_rds_file <- glue("output/{reviewer}/{review_id_sanitized}.rds")
+    #   
+    #   # if rds file does not exist, throw warning:
+    #   if (!file.exists(review_rds_file)) {
+    #     warning_df <-
+    #       warning_df %>% 
+    #       bind_cols(raise_warning(type = glue("RDS file `{review_rds_file}` does not exist"),
+    #                               critical = FALSE))
+    #     
+    #     output <- create_empty_df(names_vec = get_all_colnames())
+    #       
+    #   }
+    #   
+    #   safely_read_rds <- safely(read_rds)
+    #   output <- safely_read_rds(file = review_rds_file)
+    #   
+    # }
     
-    if (verbose) {
-      print(output)
-      writeLines("\n")
-      writeLines(paste0("Review has been parsed.\n"))
+    
+    
+    
+      # read metadata:
+      metadata <- get_review_metadata(page_content,
+                                      reviewer = reviewer)
+      
+      # read abstract:
+      abstract <- get_abstract(page_content)
+      
+      # check if there' a critical warning, in which case we stop parsing:
+      if (any(warning_df$critical == TRUE)) {
+        
+        
+        writeLines(glue::glue("STOPPING parsing. Critical warning has been raised: {str_c(warning_df$type, collapse = ' | ')}"))
+        
+        final_table <- concat_tables(
+          info_page = info_page,
+          page_content = page_content,
+          summarytable = NA,
+          metadata_review =  metadata,
+          abstract_review = abstract
+          #metadata_summaryTable = NA
+        )
+        
+        output <- review$final_table
+        
+        return(output)
+        
+      } else {
+        # continue regular parsing:
+        
+        summaryTable_count <- get_nr_of_summary_tables(page_content)
+        
+        # possibly_get_summary_table <- possibly(get_summary_table,
+        #                                        otherwise = stop_parsing_return_empty_df(
+        #                                          review_url = review_url,
+        #                                          error_message = "Error in `get_summary_table`"
+        #                                        ))
+        
+        summarytable1 <- get_summary_table(page_content)
+        
+        #review$summarytable1 <- possibly_get_summary_table(review$page_content)
+        #review$summaryTable_metadata <- get_summary_table_metadata(review$page_content)
+        
+        
+        #undebug(concat_tables)
+        final_table <- concat_tables(
+          info_page = info_page,
+          page_content = page_content,
+          summarytable = summarytable1,
+          metadata_review =  metadata,
+          abstract_review = abstract
+          #metadata_summaryTable = review$summaryTable_metadata
+        )
+        
+        
+        output <- final_table
+        
+        if (verbose) {
+          print(output)
+          writeLines("\n")
+          writeLines(paste0("Review has been parsed.\n"))
+        }
+      }
     }
-  }
-  
   
   return(output)
   
@@ -999,12 +1153,111 @@ parse_review_parts <- function(
 
 
 
+# read html page to RDS file ----------------------------------------------
+
+
+
+
+read_page_content_to_disk <- function(review_url, 
+                                 output_dir = "output",
+                                 overwrite = FALSE,
+                                 verbose = TRUE){
+  
+  # this function reads the thml of a review (and its info page) and
+  # stores the resulting html structure to disk.
+  # The use of this function is to save time: Accessing a web page takes time but not error-prone.
+  # Therefore, it's useful to separate the mere reading from the (bug-prone) processing of the content.
+  
+  
+  output <- list()
+  
+  
+  writeLines("Reading html of review page.\n")
+
+  # read html page, must be sanitized! (see function for that):
+  safely_read_html <- safely(read_html)
+  safe_page_content <- safely_read_html(review_url,
+                                        verbose = verbose)  
+  
+  url <- url(review_url, "rb")
+  close(url)
+  
+  if (!is.null(safe_page_content$error)) {
+    
+    warning_df <<-
+      warning_df %>% 
+      bind_rows(
+      raise_warning(type = "Could not read review html file",
+                    critical = TRUE))
+    
+
+  }
+  
+  
+  output[["review_page"]] <- safe_page_content
+  
+  
+  
+  writeLines("Reading html of info review page.\n")
+
+  # read html page, must be sanitized! (see function for that):
+    # get infopage page content:
+  infopage_url <- glue::glue("{review_url}/information") %>%
+    str_remove("/full")
+  
+  # parse info page, must be sanitized! (see function for that):
+  safely_page_content_info_page <- safely_read_html(infopage_url,
+                                                    verbose = verbose)
+  
+  url <- url(infopage_url, "rb")
+  close(url)
+  
+  if (!is.null(safely_page_content_info_page$error)) {
+    
+    warning_df <<-
+      warning_df %>% 
+      bind_rows(raise_warning(type = "Could not read review html info page",
+                    critical = TRUE))
+  }
+  
+  output[["info_page"]] <- safely_page_content_info_page
+  
+  
+  output[["output_dir"]] <- output_dir
+  
+  
+  # writing to disk:
+  writeLines("Now writing page content file to disk.\n")
+  
+  output_file_exists <- check_if_review_file_exists(review_url,
+                                                    file_type = "rds")
+  
+  # check if we should overwrite it, otherwise stop (if output  file already exists):
+  if (output_file_exists & !overwrite) {
+    writeLines(glue::glue("Output file exists. NOT overwriting.\n"))
+  } else {
+    
+    file_path <- glue::glue("{output_dir}/{review_url}.rdata") %>% 
+      sanitize_review_url() 
+    
+    file_path <- file_path[1]
+    
+    write_rds(x = output, 
+              file = file_path)
+    writeLines(glue::glue("Results have been saved to file: {file_path}\n"))
+  }
+  
+  
+  
+}
+
+
 
 # write-parsed-review-to-file ---------------------------------------------
 
 
 
-write_parsed_review_to_file <- function(review_url,
+write_parsed_review_to_csv_file <- function(review_url,
                                         review,
                                         output_dir = "output",
                                         overwrite = TRUE){
@@ -1045,6 +1298,7 @@ write_parsed_review_to_file <- function(review_url,
 parse_review <- function(review_url,
                          verbose = TRUE,
                          output_dir = "output",
+                         reviewer  = "?",
                          overwrite_file = TRUE) {
   
   if (verbose) writeLines(glue::glue("______Now starting with review number ((( {count_reviews} )))______\n"))
@@ -1053,9 +1307,15 @@ parse_review <- function(review_url,
   
   review_url_cochrane <- build_cochrane_url_from_doi(review_url)
   
+  #be polite:
+  bow_result <- bow(url = review_url,
+                    user_agent = "Sebastian Sauer - sebastiansauer1@gmail.com")
+
+  
   review_parsed_parts <- parse_review_parts(review_url_cochrane, 
+                                            reviewer = reviewer,
                                             overwrite = overwrite_file)
-  write_parsed_review_to_file(review_url = review_url_cochrane,
+  write_parsed_review_to_csv_file(review_url = review_url_cochrane,
                               review = review_parsed_parts,
                               output_dir = output_dir,
                               overwrite = overwrite_file)
