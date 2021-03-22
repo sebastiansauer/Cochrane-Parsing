@@ -237,7 +237,9 @@ reviewer <- "ss"
 
 ```{r}
 count_reviews <- 1
-map2_dfr(.x = dois_by_reviewer_sample$url,
+
+reviews_all_50 <- 
+  map2_dfr(.x = dois_by_reviewer_sample$url,
      .y = dois_by_reviewer_sample$reviewer,
      .f = ~ parse_review(review_url = .x,
                         reviewer = .y,

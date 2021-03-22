@@ -61,12 +61,15 @@ parse_review_parts <- function(
       # url <- url(review_url, "rb")
       # close(url)
       
+
+        
       page_content <- safe_page_content$result
       
       # parse info page, must be sanitized! (see function for that):
       info_page <- get_review_info_page(review_url)
       
-      output <- info_page
+      output <- 
+        info_page
       
       # read metadata:
       
@@ -75,14 +78,14 @@ parse_review_parts <- function(
       
       output <-
         output %>% 
-        bind_rows(metadata)
+        bind_cols(metadata)
       
       # read abstract:
       abstract <- get_abstract(page_content)
       
       output <-
         output %>% 
-        bind_rows(abstract)
+        bind_cols(abstract)
       
       # check if there' a critical warning, in which case we stop parsing:
       # if (any(warning_df$critical == TRUE)) {
@@ -110,7 +113,7 @@ parse_review_parts <- function(
       safely_get_nr_of_summary <- safely(get_nr_of_summary_tables)
       safe_summaryTable_count <- safely_get_nr_of_summary(page_content)
       
-      # on error.
+      # on error:
       if (!is.null(safe_summaryTable_count$error)) {
         
         summaryTable_count <- 0
@@ -126,8 +129,19 @@ parse_review_parts <- function(
         
       }  # no error in get_nr_of_summary, then read summary table:
       
+      
+      summaryTable_count <- safe_summaryTable_count$result
       safe_get_summary_table <- safely(get_summary_table)
       safe_summarytable1 <- safe_get_summary_table(page_content)
+      
+      summarytable <- 
+        1:summaryTable_count %>% 
+        map_dfr(~ get_summary_table(page_content = page_content,
+                                     table_number = .,),
+                                    .id = "SoF_table_number")
+      
+      
+      
       
       # on error:
       if (!is.null(summarytable1$error)) {
@@ -139,9 +153,9 @@ parse_review_parts <- function(
                                   critical = FALSE"))
         
 
-      } else summarytable <- safe_summarytable$results
+      } else summarytable <- safe_summarytable1$result
         
-        output <- 
+        out <- 
           output %>% 
           bind_cols(summarytable)
         
