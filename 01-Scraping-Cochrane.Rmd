@@ -103,7 +103,7 @@ dois_by_reviewer_sample %>%
 ```{r}
 # mindfulness open access review on intervention:
 # friendly review:
-mindfulness_url <- "https://www.cochranelibrary.com/cdsr/doi/10.1002/14651858.CD012791.pub2/full"
+mindfulness_url <- "https://www.cochranelibrary.com/cdsr/doi/10.1002/14651858.CD012791.pub2/full"  # 2 sof tables
 
 
 cochrane_url <- dois_reviews_paywalled[1]
@@ -207,8 +207,7 @@ output_dir <- "output"
 ## Test it
 
 ```{r test-parse-review}
-bad_url <- "https://www.cochranelibrary.com/cdsr/doi/10.1002/14651858.CD008720.pub2/full"
-test_review <- parse_review(bad_url, 
+test_review <- parse_review(mindfulness_url, 
                             overwrite = TRUE,
                             reviewer = "?",
                             output_dir_to_write = "output")
@@ -244,14 +243,22 @@ test_review <- parse_review(mindfulness_url, overwrite = TRUE)
 count_reviews <- 1
 
 reviews_all_50 <- 
-  
-  map2_dfr(.x = dois_by_reviewer_sample$url,
-     .y = dois_by_reviewer_sample$reviewer,
-     .f = ~ parse_review(review_url = .x,
+  map2_dfr(
+    .x = dois_by_reviewer_sample$url,
+    .y = dois_by_reviewer_sample$reviewer,
+    .f = ~ parse_review(review_url = .x,
                         reviewer = .y,
-                        overwrite = FALSE,
+                        overwrite = TRUE,
                         output_dir = glue("output/{.y}")))
-  
+
+
+writexl::write_xlsx(reviews_all_50, path = "output/all_reviewers_50.xlsx")
+```
+
+
+```{r}
+reviews_all_50 %>% 
+  count(reviewer)
 ```
 
 

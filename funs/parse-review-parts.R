@@ -132,8 +132,8 @@ parse_review_parts <- function(
       
       
       summaryTable_count <- safe_summaryTable_count$result
-      safe_get_summary_table <- safely(get_summary_table)
-      safe_summarytable1 <- safe_get_summary_table(page_content)
+      #safe_get_summary_table <- safely(get_summary_table)
+      #safe_summarytable1 <- safe_get_summary_table(page_content)
       
       summarytable <- 
         1:summaryTable_count %>% 
@@ -156,7 +156,7 @@ parse_review_parts <- function(
       # 
       # } else summarytable <- safe_summarytable1$result
         
-        out <- 
+        output <- 
           output %>% 
           bind_cols(summarytable)
         

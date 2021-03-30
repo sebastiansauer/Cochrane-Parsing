@@ -459,6 +459,7 @@ check_if_review_file_exists <- function(review_url,
 
   
    # use doi to check whether output file exists
+   # BUG!!!
   file_path <- glue::glue("{output_dir}/{review_url}.{file_type}") %>% 
     sanitize_review_url() 
   
