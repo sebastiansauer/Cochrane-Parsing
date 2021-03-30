@@ -143,9 +143,9 @@ bad_url <- "https://www.cochranelibrary.com/cdsr/doi/10.1002/14651858.CD012137.p
 # Source functions to get main study infos
 
 ```{r}
-source("funs-parse-cochrane.R")
-source("get_summary_table.R")
-source("parse-review-parts.R")
+source("funs/funs-parse-cochrane.R")
+source("funs/get_summary_table.R")
+source("funs/parse-review-parts.R")
 ```
 
 
@@ -187,20 +187,6 @@ review <- list()
 
 
 
-
-
-## Test it
-
-```{r test-parse-review}
-test_review <- parse_review(bad_url, overwrite = TRUE,
-                            reviewer = "?",
-                            output_dir = "output")
-test_review <- parse_review(review_url, overwrite = TRUE)
-test_review <- parse_review(mindfulness_url, overwrite = TRUE)
-```
-
-
-
 ## init
 
 ```{r}
@@ -209,6 +195,25 @@ table_number <- 1
 overwrite <- FALSE
 verbose <- TRUE
 reviewer <- "ss"
+overwrite_file <- TRUE
+init_new_review()
+output_dir <- "output"
+```
+
+
+
+
+
+## Test it
+
+```{r test-parse-review}
+bad_url <- "https://www.cochranelibrary.com/cdsr/doi/10.1002/14651858.CD008720.pub2/full"
+test_review <- parse_review(bad_url, 
+                            overwrite = TRUE,
+                            reviewer = "?",
+                            output_dir_to_write = "output")
+test_review <- parse_review(review_url, overwrite = TRUE)
+test_review <- parse_review(mindfulness_url, overwrite = TRUE)
 ```
 
 
@@ -239,6 +244,7 @@ reviewer <- "ss"
 count_reviews <- 1
 
 reviews_all_50 <- 
+  
   map2_dfr(.x = dois_by_reviewer_sample$url,
      .y = dois_by_reviewer_sample$reviewer,
      .f = ~ parse_review(review_url = .x,
