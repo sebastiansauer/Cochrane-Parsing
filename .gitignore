@@ -3,3 +3,9 @@
 .RData
 .Ruserdata
 *.Rproj
+
+*.bak
+
+/data
+
+
