@@ -35,6 +35,7 @@ library(conflicted)
 library(glue)
 library(polite)
 library(tidytext)
+library(readxl)
 update_geom_font_defaults(font_rc)
 ```
 
@@ -143,6 +144,7 @@ bad_url <- "https://www.cochranelibrary.com/cdsr/doi/10.1002/14651858.CD012137.p
 # Source functions to get main study infos
 
 ```{r}
+source("funs/helper-funs.R")
 source("funs/funs-parse-cochrane.R")
 source("funs/get_summary_table.R")
 source("funs/parse-review-parts.R")
@@ -198,6 +200,7 @@ reviewer <- "ss"
 overwrite_file <- TRUE
 init_new_review()
 output_dir <- "output"
+file_type = "csv"
 ```
 
 
@@ -252,7 +255,7 @@ reviews_all_50 <-
                         output_dir = glue("output/{.y}")))
 
 
-writexl::write_xlsx(reviews_all_50, path = "output/all_reviewers_50.xlsx")
+writexl::write_xlsx(reviews_all_50, path = "output/all_reviewers/all_reviewers_50.xlsx")
 ```
 
 
@@ -260,6 +263,36 @@ writexl::write_xlsx(reviews_all_50, path = "output/all_reviewers_50.xlsx")
 reviews_all_50 %>% 
   count(reviewer)
 ```
+
+
+
+#### Read from disk
+
+```{r}
+reviews_all_50 <- 
+  read_xlsx("output/all_reviewers/all_reviewers_50.xlsx")
+```
+
+
+
+#### Save in parts (per reviewer)
+
+```{r}
+
+reviewers <- 
+reviews_all_50 %>% 
+  select(reviewer) %>% 
+  distinct(reviewer) %>% 
+  pull(reviewer)
+
+
+reviewers %>% 
+  walk( ~ write_csv(
+    reviewers_all_50 %>% filter(reviewer == .),
+    file = glue("output/all_reviewers/sample_50_{.}.csv")))
+
+```
+
 
 
 
@@ -288,6 +321,8 @@ writexl::write_xlsx(review_jh1, path = "output/reviews_jh1.xlsx")
 
 ### NP
 
+
+#### NP1
 ```{r}
 dois_np1 <- 
   dois_by_reviewer_sample %>% 
@@ -307,6 +342,29 @@ save to disk:
 ```{r}
 writexl::write_xlsx(review_np1, path = "output/np/reviews_np1.xlsx")
 ```
+
+
+
+#### NP2
+
+```{r}
+dois_np2 <- 
+  read_csv("data/doi-list-np_1.csv")
+```
+
+
+```{r}
+reviews_np2 <- 
+  dois_np2 %>% 
+  pull(url) %>% 
+  map_dfr(parse_review, .id = "id_review", output_dir = "output/np",
+          overwrite_file = FALSE,
+          reviewer = "np")
+
+
+writexl::write_xlsx(reviews_np2, path = "output/np/reviews_np2.xlsx")
+```
+
 
 
 

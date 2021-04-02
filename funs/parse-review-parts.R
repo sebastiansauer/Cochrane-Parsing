@@ -175,8 +175,8 @@ parse_review_parts <- function(
   
 
   # check if output CSV file exists, and if it should not be overwritten, skip the parsing:
-  if (reviewer != "?") {output_dir <- glue("output/{reviewer}/{review_url}")
-  } else {output_dir <- glue("output/{review_url}")}
+  if (reviewer != "?") {output_dir <- glue("output/{reviewer}")
+  } else {output_dir <- glue("output")}
   
   output_file_exists <- check_if_review_file_exists(review_url,
                                                     output_dir = output_dir)
@@ -192,8 +192,7 @@ parse_review_parts <- function(
     
   }
   
- # XXX
-  
+
   safely_parse_individual_parts <- safely(parse_individual_parts)
   safe_output <- safely_parse_individual_parts(review_url = review_url) 
   
