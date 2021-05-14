@@ -5,30 +5,17 @@
 
 
 
-get_nr_of_summary_tables <- function(page_content, 
+get_nr_of_summary_tables <- function(my_page_content, 
                                      table_number = NULL, # which table should be extracted?
                                      verbose = TRUE) # should an empty table be returned? if so, what's the name of the only column?
 {
   
-  
-  # stop if critical warning has been raised earlier on:
-  # if (any(warning_df$critical == TRUE)) {
-  #   
-  #   writeLines("Stopping reading the summary table, as critical warning has been raised earlier on")
-  #   
-  #   output <- create_empty_df(names_vec = get_all_colnames())
-  #   output$doi <- review_url
-  #   output$warning <- warning_df$type
-  #   
-  #   return(output)
-  #   
-  # }
-  
+
   
   
   # check how many tables exist:
   nr_Table <- 
-    page_content %>% 
+    my_page_content %>% 
     html_nodes("table") %>% 
     length()
   
@@ -36,7 +23,7 @@ get_nr_of_summary_tables <- function(page_content,
   
   # check if a section "summary of results" exist
   summary_sections_exists <- 
-    page_content %>% 
+    my_page_content %>% 
     html_nodes(".section-collapse-title") %>% 
     html_text() %>% 
     str_trim() %>% 
@@ -46,14 +33,14 @@ get_nr_of_summary_tables <- function(page_content,
   
   # get number of summary tables:
   nr_summary_tables <- 
-    page_content %>% 
+    my_page_content %>% 
     html_nodes(".summaryOfFindings") %>% 
     html_nodes(".table") %>% 
     length()
   
   # alternative way, likely less precise:
   nr_summary_tables2 <- 
-    page_content %>% 
+    my_page_content %>% 
     html_nodes("table") %>% 
     html_nodes(".table-label") %>% 
     html_text() %>% 
@@ -133,7 +120,7 @@ check_if_review_file_exists <- function(review_url,
 
 
 
-# get-info-page -----------------------------------------------------------
+# get-review-info-page -----------------------------------------------------------
 
 
 get_review_info_page <- function(review_url, verbose = TRUE) {
@@ -245,8 +232,7 @@ get_review_info_page <- function(review_url, verbose = TRUE) {
 
 
 
-get_review_metadata <- function(page_content, 
-                                reviewer = "?",
+get_review_metadata <- function(page_content,
                                 verbose = TRUE){
   
   writeLines("Start parsing the review meta data\n")
@@ -312,7 +298,7 @@ get_review_metadata <- function(page_content,
     html_text()
   
   
-  if (length(version_warning) > 0)  {
+  if (length(version_warning) > 0)  {  # review is withdrawn:
     
     # if there is a version warning, stop parsing:
     
@@ -327,6 +313,8 @@ get_review_metadata <- function(page_content,
     writeLines(glue::glue("Version warning: {warning_df$type}\n"))
     
     #return(output)
+  } else { # reivew is not withdran
+    is_withdrawn <- FALSE
   }
   
   
@@ -398,9 +386,9 @@ get_review_metadata <- function(page_content,
   
   output <- tibble(title = title_publication,
                  doi = review_doi,
-                 reviewer = reviewer,
                  authors = authors,
                  publish_type = publish_type,
+                 is_withdrawn = is_withdrawn,
                  is_most_recent_version = is_most_recent_version,
                  url_most_most_version = url_most_most_version,
                  summaryTable_count = summaryTable_count,
@@ -683,9 +671,9 @@ parse_review <- function(review_url,
   review_url_cochrane <- build_cochrane_url_from_doi(review_url)
   
   #be polite:
-  bow_result <- bow(url = review_url,
+  bow_result <- bow(url = review_url_cochrane,
                     user_agent = "Sebastian Sauer - sebastiansauer1@gmail.com")
-
+  # not yet fully implemented
   
   # parse all parts
   review_parsed_parts <- parse_review_parts(review_url_cochrane, 

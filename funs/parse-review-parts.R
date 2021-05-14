@@ -7,7 +7,7 @@
 
 
 parse_review_parts <- function(
-  review_url,
+  sanitized_review_url,
   reviewer = "?",
   overwrite = TRUE,
   final_table = TRUE,  # should the results be converted from list to df?
@@ -15,25 +15,24 @@ parse_review_parts <- function(
   
   
   
-  parse_individual_parts <- function(review_url) {
+  parse_individual_parts <- function(sanitized_review_url,
+                                     verbose = TRUE) {
     
-    
-    # else, start normal work:
     init_new_review()
-    
-    
-    
-    
-    if (verbose) cat(paste0("**Starting to parse the review with this doi: ", review_url, "**\n"))
+
+    if (verbose) cat(paste0("**Starting to parse the review with this doi: ", 
+                            sanitized_review_url, "**\n"))
     
     # if review should not be taken vom from rds file, but read from html page:
     # read html page, must be sanitized! (see function for that):
-    safe_page_content <- safely_read_html(review_url)  
+    safe_page_content <- safely_read_html(sanitized_review_url)  
     
     
     
     # on error, stop:
     if (!is.null(safe_page_content$error)) {
+      
+      if (verbose) print("Error raised on parsing the review url!\n")
       
       warning_df <<-
         warning_df %>% 
@@ -49,10 +48,6 @@ parse_review_parts <- function(
       writeLines("Error 404 on reading full review page. Stopping this review.\n")
       
       return(output)
-      
-      
-      
-      
     
       
       } else {  # else parse regularly:
@@ -67,52 +62,38 @@ parse_review_parts <- function(
       page_content <- safe_page_content$result
       
       # parse info page, must be sanitized! (see function for that):
-      info_page <- get_review_info_page(review_url)
+      info_page <- get_review_info_page(sanitized_review_url)
       
+      # we build up the output of the function step by step
+      # first step: add info page results to output
       output <- 
         info_page
       
+      # add the name of the reviewer:
+      output <- 
+        output %>% 
+        mutate(reviewer = reviewer)
+      
       # read metadata:
       
-      metadata <- get_review_metadata(page_content,
-                                      reviewer = reviewer)
+      metadata <- get_review_metadata(safe_page_content$result)
       
+      # now add the metadata results to the output object:
       output <-
         output %>% 
         bind_cols(metadata)
       
       # read abstract:
-      abstract <- get_abstract(page_content)
+      abstract <- get_abstract(safe_page_content$result)
       
+      # add the abstract results to the output object:
       output <-
         output %>% 
         bind_cols(abstract)
-      
-      # check if there' a critical warning, in which case we stop parsing:
-      # if (any(warning_df$critical == TRUE)) {
-      #   
-      #   
-      #   writeLines(glue::glue("STOPPING parsing. Critical warning has been raised: {str_c(warning_df$type, collapse = ' | ')}"))
-      #   
-      #   final_table <- concat_tables(
-      #     info_page = info_page,
-      #     page_content = page_content,
-      #     summarytable = create_empty_df(names_vec = get_summarytab_colnames()),
-      #     metadata_review =  metadata,
-      #     abstract_review = abstract
-      #     #metadata_summaryTable = NA
-      #   )
-      #   
-      #   output <- final_table
-      #   
-      #   return(output)
-      #   
-      #   
-      # } 
-      # continue regular parsing:
+  
       
       safely_get_nr_of_summary <- safely(get_nr_of_summary_tables)
-      safe_summaryTable_count <- safely_get_nr_of_summary(page_content)
+      safe_summaryTable_count <- safely_get_nr_of_summary(safe_page_content$result)
       
       # on error:
       if (!is.null(safe_summaryTable_count$error)) {
@@ -156,6 +137,8 @@ parse_review_parts <- function(
       # 
       # } else summarytable <- safe_summarytable1$result
         
+      
+      # bind summary tables results to output object
         output <- 
           output %>% 
           bind_cols(summarytable)
@@ -178,12 +161,12 @@ parse_review_parts <- function(
   if (reviewer != "?") {output_dir <- glue("output/{reviewer}")
   } else {output_dir <- glue("output")}
   
-  output_file_exists <- check_if_review_file_exists(review_url,
+  output_file_exists <- check_if_review_file_exists(sanitized_review_url,
                                                     output_dir = output_dir)
   if (output_file_exists & !overwrite) {
     
     output <- create_empty_df(names_vec = get_all_colnames())
-    output$doi <- review_url
+    output$doi <- sanitized_review_url
     output$warnings <- "Output file already exists"
     
     writeLines(glue::glue("Output file already exists. Skipping."))
@@ -192,9 +175,11 @@ parse_review_parts <- function(
     
   }
   
+  
+  # XXX
 
   safely_parse_individual_parts <- safely(parse_individual_parts)
-  safe_output <- safely_parse_individual_parts(review_url = review_url) 
+  safe_output <- safely_parse_individual_parts(sanitized_review_url = sanitized_review_url) 
   
   if (!is.null(safe_output$error)) { 
     
