@@ -99,9 +99,12 @@ dois_by_reviewer_sample %>%
 
 
 
-
+## URLs for checking
 
 ```{r}
+reviews_ss1 <- "http://dx.doi.org/10.1002/14651858.CD001180.pub4"
+
+
 # mindfulness open access review on intervention:
 # friendly review:
 mindfulness_url <- "https://www.cochranelibrary.com/cdsr/doi/10.1002/14651858.CD012791.pub2/full"  # 2 sof tables
@@ -129,19 +132,21 @@ url_withdrawn <- "https://www.cochranelibrary.com/cdsr/doi/10.1002/14651858.CD00
 
 url_jh1 <- dois_jh[1]
 
-review_url <- mindfulness_url 
+review_url <- prob_url 
 
 url_np <- "https://www.cochranelibrary.com/cdsr/doi/10.1002/14651858.CD012137.pub2/full"
 
 url_404 <- "https://www.cochranelibrary.com/cdsr/doi/10.1002/14651858.CD007701.pub4/full"
 
 bad_url <- "https://www.cochranelibrary.com/cdsr/doi/10.1002/14651858.CD012137.pub2/full"
+
+prob_url <- "https://www.cochranelibrary.com/cdsr/doi/10.1002/14651858.CD009099.pub3"
 ```
 
 
 
 
-# Source functions to get main study infos
+# Source functions
 
 ```{r}
 source("funs/helper-funs.R")
@@ -210,7 +215,7 @@ file_type = "csv"
 ## Test it
 
 ```{r test-parse-review}
-test_review <- parse_review(mindfulness_url, 
+test_review <- parse_review(prob_url, 
                             overwrite = TRUE,
                             reviewer = "?",
                             output_dir_to_write = "output")
@@ -398,11 +403,20 @@ dois_ss <-
   #slice(5:50) %>% 
   pull(url)
 
-review_ss <- 
-  dois_ss %>% 
-  map_dfr(parse_review, .id = "id_review", output_dir = "output/ss",
-          overwrite_file = FALSE,
+count_reviews <- 1
+reviews_ss <- 
+  c("http://dx.doi.org/10.1002/14651858.CD009110.pub3", 
+    prob_url) %>% 
+  map_dfr(parse_review, 
+          .id = "id_review", 
+          output_dir = "output/ss",
+          overwrite_file = TRUE,
           reviewer = "ss")
+
+
+
+
+
 ```
 
 
@@ -449,6 +463,12 @@ write_csv(reviews_parsed3,
 
 writexl::write_xlsx(reviews_parsed3,
                     path = "test_reviews_infos3.xlsx")
+
+writexl::write_xlsx(reviews_ss,
+                    path = "output/ss/reviews_ss.xlsx")
+write_csv(reviews_ss, 
+            file = "output/ss/reviews_ss.csv")
+
 ```
 
 

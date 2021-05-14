@@ -1,0 +1,346 @@
+---
+title: "Automated checks of manual extractions"
+author: "ses"
+date: "5/14/2021"
+output: html_document
+---
+
+# Setup
+
+
+```{r global-knitr-options, include=FALSE}
+knitr::opts_chunk$set(fig.pos = 'H',
+  fig.asp = 0.618,
+  fig.width = 5,
+  fig.cap = "", 
+  fig.path = "",
+  echo = TRUE,
+  message = FALSE,
+  warning = FALSE,
+  cache = FALSE,
+  fig.show = "hold")
+```
+
+
+## Load packages
+
+```{r ipsum_setup, message=FALSE, warning=FALSE, cache=FALSE, echo=FALSE}
+
+library(tidyverse)  # data wrangling
+library(rvest)  # web scraping
+library(xml2)  # web scraping
+
+library(printr)  # print dfs as tables
+library(glue)  # glueing
+library(rcrossref)  # citation count
+library(conflicted)  # detect package confligcs
+library(readxl)  # import excel data
+library(janitor)  # clean data 
+library(polite)  # polite scraping
+
+```
+
+
+
+
+Declare conflict preferences:
+
+```{r}
+conflict_prefer("filter", "dplyr")
+```
+
+
+
+
+
+## Source functions
+
+```{r}
+source("funs/helper-funs.R")
+source("funs/funs-parse-cochrane.R")
+source("funs/get_summary_table.R")
+source("funs/parse-review-parts.R")
+```
+
+
+
+## Some constants
+
+```{r}
+sample_doi <- "14651858.CD001180.pub4"
+sample_doi2 <- "14651858.CD011923.pub2"
+```
+
+
+
+# Prepare manually extracted data
+
+## Import manually extracted data
+
+
+```{r}
+ss_manual_path <- "manual-scraping/ss/InEffective Cochrane Reviews Final_SS_v2.xlsx"
+
+ss_manual <-
+  read_xlsx(path = ss_manual_path,
+            skip = 1) %>%   # invalid header row
+  slice(-c(1,2))  %>% # invalued header rows
+  rename(reviewer = `...1`)
+
+```
+
+
+## Clean the cols
+
+```{r}
+ss_manual2 <-
+  ss_manual %>% 
+  clean_names()
+```
+
+
+### Rename cols
+
+```{r}
+ss_manual3 <-
+  ss_manual2
+
+names(ss_manual3)[3] <- "SoF_table_number"
+names(ss_manual3)[4] <- "is_outdated"
+names(ss_manual3)[5] <- "is_withdrawn"
+names(ss_manual3)[7] <- "GRADE_used"
+```
+
+
+### Recode 
+
+```{r}
+ss_manual3a <-
+  ss_manual3 %>% 
+  mutate(across(.cols = c(3:7),
+                .fns = tolower)) %>% 
+  mutate(is_outdated = ifelse(is_outdated == "yes", TRUE, FALSE),
+         is_withdrawn = ifelse(is_withdrawn == "yes", TRUE, FALSE),
+         GRADE_used = ifelse(GRADE_used == "yes", TRUE, FALSE)) %>% 
+  group_by(url) %>% 
+  mutate(SoF_table_number = row_number()) %>% 
+  ungroup()
+```
+
+
+
+
+
+### Sanitize url
+
+
+```{r}
+ss_manual3b <- 
+ss_manual3a %>% 
+  mutate(cochrane_id = sanitize_review_url(url))
+```
+
+
+
+## Select columns 
+
+
+### Cols to be checked by the algorithm 
+
+
+```{r}
+cols_to_be_checked <-
+  c("is_outdated",
+    "is_withdrawn",   
+    "GRADE_used")
+```
+
+
+### ID columns
+
+
+```{r}
+id_cols_manual <-
+  c("reviewer", "title", "cochrane_id", "SoF_table_number")
+```
+
+
+
+
+## Select relevant columns
+
+
+```{r}
+ss_manual4 <-
+  ss_manual3b %>% 
+  select(any_of(c(id_cols_manual, cols_to_be_checked)))
+```
+
+
+
+## Filter relevant rows
+
+
+```{r}
+ss_manual5 <-
+  ss_manual4 %>% 
+  filter(tolower(reviewer) == "ss")
+```
+
+
+
+
+## Checks
+
+```{r}
+ss_manual5 %>% 
+  filter(cochrane_id == sample_doi) %>% 
+  select(SoF_table_number, GRADE_used)
+```
+
+
+# Prepare machine extracted data
+
+## Import machine extracted data
+
+
+```{r}
+ss_machine_path <- "output/ss/reviews_ss.csv"
+
+ss_machine <- 
+  read_csv(ss_machine_path)
+```
+
+
+## Some preparations
+
+
+```{r}
+ss_machine2 <-
+  ss_machine %>% 
+  mutate(is_outdated = !is_most_recent_version,
+         url = doi,
+         cochrane_id = sanitize_review_url(doi)) 
+```
+
+
+### Add `GRADE_used`
+
+
+`GRADE_used` is set to TRUE if GRADE was used for at least one measure in the respective SOF.
+
+
+
+```{r}
+ss_machine3 <-
+  ss_machine2 %>% 
+  group_by(doi, SoF_table_number) %>% 
+  mutate(GRADE_used = str_detect(GRADE, "⊕|⊝")) %>% 
+  mutate(GRADE_used = ifelse(is.na(GRADE_used), FALSE, TRUE )) %>% 
+  mutate(GRADE_used = ifelse(any(GRADE_used == TRUE), TRUE, FALSE)) %>% 
+  ungroup()
+```
+
+#### Check
+
+
+```{r}
+ss_machine3 %>% 
+  filter(cochrane_id == sample_doi2) %>% 
+  select(SoF_table_number, GRADE_used)
+```
+
+
+## Select relevant columns
+
+
+```{r}
+ss_machine4 <-
+  ss_machine3 %>% 
+  select(cochrane_id, SoF_table_number, any_of(cols_to_be_checked))
+```
+
+
+
+# Merge manual and machine extracted data
+
+
+## Check 1 
+
+Are the ID (sample dois) correctly parsed?
+
+```{r}
+
+ss_machine4 %>% 
+  filter(cochrane_id == sample_doi) %>% 
+  pull(cochrane_id)
+
+
+ss_manual5 %>%
+  filter(cochrane_id == sample_doi) %>% 
+  pull(cochrane_id)
+```
+
+
+## Check 2
+
+
+Are the `GRADE_used` cols are correctly parsed?
+
+
+```{r}
+ss_machine4 %>% 
+  filter(cochrane_id == sample_doi2) %>% 
+  select(SoF_table_number, GRADE_used)
+```
+
+
+```{r}
+ss_manual5 %>% 
+  filter(cochrane_id == sample_doi2) %>% 
+  select(SoF_table_number, GRADE_used)
+```
+
+
+
+## Merge em!
+
+
+```{r}
+ss_merged <- 
+  ss_manual5 %>% 
+  left_join(y = ss_machine4, 
+            by = c("cochrane_id", "SoF_table_number"))
+```
+
+
+- x: manual (reviewer)
+- y: machine 
+
+
+# Check for differences between manual and machine extractions
+
+
+```{r}
+ss_merged2 <-
+  ss_merged %>% 
+  mutate(identical_outdated = is_outdated.x == is_outdated.y,
+         identical_withdrawn = is_withdrawn.x == is_withdrawn.y,
+         identical_GRADE_used = GRADE_used.x == GRADE_used.y)
+```
+
+
+
+## Filter for differences
+
+A difference is indicative for some error, either by the machine or by the reviewer. To be inspected with closer scrunity.
+
+
+```{r}
+ss_merged3 <-
+  ss_merged2 %>% 
+  filter(identical_outdated == FALSE |
+         identical_withdrawn == FALSE |
+         identical_GRADE_used == FALSE  )
+```
+
