@@ -4,15 +4,15 @@
 
 
 
-get_summary_table_metadata <- function(safe_page_content, 
+get_summary_table_metadata <- function(page_content, 
                                        table_number = 1,
                                        verbose = TRUE) {
   
   
-  writeLines("Start parsing SoF Table for metadata.\n")
+  if (verbose) writeLines("Start parsing SoF Table for metadata.\n")
   
   # run only if at least one such tables exists:
-  nr_summaryOfFindingsTable <- get_nr_of_summary_tables(safe_page_content, 
+  nr_summaryOfFindingsTable <- get_nr_of_summary_tables(page_content, 
                                                         verbose = TRUE)
   
   
@@ -38,7 +38,7 @@ get_summary_table_metadata <- function(safe_page_content,
   # otherwise, start normal work:
   # get raw summary of findings table:
   summaryOfFindingsTable <- 
-    safe_page_content %>% 
+    page_content %>% 
     html_nodes(".summaryOfFindings") %>% 
     html_nodes("table") %>% 
     .[[table_number]] %>% 
@@ -114,7 +114,10 @@ get_summary_table <- function(page_content,
                               verbose = TRUE) {
   
   
-  warnings_summary_table <- NA
+  if (verbose)writeLines("Start parsing SoF Table.\n")
+
+  
+  #warnings_summary_table <- NA
   
   
   

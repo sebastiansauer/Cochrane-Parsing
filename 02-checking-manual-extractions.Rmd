@@ -69,6 +69,7 @@ source("funs/parse-review-parts.R")
 ```{r}
 sample_doi <- "14651858.CD001180.pub4"
 sample_doi2 <- "14651858.CD011923.pub2"
+sample_doi3 <- "14651858.CD004123.pub4"
 ```
 
 
@@ -194,7 +195,7 @@ ss_manual5 <-
 
 ```{r}
 ss_manual5 %>% 
-  filter(cochrane_id == sample_doi) %>% 
+  filter(cochrane_id == sample_doi3) %>% 
   select(SoF_table_number, GRADE_used)
 ```
 
@@ -229,6 +230,14 @@ ss_machine2 <-
 
 `GRADE_used` is set to TRUE if GRADE was used for at least one measure in the respective SOF.
 
+Check
+
+```{r}
+ss_machine2 %>% 
+  filter(cochrane_id == sample_doi3) %>% 
+    select(GRADE, title)
+```
+
 
 
 ```{r}
@@ -246,7 +255,7 @@ ss_machine3 <-
 
 ```{r}
 ss_machine3 %>% 
-  filter(cochrane_id == sample_doi2) %>% 
+  filter(cochrane_id == sample_doi3) %>% 
   select(SoF_table_number, GRADE_used)
 ```
 
@@ -343,4 +352,8 @@ ss_merged3 <-
          identical_withdrawn == FALSE |
          identical_GRADE_used == FALSE  )
 ```
+
+
+
+## Write to disk
 

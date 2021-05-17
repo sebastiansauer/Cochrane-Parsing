@@ -117,17 +117,32 @@ get_all_colnames <- function(output_file = "first",  # if first, take first outp
 
 
 raise_warning <- function(type,
-                          critical = c(FALSE, TRUE),
+                          critical = FALSE,
                           write_to_disk = TRUE){
   
+  if (!exists("warning_df"))
+    warning_df <-
+      tibble(
+        type = "Init",
+        date = Sys.Date(),
+        time = Sys.time(),
+        critical = FALSE
+      )
   
-  warning_df <-
+  
+  warning_df_new_row <-
     tibble(
       type = unlist(type),
       date = Sys.Date(),
       time = Sys.time(),
       critical = critical
     )
+
+  warning_df <<-
+    warning_df %>% 
+    bind_rows(warning_df_new_row)
+    
+ 
   
   if (write_to_disk) write_csv(warning_df,
                                file = "logging/warnings.csv")
@@ -203,10 +218,9 @@ init_new_review <- function() {
   
   # initialize logging:
   warning_df <<- raise_warning(type = " ",
+                               doi = " ",
                                critical = FALSE,
                                write_to_disk = FALSE) 
-  
-  
   
   
 }

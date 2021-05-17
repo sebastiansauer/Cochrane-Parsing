@@ -118,25 +118,12 @@ parse_review_parts <- function(
       
       summarytable <- 
         1:summaryTable_count %>% 
-        map_dfr(~ get_summary_table(page_content = page_content,
+        map_dfr(~ get_summary_table(page_content = page_content$result,
                                      table_number = .,),
                                     .id = "SoF_table_number")
       
       
-      
-      
-      # on error:
-      #if (!is.null(summarytable$error)) {
-      #   summarytable <- create_empty_df(names_vec = get_summarytab_colnames())
-      #   
-      #   warning_df <<-
-      #     warning_df  %>% 
-      #     bind_cols(raise_warning(type = "Zero summary tables detected,
-      #                             critical = FALSE"))
-      #   
-      # 
-      # } else summarytable <- safe_summarytable1$result
-        
+
       
       # bind summary tables results to output object
         output <- 
@@ -179,7 +166,10 @@ parse_review_parts <- function(
   # XXX
 
   safely_parse_individual_parts <- safely(parse_individual_parts)
-  safe_output <- safely_parse_individual_parts(sanitized_review_url = sanitized_review_url) 
+  safe_output <- 
+    safely_parse_individual_parts(
+      sanitized_review_url = sanitized_review_url
+      ) 
   
   if (!is.null(safe_output$error)) { 
     
@@ -195,20 +185,7 @@ parse_review_parts <- function(
 
 
  
-  
-      # #undebug(concat_tables)
-      # final_table <- concat_tables(
-      #   info_page = info_page,
-      #   page_content = page_content,
-      #   summarytable = summarytable1,
-      #   metadata_review =  metadata,
-      #   abstract_review = abstract
-      #   #metadata_summaryTable = review$summaryTable_metadata
-      # )
-      
-      
-      # output <- final_table
-      
+
       if (verbose) {
         print(output)
         writeLines("\n")

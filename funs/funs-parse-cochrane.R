@@ -235,7 +235,7 @@ get_review_info_page <- function(review_url, verbose = TRUE) {
 get_review_metadata <- function(page_content,
                                 verbose = TRUE){
   
-  writeLines("Start parsing the review meta data\n")
+  if (verbose) writeLines("Start parsing the review meta data\n")
   
   # initialize problems
   has_no_warnings <- TRUE
@@ -273,11 +273,8 @@ get_review_metadata <- function(page_content,
     #output <- stop_parsing_return_empty_df(review_url = review_doi,
     error_message <- glue::glue("Publish type is {publish_type}")
 
-# return(output)
-    warning_df <<-
-      warning_df %>% 
-      bind_rows(raise_warning(type = error_message,
-                          critical = TRUE))
+
+  raise_warning(type = error_message)
 
 }  
   
@@ -302,17 +299,16 @@ get_review_metadata <- function(page_content,
     
     # if there is a version warning, stop parsing:
     
-    warning_df <<- 
-      warning_df %>% 
-      bind_rows(raise_warning(type = version_warning,
-                              critical = FALSE))
+    # warning_df <<- 
+    #   warning_df %>% 
+    #   bind_rows(raise_warning(type = version_warning,
+    #                           critical = FALSE))
+     
+    raise_warning(type = version_warning)
     
-    #output <- create_empty_df(names_vec = get_all_colnames())
-    #output$doi <- review_url
     
     writeLines(glue::glue("Version warning: {warning_df$type}\n"))
     
-    #return(output)
   } else { # reivew is not withdran
     is_withdrawn <- FALSE
   }
@@ -334,10 +330,12 @@ get_review_metadata <- function(page_content,
     ))  {
       is_most_recent_version <- FALSE 
       
-      warning_df <<- 
-        warning_df %>% 
-        bind_rows(raise_warning(type = "outdated_version",
-                                critical = FALSE))
+      # warning_df <<- 
+      #   warning_df %>% 
+      #   bind_rows(raise_warning(type = "outdated_version",
+      #                           critical = FALSE))
+      # 
+      raise_warning(type = "outdated_version")
       
       # get url to most recent version:
       url_most_most_version <- 
@@ -375,11 +373,12 @@ get_review_metadata <- function(page_content,
   
   if (is_paywalled)
     
-    warning_df <<- 
-    warning_df %>% 
-    bind_rows(raise_warning(type = "is paywalled",
-                            critical = FALSE))
+    # warning_df <<- 
+    # warning_df %>% 
+    # bind_rows(raise_warning(type = "is paywalled",
+    #                         critical = FALSE))
   
+    raise_warning(type = "is paywalled")
   
   citation_count <- get_number_of_citations(review_doi)
   
@@ -412,6 +411,7 @@ get_review_metadata <- function(page_content,
 
 get_abstract <- function(page_content, verbose = TRUE) {
   
+  if (verbose) writeLines("Now reading abstract.\n")
   
 
   # parse structured abstract (in parts):
@@ -664,6 +664,9 @@ parse_review <- function(review_url,
                          reviewer  = "?",
                          overwrite_file = TRUE) {
   
+  if (!exists("count_reviews"))
+    count_reviews <<- 1
+  
   if (verbose) writeLines(glue::glue("______Now starting with review number ((( {count_reviews} )))______\n"))
   if (verbose) writeLines(glue::glue("______Now review with url ((( {review_url} )))______\n"))
   
@@ -673,7 +676,7 @@ parse_review <- function(review_url,
   #be polite:
   bow_result <- bow(url = review_url_cochrane,
                     user_agent = "Sebastian Sauer - sebastiansauer1@gmail.com")
-  # not yet fully implemented
+  # not yet fully implemented!
   
   # parse all parts
   review_parsed_parts <- parse_review_parts(review_url_cochrane, 
@@ -692,7 +695,8 @@ parse_review <- function(review_url,
                               reviewer = reviewer,
                               overwrite = overwrite_file)
   
-  #if (!exists(x = count_reviews))
+  if (!exists("count_reviews")) 
+    count_reviews <- 0
 
   count_reviews <<- count_reviews + 1
   
