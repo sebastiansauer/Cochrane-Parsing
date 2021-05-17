@@ -1,12 +1,6 @@
 ---
 title: "01-Cochrane-Scraping"
-ipsum_meta:
-  twitter_card: "Summary info for the Twitter Card"
-  twitter_site: "\\@sitehandle"
-  twitter_creator: "\\@creatorhandle"
-  og_url: "https\\://example.com/open/graph/finalURLfor/this"
-  og_description: "A modest size description of the content"
-  og_image: "https\\://example.com/open/graph/imageURLfor/this"
+
 output: 
   hrbrthemes::ipsum:
     toc: true
@@ -23,7 +17,7 @@ knitr::opts_chunk$set(fig.retina = 2)
 ```
 
 ```{r ipsum_setup, message=FALSE, warning=FALSE, cache=FALSE, echo=FALSE}
-library(hrbrthemes)
+#library(hrbrthemes)
 library(tidyverse)  # data wrangling
 library(rvest)  # web scraping
 library(xml2)  # web scraping
@@ -36,7 +30,7 @@ library(glue)
 library(polite)
 library(tidytext)
 library(readxl)
-update_geom_font_defaults(font_rc)
+#update_geom_font_defaults(font_rc)
 ```
 
 
@@ -140,6 +134,8 @@ url_404 <- "https://www.cochranelibrary.com/cdsr/doi/10.1002/14651858.CD007701.p
 
 bad_url <- "https://www.cochranelibrary.com/cdsr/doi/10.1002/14651858.CD012137.pub2/full"
 
+bad_url2 <- "https://www.cochranelibrary.com/cdsr/doi/10.1002/14651858.CD004123.pub4"
+
 prob_url <- "https://www.cochranelibrary.com/cdsr/doi/10.1002/14651858.CD009099.pub3"
 ```
 
@@ -219,7 +215,7 @@ test_review <- parse_review(prob_url,
                             overwrite = TRUE,
                             reviewer = "?",
                             output_dir_to_write = "output")
-test_review <- parse_review(review_url, overwrite = TRUE)
+test_review <- parse_review(bad_url2)
 test_review <- parse_review(mindfulness_url, overwrite = TRUE)
 ```
 
@@ -405,15 +401,13 @@ dois_ss <-
 
 count_reviews <- 1
 reviews_ss <- 
-  c("http://dx.doi.org/10.1002/14651858.CD009110.pub3", 
-    prob_url) %>% 
+  c(
+    bad_url2) %>% 
   map_dfr(parse_review, 
           .id = "id_review", 
           output_dir = "output/ss",
           overwrite_file = TRUE,
           reviewer = "ss")
-
-
 
 
 
