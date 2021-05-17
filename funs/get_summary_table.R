@@ -1,4 +1,87 @@
 
+# Get number of SoF tables ------------------------------------------------
+
+
+
+get_nr_of_summary_tables <- function(my_page_content, 
+                                     table_number = NULL, # which table should be extracted?
+                                     verbose = TRUE) # should an empty table be returned? if so, what's the name of the only column?
+{
+  
+  
+  
+  
+  # check how many tables exist:
+  nr_Table <- 
+    my_page_content %>% 
+    html_nodes("table") %>% 
+    length()
+  
+  
+  
+  # check if a section "summary of results" exist
+  summary_sections_exists <- 
+    my_page_content %>% 
+    html_nodes(".section-collapse-title") %>% 
+    html_text() %>% 
+    str_trim() %>% 
+    str_detect("Summary of findings") %>% 
+    any()
+  
+  
+  # get number of summary tables:
+  nr_summary_tables <- 
+    my_page_content %>% 
+    html_nodes(".summaryOfFindings") %>% 
+    html_nodes(".table") %>% 
+    length()
+  
+  # alternative way, likely less precise:
+  nr_summary_tables2 <- 
+    my_page_content %>% 
+    html_nodes("table") %>% 
+    html_nodes(".table-label") %>% 
+    html_text() %>% 
+    str_detect("Summary of findings") %>% sum()
+  
+  # warn if there are no summary tables:
+  if (summary_sections_exists == FALSE) {
+    writeLines("No (zero) summary sections detected!")
+    
+    raise_warning(type = "No (zero) summary sections detected",
+                  critical = FALSE)
+  }
+  else {
+    if (verbose) writeLines(paste0("Number of summary tables detected: ", nr_summary_tables))
+    
+  }
+  
+  # warn if user queries for a table number that does not exist:
+  if (!is.null(table_number)) {
+    if (table_number > nr_summaryOfFindingsTable) {
+      
+      writeLines(paste("This table does not exist! Aborting.\n"))
+    }
+    
+  }
+  
+  if (summary_sections_exists == FALSE & nr_summary_tables != 0)
+    stop("summary_sections_exists == FALSE & nr_summary_tables != 0")
+  
+  
+  return(nr_summary_tables)
+}
+
+
+
+
+
+
+
+
+
+
+
 # get_summary_table_metadata ----------------------------------------------
 
 
@@ -87,7 +170,9 @@ get_summary_table_metadata <- function(page_content,
   
   if (verbose) print(output)
   
-  
+  print("SoF metadata dim:\n")
+  print(dim(output))
+  print("Finished parsing SoF metadata.\n")
   
   return(output)
   
@@ -114,12 +199,12 @@ get_summary_table <- function(page_content,
                               verbose = TRUE) {
   
   
-  if (verbose)writeLines("Start parsing SoF Table.\n")
+  if (verbose) writeLines("Start parsing SoF Table.\n")
 
   
   #warnings_summary_table <- NA
   
-  
+  if (!exists("warning_df")) raise_warning(type = "Init")
   
   # stop if critical warning has been raised earlier on:
   if (any(warning_df$critical == TRUE)) {
@@ -141,27 +226,16 @@ get_summary_table <- function(page_content,
   
   
   # if no summary table exists, report it, and stop:
-  if ((table_number > nr_summaryOfFindingsTable) | 
+  if ((table_number > nr_summaryOfFindingsTable) || 
       (nr_summaryOfFindingsTable == 0)) {
     
     # output <- 
     #   create_empty_df(names_vec = get_summarytab_colnames())
-    warning_df <<-
-      warning_df %>% 
-      bind_rows(raise_warning(type = "No SoF table detected",
-                              critical = FALSE))
-    
-    
-    
+    raise_warning(type = "No SoF table detected",
+                              critical = FALSE)
     output <- create_empty_df(names_vec = get_summarytab_colnames())
-    
-    #output$Comments <- "No summary table detected, hence no outcomes reported"
-    
     print("As no summary findings tables were detected, I'm stopping the collection of summary tables.")
-    
-    
-    
-    
+
   } else { # otherwise, go on:
     
     
@@ -191,10 +265,8 @@ get_summary_table <- function(page_content,
     
     # take first columns if there are more than one relevant column:
     if (length(col_Outcomes) > 1) {
-      warning_df <<- 
-        warning_df %>% 
-        bind_rows(raise_warning(type = "too many columns at `col_Outcomes`",
-                                critical = FALSE))
+     raise_warning(type = "too many columns at `col_Outcomes`",
+                                critical = FALSE)
       
       col_Outcomes <- col_Outcomes[1]
       
@@ -204,10 +276,8 @@ get_summary_table <- function(page_content,
     }
     
     if (length(col_Outcomes) == 0) {
-      warning_df <<- 
-        warning_df %>% 
-        bind_rows(raise_warning(type = "no columns at `col_Outcomes`",
-                                critical = FALSE))
+      raise_warning(type = "no columns at `col_Outcomes`",
+                                critical = FALSE)
       
       col_Outcomes <- "NO_COL_OUTCOME"
       
@@ -284,9 +354,7 @@ get_summary_table <- function(page_content,
     
     # if there are STILL multiple such cols, take the first one and raise error:
     if (length(col_GRADE) > 1) {
-      warning_df <<-
-        warning_df %>% 
-        bind_rows(raise_warning(type = "Multiple cols found at `col_GRADES`. Taking the first one. Might be wrong!"))
+     raise_warning(type = "Multiple cols found at `col_GRADES`. Taking the first one. Might be wrong!")
       
       col_GRADE <- col_grades[1]
     }
@@ -345,10 +413,8 @@ get_summary_table <- function(page_content,
     
     # take first columns if there are more than one relevant column:
     if (length(col_participants_studies) > 1) {
-      warning_df <<- 
-        warning_df %>% 
-        bind_rows(raise_warning(type = "too many columns at `col_participants_studies`",
-                                critical = FALSE))
+     raise_warning(type = "too many columns at `col_participants_studies`",
+                                critical = FALSE)
       
       # output <- create_empty_df(names_vec = get_all_colnames())
       # output$doi <- review_url
@@ -361,10 +427,8 @@ get_summary_table <- function(page_content,
     }
     
     if (length(col_participants_studies) == 0) {
-      warning_df <<- 
-        warning_df %>% 
-        bind_rows(raise_warning(type = "no columns found at `col_participants_studies`",
-                                critical = FALSE))
+      raise_warning(type = "no columns found at `col_participants_studies`",
+                                critical = FALSE)
       
       summaryOfFindingsTable6 <-
         summaryOfFindingsTable5 %>% 
@@ -402,10 +466,8 @@ get_summary_table <- function(page_content,
     
     
     if (length(col_rel_eff_CI) > 1) {
-      warning_df <<- 
-        warning_df %>% 
-        bind_rows(raise_warning(type = "too many columns at `col_rel_eff_CI`",
-                                critical = FALSE))
+     raise_warning(type = "too many columns at `col_rel_eff_CI`",
+                                critical = FALSE)
       
       # output <- create_empty_df(names_vec = get_all_colnames())
       # output$doi <- review_url
@@ -450,10 +512,8 @@ get_summary_table <- function(page_content,
       names()
     
     if (length(col_comments) > 1) {
-      warning_df <<- 
-        warning_df %>% 
-        bind_rows(raise_warning(type = "too many columns at `col_comments`",
-                                critical = FALSE))
+     raise_warning(type = "too many columns at `col_comments`",
+                                critical = FALSE)
       
       # output <- create_empty_df(names_vec = get_all_colnames())
       # output$doi <- review_url
@@ -523,7 +583,8 @@ get_summary_table <- function(page_content,
     
   }
   
-  
+  if (verbose) writeLines(paste0("SoF data dimensions: ",  dim(output)))
+  writeLines("\n")
   if (verbose) writeLines("Finished parsing SoF Table.\n")
   
   return(output)

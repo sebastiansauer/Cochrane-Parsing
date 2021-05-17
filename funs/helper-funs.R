@@ -180,10 +180,8 @@ stop_parsing_return_empty_df <- function(review_url,
                                          error_message = "no message",
                                          is_critical = TRUE) {
   
-  warning_df <<- 
-    warning_df %>% 
-    bind_rows(raise_warning(type = error_message,
-                            critical = is_critical))
+ raise_warning(type = error_message,
+                            critical = is_critical)
   
   output <- create_empty_df(names_vec = get_all_colnames())
   output$doi <- review_url
@@ -217,10 +215,10 @@ init_new_review <- function() {
   
   
   # initialize logging:
-  warning_df <<- raise_warning(type = " ",
-                               doi = " ",
-                               critical = FALSE,
-                               write_to_disk = FALSE) 
+  if (exists("warning_df")) rm(warning_df, inherits = TRUE)
+  raise_warning(type = "INIT",
+                critical = FALSE,
+                write_to_disk = FALSE) 
   
   
 }

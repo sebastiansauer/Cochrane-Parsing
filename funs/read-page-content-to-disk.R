@@ -32,11 +32,8 @@ read_page_content_to_disk <- function(review_url,
   
   if (!is.null(safe_page_content$error)) {
     
-    warning_df <<-
-      warning_df %>% 
-      bind_rows(
-        raise_warning(type = "Could not read review html file",
-                      critical = TRUE))
+   raise_warning(type = "Could not read review html file",
+                      critical = TRUE)
     
     
   }

@@ -25,7 +25,7 @@ library(stringr)  # string manipulation
 library(printr)  # print dfs as tables
 library(glue)  # glueing
 library(rcrossref)  # citation count
-library(conflicted)
+#library(conflicted)
 library(glue)
 library(polite)
 library(tidytext)
@@ -37,7 +37,7 @@ library(readxl)
 Declare conflict preferences:
 
 ```{r}
-conflict_prefer("filter", "dplyr")
+#conflict_prefer("filter", "dplyr")
 ```
 
 
@@ -401,7 +401,7 @@ dois_ss <-
 
 count_reviews <- 1
 reviews_ss <- 
-  c(
+  c(reviews_ss1,
     bad_url2) %>% 
   map_dfr(parse_review, 
           .id = "id_review", 

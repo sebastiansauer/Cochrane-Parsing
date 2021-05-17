@@ -18,7 +18,8 @@ parse_review_parts <- function(
   parse_individual_parts <- function(sanitized_review_url,
                                      verbose = TRUE) {
     
-    init_new_review()
+    #init_new_review()
+    if (exists("warning_df")) rm(warning_df, inherits = TRUE)
 
     if (verbose) cat(paste0("**Starting to parse the review with this doi: ", 
                             sanitized_review_url, "**\n"))
@@ -34,11 +35,8 @@ parse_review_parts <- function(
       
       if (verbose) print("Error raised on parsing the review url!\n")
       
-      warning_df <<-
-        warning_df %>% 
-        bind_rows(
-          raise_warning(type = safe_page_content$error$message,
-                        critical = TRUE))
+     raise_warning(type = safe_page_content$error$message,
+                        critical = TRUE)
       
       output <- create_empty_df(names_vec = get_all_colnames())
       #output$warnings <- safe_page_content$error$message
@@ -101,10 +99,8 @@ parse_review_parts <- function(
         summaryTable_count <- 0
         summarytable <- create_empty_df(names_vec = get_summarytab_colnames())
         
-        warning_df <<-
-          warning_df  %>% 
-          bind_cols(raise_warning(type = "Zero summary tables detected,
-                                  critical = FALSE"))
+        raise_warning(type = "Zero summary tables detected,
+                                  critical = FALSE")
         
         return(output)
         
@@ -118,7 +114,7 @@ parse_review_parts <- function(
       
       summarytable <- 
         1:summaryTable_count %>% 
-        map_dfr(~ get_summary_table(page_content = page_content$result,
+        map_dfr(~ get_summary_table(page_content = safe_page_content$result,
                                      table_number = .,),
                                     .id = "SoF_table_number")
       
@@ -172,18 +168,24 @@ parse_review_parts <- function(
       ) 
   
   if (!is.null(safe_output$error)) { 
+    if (verbose) print("Error on 'safe_output':")
+    print(safe_output$error)
     
-    output <- create_empty_df(names_vec = get_all_colnames())
-    warning_df <<-
-      warning_df %>% 
-      bind_rows(raise_warning(type = "parse_parts failed.",
-                              critical = FALSE))
+    #output <- create_empty_df(names_vec = get_all_colnames())
+    raise_warning(type = "parse_parts failed!")
+    
   } else {
     
     output <- safe_output$result
   }
 
 
+  # elimine duplicate rows
+  output <- 
+  output %>% 
+  select(-id_measure) %>% 
+    distinct() %>% 
+    mutate(id_measure = row_number()) 
  
 
       if (verbose) {

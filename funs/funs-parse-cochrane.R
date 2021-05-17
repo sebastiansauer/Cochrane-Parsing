@@ -5,80 +5,6 @@
 
 
 
-get_nr_of_summary_tables <- function(my_page_content, 
-                                     table_number = NULL, # which table should be extracted?
-                                     verbose = TRUE) # should an empty table be returned? if so, what's the name of the only column?
-{
-  
-
-  
-  
-  # check how many tables exist:
-  nr_Table <- 
-    my_page_content %>% 
-    html_nodes("table") %>% 
-    length()
-  
-  
-  
-  # check if a section "summary of results" exist
-  summary_sections_exists <- 
-    my_page_content %>% 
-    html_nodes(".section-collapse-title") %>% 
-    html_text() %>% 
-    str_trim() %>% 
-    str_detect("Summary of findings") %>% 
-    any()
-  
-  
-  # get number of summary tables:
-  nr_summary_tables <- 
-    my_page_content %>% 
-    html_nodes(".summaryOfFindings") %>% 
-    html_nodes(".table") %>% 
-    length()
-  
-  # alternative way, likely less precise:
-  nr_summary_tables2 <- 
-    my_page_content %>% 
-    html_nodes("table") %>% 
-    html_nodes(".table-label") %>% 
-    html_text() %>% 
-    str_detect("Summary of findings") %>% sum()
-  
-  # warn if there are no summary tables:
-  if (summary_sections_exists == FALSE) {
-    writeLines("No (zero) summary sections detected!")
-    
-    warning_df <<- 
-      warning_df %>% 
-      bind_rows(raise_warning(type = "No (zero) summary sections detected",
-                              critical = FALSE))
-  }
-  else {
-    if (verbose) writeLines(paste0("Number of summary tables detected: ", nr_summary_tables))
-    
-  }
-  
-  # warn if user queries for a table number that does not exist:
-  if (!is.null(table_number)) {
-    if (table_number > nr_summaryOfFindingsTable) {
-      
-      writeLines(paste("This table does not exist! Aborting.\n"))
-    }
-    
-  }
-  
-  if (summary_sections_exists == FALSE & nr_summary_tables != 0)
-    stop("summary_sections_exists == FALSE & nr_summary_tables != 0")
-  
-  
-  return(nr_summary_tables)
-}
-
-
-
-
 # check-if-review-file-exists ---------------------------------------------
 
 
@@ -137,11 +63,8 @@ get_review_info_page <- function(review_url, verbose = TRUE) {
   # on error, stop:
   if (!is.null(safe_page_content_info_page$error)) {
     
-    warning_df <<-
-      warning_df %>% 
-      bind_cols(
-        raise_warning(type = safe_page_content_info_page$error$message,
-                      critical = TRUE))
+    raise_warning(type = safe_page_content_info_page$error$message,
+                      critical = TRUE)
     
     output <- create_empty_df(names_vec = get_infopage_colnames())
     output$doi <- review_url
@@ -472,6 +395,8 @@ get_abstract <- function(page_content, verbose = TRUE) {
     bind_cols(conclusion_sentiments)
   
   if (verbose) print(output)
+  
+  print("Abstract has been read.\n")
   
   return(output)
   
