@@ -156,40 +156,6 @@ source("funs/parse-review-parts.R")
 
 
 
-
-# Test run: parse one review
-
-```{r}
-review <- list()
-  
-  review$page_content <- read_html(review_url)  
-  review$metadata <- get_review_metadata(review$page_content)
-  review$abstract <- get_abstract(review$page_content)
-  
-  
-  #debug(get_nr_of_summary_tables)
-  
-  #undebug(get_nr_of_summary_tables)
-  review$number_of_summary_tables <- get_nr_of_summary_tables(review$page_content)
-  
-  
-  #debug(get_summary_table)
-   
-  review$summarytable1 <- get_summary_table(review$page_content)
-  review$summaryTable_metadata <- get_summary_table_metadata(review$page_content)
-  
-  #undebug(add_metadata_to_summary_table)
-  review$final_table <- concat_tables(
-    page_content = review$page_content,
-    summarytable = review$summarytable1,
-    metadata_review =  review$metadata,
-    abstract_review = review$abstract,
-    metadata_summaryTable = review$summaryTable_metadata)
-```
-
-
-
-
 ## init
 
 ```{r}
@@ -401,8 +367,7 @@ dois_ss <-
 
 count_reviews <- 1
 reviews_ss <- 
-  c(reviews_ss1,
-    bad_url2) %>% 
+  dois_ss %>% 
   map_dfr(parse_review, 
           .id = "id_review", 
           output_dir = "output/ss",
