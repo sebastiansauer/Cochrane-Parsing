@@ -127,6 +127,7 @@ names(ss_manual3)[3] <- "SoF_table_number"
 names(ss_manual3)[4] <- "is_outdated"
 names(ss_manual3)[5] <- "is_withdrawn"
 names(ss_manual3)[7] <- "GRADE_used"
+names(ss_manual3)[22] <- "first_high_qual_outcome"
 ```
 
 
@@ -142,9 +143,26 @@ ss_manual3a <-
          GRADE_used = ifelse(GRADE_used == "yes", TRUE, FALSE)) %>% 
   group_by(url) %>% 
   mutate(SoF_table_number = row_number()) %>% 
-  ungroup()
+  ungroup() %>% 
+  mutate(has_high_quality_outcome = ifelse(
+    str_count(str_squish(first_high_qual_outcome)) > 0, TRUE, FALSE)) %>% 
+  mutate(has_high_quality_outcome = replace_na(has_high_quality_outcome, FALSE))
 ```
 
+
+
+Checks
+
+```{r}
+ss_manual3a %>% 
+  count(GRADE_used)
+```
+
+
+```{r}
+ss_manual3a %>% 
+  count(has_high_quality_outcome)
+```
 
 
 
@@ -170,7 +188,10 @@ ss_manual3a %>%
 cols_to_be_checked <-
   c("is_outdated",
     "is_withdrawn",   
-    "GRADE_used")
+    "GRADE_used",
+    "first_high_qual_outcome",
+    "has_high_quality_outcome"
+    )
 ```
 
 
@@ -192,6 +213,11 @@ id_cols_manual <-
 ss_manual4 <-
   ss_manual3b %>% 
   select(any_of(c(id_cols_manual, cols_to_be_checked)))
+```
+
+
+```{r}
+names(ss_manual4)
 ```
 
 
@@ -217,13 +243,20 @@ ss_manual5 %>%
 ```
 
 
+```{r}
+ss_manual5 %>% 
+  count(first_high_qual_outcome)
+```
+
+
+
 # Prepare machine extracted data
 
 ## Import machine extracted data
 
 
 ```{r}
-ss_machine_path <- "output/ss/reviews_output_ss.xlsx"
+ss_machine_path <- "output/ss/reviews_output_machine_ss.xlsx"
 
 ss_machine <- 
   read_xlsx(ss_machine_path)
@@ -264,10 +297,28 @@ ss_machine3 <-
   mutate(GRADE_used = str_detect(GRADE, "⊕|⊝")) %>% 
   mutate(GRADE_used = ifelse(is.na(GRADE_used), FALSE, TRUE )) %>% 
   mutate(GRADE_used = ifelse(any(GRADE_used == TRUE), TRUE, FALSE)) %>% 
-  ungroup()
+  ungroup() %>% 
+  mutate(has_high_quality_outcome = str_detect(tolower(GRADE), "high")) %>% 
+  mutate(has_high_quality_outcome = ifelse(
+    is.na(has_high_quality_outcome), FALSE, has_high_quality_outcome)) %>% 
+  mutate(high_qual_outcome = ifelse(has_high_quality_outcome == TRUE,
+                                    Outcomes, "no high quality outcome")) 
+  
 ```
 
-#### Check
+#### Checks
+
+```{r}
+ss_machine3 %>% 
+  count(has_high_quality_outcome)
+```
+
+
+```{r}
+ss_machine3 %>% 
+  count(high_qual_outcome)
+```
+
 
 
 ```{r}
@@ -283,7 +334,14 @@ ss_machine3 %>%
 ```{r}
 ss_machine4 <-
   ss_machine3 %>% 
-  select(cochrane_id, SoF_table_number, any_of(cols_to_be_checked))
+  select(cochrane_id, SoF_table_number,
+         any_of(cols_to_be_checked), 
+         high_qual_outcome)
+```
+
+
+```{r}
+names(ss_machine4)
 ```
 
 
@@ -296,7 +354,6 @@ ss_machine4 <-
 Are the ID (sample dois) correctly parsed?
 
 ```{r}
-
 ss_machine4 %>% 
   filter(cochrane_id == sample_doi) %>% 
   pull(cochrane_id)
@@ -344,6 +401,11 @@ ss_merged <-
 - y: machine 
 
 
+```{r}
+names(ss_merged)
+```
+
+
 # Check for differences between manual and machine extractions
 
 
@@ -352,9 +414,24 @@ ss_merged2 <-
   ss_merged %>% 
   mutate(identical_outdated = is_outdated.x == is_outdated.y,
          identical_withdrawn = is_withdrawn.x == is_withdrawn.y,
-         identical_GRADE_used = GRADE_used.x == GRADE_used.y)
+         identical_GRADE_used = GRADE_used.x == GRADE_used.y) %>% 
+  mutate(identical_has_high_quality_outcome = case_when(
+    (has_high_quality_outcome.x == FALSE) & 
+      (has_high_quality_outcome.y == FALSE) ~ "TRUE, negative",
+    (has_high_quality_outcome.x == FALSE) & 
+      (has_high_quality_outcome.y == FALSE) ~ "TRUE, positive",
+    TRUE ~ "FALSE"
+  ))
 ```
 
+
+
+## Checks
+
+```{r}
+ss_merged2 %>% 
+  count(identical_has_high_quality_outcome)
+```
 
 
 ## Filter for differences
