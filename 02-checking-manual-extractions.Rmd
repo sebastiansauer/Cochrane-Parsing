@@ -85,13 +85,13 @@ sample_doi3 <- "14651858.CD004123.pub4"
 ### Paths
 
 ```{r}
-output_path <- paste0(here(),"/output/ss/")
+output_path <- paste0(here(),"/output/comparison/ss")
 ```
 
 
 
 
-# Prepare manually extracted data
+# Prepare MANUALLY (by human) extracted data
 
 ## Import manually extracted data
 
@@ -146,7 +146,8 @@ ss_manual3a <-
   ungroup() %>% 
   mutate(has_high_quality_outcome = ifelse(
     str_count(str_squish(first_high_qual_outcome)) > 0, TRUE, FALSE)) %>% 
-  mutate(has_high_quality_outcome = replace_na(has_high_quality_outcome, FALSE))
+  mutate(has_high_quality_outcome = replace_na(has_high_quality_outcome, FALSE)) %>% 
+  mutate(first_high_qual_outcome = replace_na(first_high_qual_outcome, "no high quality outcome"))
 ```
 
 
@@ -250,7 +251,7 @@ ss_manual5 %>%
 
 
 
-# Prepare machine extracted data
+# Prepare MACHINE extracted data
 
 ## Import machine extracted data
 
@@ -301,10 +302,14 @@ ss_machine3 <-
   mutate(has_high_quality_outcome = str_detect(tolower(GRADE), "high")) %>% 
   mutate(has_high_quality_outcome = ifelse(
     is.na(has_high_quality_outcome), FALSE, has_high_quality_outcome)) %>% 
-  mutate(high_qual_outcome = ifelse(has_high_quality_outcome == TRUE,
-                                    Outcomes, "no high quality outcome")) 
+  mutate(first_high_qual_outcome = ifelse(has_high_quality_outcome == TRUE,
+                                    Outcomes, "no high quality outcome")) %>% 
+  ungroup()
   
 ```
+
+**NOTE**. Although the column `first_high_qual_outcome` suggests via its name that only the *first* high quality outcome is reported, this column checks whether the respective measure of th SoF table is of high GRADE level or not.
+
 
 #### Checks
 
@@ -316,7 +321,7 @@ ss_machine3 %>%
 
 ```{r}
 ss_machine3 %>% 
-  count(high_qual_outcome)
+  count(first_high_qual_outcome)
 ```
 
 
@@ -335,8 +340,7 @@ ss_machine3 %>%
 ss_machine4 <-
   ss_machine3 %>% 
   select(cochrane_id, SoF_table_number,
-         any_of(cols_to_be_checked), 
-         high_qual_outcome)
+         any_of(cols_to_be_checked))
 ```
 
 
@@ -415,18 +419,26 @@ ss_merged2 <-
   mutate(identical_outdated = is_outdated.x == is_outdated.y,
          identical_withdrawn = is_withdrawn.x == is_withdrawn.y,
          identical_GRADE_used = GRADE_used.x == GRADE_used.y) %>% 
-  mutate(identical_has_high_quality_outcome = case_when(
-    (has_high_quality_outcome.x == FALSE) & 
-      (has_high_quality_outcome.y == FALSE) ~ "TRUE, negative",
-    (has_high_quality_outcome.x == FALSE) & 
-      (has_high_quality_outcome.y == FALSE) ~ "TRUE, positive",
-    TRUE ~ "FALSE"
-  ))
+  mutate(identical_has_high_quality_outcome = 
+           identical(has_high_quality_outcome.x, has_high_quality_outcome.y)) %>% 
+  mutate(identical_first_high_qual_outcome = 
+           case_when(
+             identical(first_high_qual_outcome.x, first_high_qual_outcome.y) ~ TRUE,
+             str_detect(first_high_qual_outcome.x, first_high_qual_outcome.y) ~ TRUE,
+             str_detect(first_high_qual_outcome.y, first_high_qual_outcome.x) ~ TRUE,
+             TRUE ~ FALSE
+           ))
 ```
 
 
 
 ## Checks
+
+```{r}
+ss_merged2 %>% 
+  count(identical_first_high_qual_outcome)
+```
+
 
 ```{r}
 ss_merged2 %>% 
@@ -444,7 +456,9 @@ ss_merged3 <-
   ss_merged2 %>% 
   filter(identical_outdated == FALSE |
          identical_withdrawn == FALSE |
-         identical_GRADE_used == FALSE  )
+         identical_GRADE_used == FALSE |
+        identical_has_high_quality_outcome == FALSE |
+          identical_has_high_quality_outcome == FALSE)
 
 ss_merged3
 ```
@@ -456,10 +470,10 @@ ss_merged3
 
 ```{r}
 write_xlsx(ss_merged2,
-           path = paste0(data_path, "/comparison_human_machine_ss",".xlsx"))
+           path = paste0(output_path, "/comparison_human_machine_ss",".xlsx"))
 
 
 write_xlsx(ss_merged3,
-           path = paste0(data_path, "/comparison_human_machine_problems_only_ss.xlsx"))
+           path = paste0(output_path, "/comparison_human_machine_problems_only_ss.xlsx"))
 ```
 
