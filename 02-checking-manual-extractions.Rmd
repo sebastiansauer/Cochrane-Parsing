@@ -33,10 +33,12 @@ library(xml2)  # web scraping
 library(printr)  # print dfs as tables
 library(glue)  # glueing
 library(rcrossref)  # citation count
-library(conflicted)  # detect package confligcs
+#library(conflicted)  # detect package confligcs
 library(readxl)  # import excel data
 library(janitor)  # clean data 
-library(polite)  # polite scraping
+library(here)  # relative file paths
+library(writexl)  # write to xslx
+#library(polite)  # polite scraping
 
 ```
 
@@ -46,7 +48,7 @@ library(polite)  # polite scraping
 Declare conflict preferences:
 
 ```{r}
-conflict_prefer("filter", "dplyr")
+#conflict_prefer("filter", "dplyr")
 ```
 
 
@@ -66,11 +68,26 @@ source("funs/parse-review-parts.R")
 
 ## Some constants
 
+
+### dois
+
 ```{r}
 sample_doi <- "14651858.CD001180.pub4"
+
 sample_doi2 <- "14651858.CD011923.pub2"
+# https://www.cochranelibrary.com/cdsr/doi/10.1002/14651858.CD011923.pub2/full#CD011923-sec1-0001
+# 
 sample_doi3 <- "14651858.CD004123.pub4"
 ```
+
+
+
+### Paths
+
+```{r}
+output_path <- paste0(here(),"/output/ss/")
+```
+
 
 
 
@@ -206,10 +223,10 @@ ss_manual5 %>%
 
 
 ```{r}
-ss_machine_path <- "output/ss/reviews_ss.csv"
+ss_machine_path <- "output/ss/reviews_output_ss.xlsx"
 
 ss_machine <- 
-  read_csv(ss_machine_path)
+  read_xlsx(ss_machine_path)
 ```
 
 
@@ -351,9 +368,21 @@ ss_merged3 <-
   filter(identical_outdated == FALSE |
          identical_withdrawn == FALSE |
          identical_GRADE_used == FALSE  )
+
+ss_merged3
 ```
 
 
 
 ## Write to disk
+
+
+```{r}
+write_xlsx(ss_merged2,
+           path = paste0(data_path, "/comparison_human_machine_ss",".xlsx"))
+
+
+write_xlsx(ss_merged3,
+           path = paste0(data_path, "/comparison_human_machine_problems_only_ss.xlsx"))
+```
 

@@ -6,7 +6,9 @@ source("funs/parse-review-parts.R")
 
 bad_url2 <- "https://www.cochranelibrary.com/cdsr/doi/10.1002/14651858.CD004123.pub4"
 
-review_url <- bad_url2
+
+
+review_url <- "https://www.cochranelibrary.com/cdsr/doi/10.1002/14651858.CD011426.pub2"
 #review_url <- reviews_ss1
 review_url
 review_url_cochrane <- build_cochrane_url_from_doi(review_url)

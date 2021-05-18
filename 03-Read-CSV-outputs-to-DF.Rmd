@@ -1,0 +1,131 @@
+---
+title: "Read CSV files with Cochrane results"
+author: "ses"
+date: "5/18/2021"
+output: html_document
+---
+
+
+# Setup
+
+```{r global-knitr-options, include=FALSE}
+knitr::opts_chunk$set(fig.pos = 'H',
+  fig.asp = 0.618,
+  fig.width = 5,
+  fig.cap = "", 
+  fig.path = "",
+  echo = TRUE,
+  message = FALSE,
+  warning = FALSE,
+  cache = FALSE,
+  fig.show = "hold")
+```
+
+
+```{r}
+library(tidyverse)
+library(here)
+```
+
+
+# Constants
+
+
+```{r}
+reviewer <- "ss"
+data_path <- paste0(here(),"/output/", reviewer)
+data_path
+```
+
+
+
+# Read all CSV files
+
+
+```{r}
+csv_files <- list.files(path = data_path,
+           pattern = ".csv")
+```
+
+```{r}
+length(csv_files)
+```
+
+
+
+# Exclude non-relevant files
+
+
+```{r}
+relevant_pattern <- "^\\d+\\.CD\\d+\\.pub\\d\\.csv$"
+#relevant_pattern2 <- "^\\d+\\.CD"
+
+```
+
+
+```{r}
+csv_files2 <- 
+  csv_files %>% 
+  keep(.p = str_detect(., relevant_pattern))
+```
+
+
+# Check
+
+```{r}
+file_to_look_for <- "14651858.CD004123.pub4.csv"
+
+any(csv_files2 == file_to_look_for)
+```
+
+
+# Add path back in
+
+
+```{r}
+csv_files3 <-
+  csv_files2 %>% 
+  paste0(data_path, "/", .)
+```
+
+
+```{r}
+head(csv_files3)
+```
+
+```{r}
+length(csv_files3)
+```
+
+
+# Build df
+
+
+```{r}
+reviews_output <- 
+csv_files3 %>% 
+  map_dfr(read_csv, .id = "filename")
+```
+
+
+```{r}
+reviews_output %>% 
+  head()
+```
+
+```{r}
+dim(reviews_output)
+```
+
+
+# Save to disk
+
+
+```{r}
+full_path <- paste0(data_path,"/reviews_output_machine_ss.xlsx")
+full_path
+
+writexl::write_xlsx(reviews_output,
+                    path = full_path)
+```
+
