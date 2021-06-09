@@ -5,7 +5,7 @@ compare_human_machine_extractions <- function(human_extractions_path,
                                               discrepancies_only = FALSE,
                                               verbose = TRUE
                                               ) {
-  
+  2
   library(tidyverse)  # data wrangling
   library(rvest)  # web scraping
   library(xml2)  # web scraping

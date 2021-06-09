@@ -367,7 +367,7 @@ dois_ss <-
 
 count_reviews <- 1
 reviews_ss <- 
-  dois_ss %>% 
+  c(bad_url2) %>% 
   map_dfr(parse_review, 
           .id = "id_review", 
           output_dir = "output/ss",
@@ -424,7 +424,7 @@ writexl::write_xlsx(reviews_parsed3,
                     path = "test_reviews_infos3.xlsx")
 
 writexl::write_xlsx(reviews_ss,
-                    path = "output/ss/reviews_ss.xlsx")
+                    path = "output/ss/reviews_machine_ss.xlsx")
 write_csv(reviews_ss, 
             file = "output/ss/reviews_ss.csv")
 
