@@ -36,7 +36,7 @@ parse_review_parts <- function(
       if (verbose) print("Error raised on parsing the review url!\n")
       
      raise_warning(type = safe_page_content$error$message,
-                        critical = TRUE)
+                        critical = FALSE)
       
       output <- create_empty_df(names_vec = get_all_colnames())
       #output$warnings <- safe_page_content$error$message

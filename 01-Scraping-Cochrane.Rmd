@@ -193,7 +193,7 @@ file_type = "csv"
 ## Test it
 
 ```{r test-parse-review}
-test_review <- parse_review(prob_url, 
+test_review <- parse_review(mindfulness_url, 
                             overwrite = TRUE,
                             reviewer = "?",
                             output_dir_to_write = "output")
@@ -300,8 +300,6 @@ dois_np <-
   read_csv("data/dois_np.csv")
 
 
-dois_no_short <-
-
 ```
 
 
@@ -309,7 +307,7 @@ dois_no_short <-
 reviews_np <- 
   dois_np %>% 
   pull(url) %>% 
-  `[`(1:10) %>% 
+  `[`(7) %>% 
   map_dfr(parse_review, 
           .id = "id_review", 
           output_dir = "output/np",

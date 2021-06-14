@@ -90,14 +90,22 @@ get_infopage_colnames <- function() {
 
 
 
-get_all_colnames <- function(output_file = "first",  # if first, take first output file in "output" folder
+get_all_colnames <- function(output_file = "automatic",  # if first, take first output file in "output" folder
                              verbose = FALSE, ...) {
   
-  if (output_file == "first") {
-    first_file_found <- dir("output/", pattern = "^\\d.*csv")[1]
-    output_file_df <- read_csv(glue::glue("output/{first_file_found}"),
-                               col_types = cols(),
-                               ...)
+  if (output_file == "automatic") {
+    cat("Searching for get-all-columns.csv.\n")
+    if (file.exists("output/get-all-columns.csv")) 
+      {output_file_df <- read_csv(glue::glue("output/get-all-columns.csv"),
+                                 col_types = cols(),
+                                 ...) 
+      } else print("get-all-columns.csv not found!\n")
+  
+  # if (output_file == "first") {
+  #   first_file_found <- dir("output/", pattern = "^\\d.*csv")[1]
+  #   output_file_df <- read_csv(glue::glue("output/{first_file_found}"),
+  #                              col_types = cols(),
+  #                              ...)
   } else {
     if (!file.exists(output_file)) stop("File not found!")
     output_file_df <- read_csv(output_file, 
