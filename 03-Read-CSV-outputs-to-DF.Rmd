@@ -3,6 +3,8 @@ title: "Read CSV files with Cochrane results"
 author: "ses"
 date: "5/18/2021"
 output: html_document
+editor_options: 
+  chunk_output_type: console
 ---
 
 
@@ -25,6 +27,7 @@ knitr::opts_chunk$set(fig.pos = 'H',
 ```{r}
 library(tidyverse)
 library(here)
+library(glue)
 ```
 
 
@@ -32,8 +35,8 @@ library(here)
 
 
 ```{r}
-reviewer <- "ss"
-data_path <- paste0(here(),"/output/", reviewer)
+reviewer_selected <- "np"
+data_path <- paste0(here(),"/output/", reviewer_selected)
 data_path
 ```
 
@@ -73,9 +76,14 @@ csv_files2 <-
 # Check
 
 ```{r}
-file_to_look_for <- "14651858.CD004123.pub4.csv"
+length(csv_files2)
+```
 
-any(csv_files2 == file_to_look_for)
+
+```{r}
+#file_to_look_for <- "14651858.CD004123.pub4.csv"
+
+#any(csv_files2 == file_to_look_for)
 ```
 
 
@@ -100,11 +108,33 @@ length(csv_files3)
 
 # Build df
 
+```{r}
+parse_csv <- function(filename) {
+  
+  output <- read_csv(filename)
+  
+  if (!is_integer(output$n_participants_studies))
+    output$n_participants_studies <- parse_integer(as.character(output$n_participants_studies),
+                                                   na = c("", "NA", NA))
+  
+  return(output)
+}
+```
+
+Check:
+
+```{r}
+out <- parse_csv(csv_files3[1])
+str(out$n_participants_studies)
+parse_integer(as.character(NA))
+```
+
+
 
 ```{r}
 reviews_output <- 
 csv_files3 %>% 
-  map_dfr(read_csv, .id = "filename")
+  map_dfr(parse_csv, .id = "filename")
 ```
 
 
@@ -118,11 +148,16 @@ dim(reviews_output)
 ```
 
 
+```{r}
+str(reviews_output$n_participants_studies)
+```
+
+
 # Save to disk
 
 
 ```{r}
-full_path <- paste0(data_path,"/reviews_output_machine_ss.xlsx")
+full_path <- glue("{data_path}/reviews_output_machine_{reviewer_selected}.xlsx")
 full_path
 
 writexl::write_xlsx(reviews_output,
