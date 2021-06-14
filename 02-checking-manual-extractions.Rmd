@@ -3,6 +3,8 @@ title: "Automated checks of manual extractions"
 author: "ses"
 date: "5/14/2021"
 output: html_document
+editor_options: 
+  chunk_output_type: console
 ---
 
 # Setup
@@ -39,6 +41,8 @@ library(janitor)  # clean data
 library(here)  # relative file paths
 library(writexl)  # write to xslx
 #library(polite)  # polite scraping
+library(testthat)  # testing
+library(tools)  # testing/error messages
 
 ```
 
@@ -85,7 +89,7 @@ sample_doi3 <- "14651858.CD004123.pub4"
 ### Paths
 
 ```{r}
-output_path <- paste0(here(),"/output/comparison/ss")
+output_path <- paste0(here(),"/output/comparison/nk")
 ```
 
 
@@ -95,12 +99,41 @@ output_path <- paste0(here(),"/output/comparison/ss")
 
 ## Import manually extracted data
 
+### ss
+
+
+
+## Prep
+
+Define here the (short) name of the reviewer.
 
 ```{r}
-ss_manual_path <- "manual-scraping/ss/InEffective Cochrane Reviews Final_SS_v2.xlsx"
+reviewer_selected <- "np"
+```
 
-ss_manual <-
-  read_xlsx(path = ss_manual_path,
+
+```{r}
+extractions_manual_path <- glue("manual-extractions/{reviewer_selected}/InEffective Cochrane Reviews Final_{reviewer_selected}.xlsx")
+```
+
+This is the relative path the file with the manually extracted Cochrane data:
+
+```{r}
+cat(extractions_manual_path)
+```
+
+
+Check if file exists:
+
+```{r}
+if (!file.exists(extractions_manual_path)) stop("File not found!") else message("File found.")
+```
+
+
+
+```{r}
+extractions_manual <-
+  read_xlsx(path = extractions_manual_path,
             skip = 1) %>%   # invalid header row
   slice(-c(1,2))  %>% # invalued header rows
   rename(reviewer = `...1`)
@@ -111,8 +144,8 @@ ss_manual <-
 ## Clean the cols
 
 ```{r}
-ss_manual2 <-
-  ss_manual %>% 
+extractions_manual2 <-
+  extractions_manual %>% 
   clean_names()
 ```
 
@@ -120,22 +153,22 @@ ss_manual2 <-
 ### Rename cols
 
 ```{r}
-ss_manual3 <-
-  ss_manual2
+extractions_manual3 <-
+  extractions_manual2
 
-names(ss_manual3)[3] <- "SoF_table_number"
-names(ss_manual3)[4] <- "is_outdated"
-names(ss_manual3)[5] <- "is_withdrawn"
-names(ss_manual3)[7] <- "GRADE_used"
-names(ss_manual3)[22] <- "first_high_qual_outcome"
+names(extractions_manual3)[3] <- "SoF_table_number"
+names(extractions_manual3)[4] <- "is_outdated"
+names(extractions_manual3)[5] <- "is_withdrawn"
+names(extractions_manual3)[7] <- "GRADE_used"
+names(extractions_manual3)[22] <- "first_high_qual_outcome"
 ```
 
 
 ### Recode 
 
 ```{r}
-ss_manual3a <-
-  ss_manual3 %>% 
+extractions_manual3a <-
+  extractions_manual3 %>% 
   mutate(across(.cols = c(3:7),
                 .fns = tolower)) %>% 
   mutate(is_outdated = ifelse(is_outdated == "yes", TRUE, FALSE),
@@ -155,15 +188,16 @@ ss_manual3a <-
 Checks
 
 ```{r}
-ss_manual3a %>% 
+extractions_manual3a %>% 
   count(GRADE_used)
 ```
 
 
 ```{r}
-ss_manual3a %>% 
+extractions_manual3a %>% 
   count(has_high_quality_outcome)
 ```
+
 
 
 
@@ -172,8 +206,8 @@ ss_manual3a %>%
 
 
 ```{r}
-ss_manual3b <- 
-ss_manual3a %>% 
+extractions_manual3b <- 
+extractions_manual3a %>% 
   mutate(cochrane_id = sanitize_review_url(url))
 ```
 
@@ -211,14 +245,14 @@ id_cols_manual <-
 
 
 ```{r}
-ss_manual4 <-
-  ss_manual3b %>% 
+extractions_manual4 <-
+  extractions_manual3b %>% 
   select(any_of(c(id_cols_manual, cols_to_be_checked)))
 ```
 
 
 ```{r}
-names(ss_manual4)
+names(extractions_manual4)
 ```
 
 
@@ -227,9 +261,9 @@ names(ss_manual4)
 
 
 ```{r}
-ss_manual5 <-
-  ss_manual4 %>% 
-  filter(tolower(reviewer) == "ss")
+extractions_manual5 <-
+  extractions_manual4 %>% 
+  filter(tolower(reviewer) == reviewer_selected)
 ```
 
 
@@ -238,14 +272,14 @@ ss_manual5 <-
 ## Checks
 
 ```{r}
-ss_manual5 %>% 
-  filter(cochrane_id == sample_doi3) %>% 
-  select(SoF_table_number, GRADE_used)
+# extractions_manual5 %>% 
+#   filter(cochrane_id == sample_doi3) %>% 
+#   select(SoF_table_number, GRADE_used)
 ```
 
 
 ```{r}
-ss_manual5 %>% 
+extractions_manual5 %>% 
   count(first_high_qual_outcome)
 ```
 
@@ -257,10 +291,35 @@ ss_manual5 %>%
 
 
 ```{r}
-ss_machine_path <- "output/ss/reviews_output_machine_ss.xlsx"
+extractions_machine_path <- glue( "output/{reviewer_selected}/reviews_output_machine_{reviewer_selected}.xlsx")
+```
 
-ss_machine <- 
-  read_xlsx(ss_machine_path)
+This is the name of the file with the machine extracted data:
+
+```{r}
+extractions_machine_path
+```
+
+
+Check if this file exists:
+
+```{r}
+if (!file.exists(extractions_machine_path)) stop("File does not exist!") else message("File found.")
+```
+
+
+```{r}
+extractions_machine <- 
+  read_xlsx(extractions_machine_path)
+```
+
+```{r}
+glimpse(extractions_machine)
+```
+
+```{r}
+extractions_machine %>% 
+  count(SoF_table_number)
 ```
 
 
@@ -268,8 +327,8 @@ ss_machine <-
 
 
 ```{r}
-ss_machine2 <-
-  ss_machine %>% 
+extractions_machine2 <-
+  extractions_machine %>% 
   mutate(is_outdated = !is_most_recent_version,
          url = doi,
          cochrane_id = sanitize_review_url(doi)) 
@@ -284,16 +343,16 @@ ss_machine2 <-
 Check
 
 ```{r}
-ss_machine2 %>% 
-  filter(cochrane_id == sample_doi3) %>% 
-    select(GRADE, title)
+# extractions_machine2 %>% 
+#   filter(cochrane_id == sample_doi3) %>% 
+#     select(GRADE, title)
 ```
 
 
 
 ```{r}
-ss_machine3 <-
-  ss_machine2 %>% 
+extractions_machine3 <-
+  extractions_machine2 %>% 
   group_by(doi, SoF_table_number) %>% 
   mutate(GRADE_used = str_detect(GRADE, "⊕|⊝")) %>% 
   mutate(GRADE_used = ifelse(is.na(GRADE_used), FALSE, TRUE )) %>% 
@@ -302,8 +361,9 @@ ss_machine3 <-
   mutate(has_high_quality_outcome = str_detect(tolower(GRADE), "high")) %>% 
   mutate(has_high_quality_outcome = ifelse(
     is.na(has_high_quality_outcome), FALSE, has_high_quality_outcome)) %>% 
-  mutate(first_high_qual_outcome = ifelse(has_high_quality_outcome == TRUE,
-                                    Outcomes, "no high quality outcome")) %>% 
+  mutate(first_high_qual_outcome = 
+           ifelse(has_high_quality_outcome == TRUE,
+                  Outcomes, "no high quality outcome")) %>% 
   ungroup()
   
 ```
@@ -311,25 +371,43 @@ ss_machine3 <-
 **NOTE**. Although the column `first_high_qual_outcome` suggests via its name that only the *first* high quality outcome is reported, this column checks whether the respective measure of th SoF table is of high GRADE level or not.
 
 
-#### Checks
+### Check column type
+
+`SoF_table_number` should be of type `integer`:
 
 ```{r}
-ss_machine3 %>% 
+extractions_machine3a <-
+  extractions_machine3 %>% 
+  mutate(SoF_table_number = parse_number(SoF_table_number))
+```
+
+
+```{r}
+extractions_machine3a %>% 
+  select(SoF_table_number) %>% 
+  str()
+```
+
+
+### Checks
+
+```{r}
+extractions_machine3a %>% 
   count(has_high_quality_outcome)
 ```
 
 
 ```{r}
-ss_machine3 %>% 
+extractions_machine3a %>% 
   count(first_high_qual_outcome)
 ```
 
 
 
 ```{r}
-ss_machine3 %>% 
-  filter(cochrane_id == sample_doi3) %>% 
-  select(SoF_table_number, GRADE_used)
+# extractions_machine3 %>% 
+#   filter(cochrane_id == sample_doi3) %>% 
+#   select(SoF_table_number, GRADE_used)
 ```
 
 
@@ -337,15 +415,15 @@ ss_machine3 %>%
 
 
 ```{r}
-ss_machine4 <-
-  ss_machine3 %>% 
+extractions_machine4 <-
+  extractions_machine3a %>% 
   select(cochrane_id, SoF_table_number,
          any_of(cols_to_be_checked))
 ```
 
 
 ```{r}
-names(ss_machine4)
+names(extractions_machine4)
 ```
 
 
@@ -358,14 +436,14 @@ names(ss_machine4)
 Are the ID (sample dois) correctly parsed?
 
 ```{r}
-ss_machine4 %>% 
-  filter(cochrane_id == sample_doi) %>% 
-  pull(cochrane_id)
-
-
-ss_manual5 %>%
-  filter(cochrane_id == sample_doi) %>% 
-  pull(cochrane_id)
+# extractions_machine4 %>% 
+#   filter(cochrane_id == sample_doi) %>% 
+#   pull(cochrane_id)
+# 
+# 
+# extractions_manual5 %>%
+#   filter(cochrane_id == sample_doi) %>% 
+#   pull(cochrane_id)
 ```
 
 
@@ -376,17 +454,18 @@ Are the `GRADE_used` cols are correctly parsed?
 
 
 ```{r}
-ss_machine4 %>% 
-  filter(cochrane_id == sample_doi2) %>% 
-  select(SoF_table_number, GRADE_used)
+# extractions_machine4 %>% 
+#   filter(cochrane_id == sample_doi2) %>% 
+#   select(SoF_table_number, GRADE_used)
 ```
 
 
 ```{r}
-ss_manual5 %>% 
-  filter(cochrane_id == sample_doi2) %>% 
-  select(SoF_table_number, GRADE_used)
+# extractions_manual5 %>% 
+#   filter(cochrane_id == sample_doi2) %>% 
+#   select(SoF_table_number, GRADE_used)
 ```
+
 
 
 
@@ -394,9 +473,9 @@ ss_manual5 %>%
 
 
 ```{r}
-ss_merged <- 
-  ss_manual5 %>% 
-  left_join(y = ss_machine4, 
+extractions_merged <- 
+  extractions_manual5 %>% 
+  left_join(y = extractions_machine4, 
             by = c("cochrane_id", "SoF_table_number"))
 ```
 
@@ -406,7 +485,7 @@ ss_merged <-
 
 
 ```{r}
-names(ss_merged)
+names(extractions_merged)
 ```
 
 
@@ -414,8 +493,8 @@ names(ss_merged)
 
 
 ```{r}
-ss_merged2 <-
-  ss_merged %>% 
+extractions_merged2 <-
+  extractions_merged %>% 
   mutate(identical_outdated = is_outdated.x == is_outdated.y,
          identical_withdrawn = is_withdrawn.x == is_withdrawn.y,
          identical_GRADE_used = GRADE_used.x == GRADE_used.y) %>% 
@@ -435,13 +514,13 @@ ss_merged2 <-
 ## Checks
 
 ```{r}
-ss_merged2 %>% 
+extractions_merged2 %>% 
   count(identical_first_high_qual_outcome)
 ```
 
 
 ```{r}
-ss_merged2 %>% 
+extractions_merged2 %>% 
   count(identical_has_high_quality_outcome)
 ```
 
@@ -452,15 +531,15 @@ A difference is indicative for some error, either by the machine or by the revie
 
 
 ```{r}
-ss_merged3 <-
-  ss_merged2 %>% 
+extractions_merged3 <-
+  extractions_merged2 %>% 
   filter(identical_outdated == FALSE |
          identical_withdrawn == FALSE |
          identical_GRADE_used == FALSE |
         identical_has_high_quality_outcome == FALSE |
           identical_has_high_quality_outcome == FALSE)
 
-ss_merged3
+extractions_merged
 ```
 
 
@@ -469,11 +548,11 @@ ss_merged3
 
 
 ```{r}
-write_xlsx(ss_merged2,
-           path = paste0(output_path, "/comparison_human_machine_ss",".xlsx"))
+write_xlsx(extractions_merged2,
+           path = paste0(output_path, "/comparison_human_machine_ss" , ".xlsx"))
 
 
-write_xlsx(ss_merged3,
+write_xlsx(extractions_merged3,
            path = paste0(output_path, "/comparison_human_machine_problems_only_ss.xlsx"))
 ```
 

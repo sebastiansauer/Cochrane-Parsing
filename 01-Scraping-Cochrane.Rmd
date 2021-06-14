@@ -10,6 +10,13 @@ editor_options:
 ---
 
 
+
+# Purpose
+
+
+The purpose of this script is to conduct the actual parsing of Cochrane reviews. It is assumed that multiple reviews across multiple reviewers are provided.
+
+
 # Setup
 
 ```{r include=FALSE}
@@ -44,6 +51,7 @@ Declare conflict preferences:
 
 # Define pages to be scraped
 
+Provide a list of DOIs (pointing to Cochrane reviews) to be parsed:
 
 ```{r}
 dois_list <- readxl::read_xlsx("data/doi-list-reviewer.xlsx")
@@ -53,6 +61,8 @@ dois_list <- readxl::read_xlsx("data/doi-list-reviewer.xlsx")
 
 ## Check
  
+Count how many reviews per reviewer are submitted:
+
 ```{r}
 dois_list %>% 
   count(reviewer)
@@ -63,6 +73,7 @@ dois_list %>%
 
 ## Subsamples of reviewers
 
+For curiosity, let's look to some particular reviewers:
 
 ```{r}
 dois_jh <- dois_list %>% 
@@ -94,6 +105,9 @@ dois_by_reviewer_sample %>%
 
 
 ## URLs for checking
+
+
+For demonstration and testing purposes, here's a list of relevant DOIs:
 
 ```{r}
 reviews_ss1 <- "http://dx.doi.org/10.1002/14651858.CD001180.pub4"
@@ -156,7 +170,9 @@ source("funs/parse-review-parts.R")
 
 
 
-## init
+## Init
+
+Let's define some constants we might need later on.
 
 ```{r}
 count_reviews <- 1
@@ -188,18 +204,7 @@ test_review <- parse_review(mindfulness_url, overwrite = TRUE)
 
 
 
-
-
-
-
 # Parse reviews
-
-
-
-
-
-
-
 
 
 ## Loop
@@ -289,43 +294,26 @@ writexl::write_xlsx(review_jh1, path = "output/reviews_jh1.xlsx")
 ### NP
 
 
-#### NP1
-```{r}
-dois_np1 <- 
-  dois_by_reviewer_sample %>% 
-  filter(str_detect(reviewer, "NP")) %>% 
-  slice(5:50) %>% 
-  pull(url)
-
-review_np1 <- 
-  dois_np1 %>% 
-  map_dfr(parse_review, .id = "id_review", output_dir = "output/np",
-          overwrite_file = FALSE,
-          reviewer = "np")
-```
-
-save to disk:
 
 ```{r}
-writexl::write_xlsx(review_np1, path = "output/np/reviews_np1.xlsx")
-```
+dois_np <- 
+  read_csv("data/dois_np.csv")
 
 
+dois_no_short <-
 
-#### NP2
-
-```{r}
-dois_np2 <- 
-  read_csv("data/doi-list-np_1.csv")
 ```
 
 
 ```{r}
-reviews_np2 <- 
-  dois_np2 %>% 
+reviews_np <- 
+  dois_np %>% 
   pull(url) %>% 
-  map_dfr(parse_review, .id = "id_review", output_dir = "output/np",
-          overwrite_file = FALSE,
+  `[`(1:10) %>% 
+  map_dfr(parse_review, 
+          .id = "id_review", 
+          output_dir = "output/np",
+          overwrite_file = TRUE,
           reviewer = "np")
 
 
@@ -431,11 +419,3 @@ write_csv(reviews_ss,
 ```
 
 
-
-
-
-
-```{r bib, include=FALSE}
-# KEEP THIS AT THE END OF THE DOCUMENT TO GENERATE A LOCAL bib FILE FOR PKGS USED
-knitr::write_bib(sub("^package:", "", grep("package", search(), value=TRUE)), file='skeleton.bib')
-```

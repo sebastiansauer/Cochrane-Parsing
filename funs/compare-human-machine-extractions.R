@@ -5,7 +5,7 @@ compare_human_machine_extractions <- function(human_extractions_path,
                                               discrepancies_only = FALSE,
                                               verbose = TRUE
                                               ) {
-  2
+  
   library(tidyverse)  # data wrangling
   library(rvest)  # web scraping
   library(xml2)  # web scraping
@@ -128,6 +128,8 @@ compare_human_machine_extractions <- function(human_extractions_path,
     left_join(y = extractions_machine4, 
               by = c("cochrane_id", "SoF_table_number"))
   
+  
+  # SEE HERE WHICH CHECKS WERE PERFORMED:
   
   extractions_merged2 <-
     extractions_merged %>% 
