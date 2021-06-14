@@ -307,7 +307,7 @@ dois_np <-
 reviews_np <- 
   dois_np %>% 
   pull(url) %>% 
-  `[`(7) %>% 
+  #`[`(6:8) %>% 
   map_dfr(parse_review, 
           .id = "id_review", 
           output_dir = "output/np",

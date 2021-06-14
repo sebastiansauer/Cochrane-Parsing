@@ -41,7 +41,9 @@ parse_review_parts <- function(
       output <- create_empty_df(names_vec = get_all_colnames())
       #output$warnings <- safe_page_content$error$message
       output$doi <- review_url
-      output$warnings <- str_c(warning_df$type, collapse =  " - ")
+      output$warnings <- str_c(output$warnings,
+                               "Error 404 on reading full review page",
+                               collapse =  " - ")
       
       writeLines("Error 404 on reading full review page. Stopping this review.\n")
       
@@ -171,13 +173,15 @@ parse_review_parts <- function(
     if (verbose) print("Error on 'safe_output':")
     print(safe_output$error)
     
-    #output <- create_empty_df(names_vec = get_all_colnames())
+    output <- create_empty_df(names_vec = get_all_colnames())
+    output$doi <- sanitized_review_url
+    
     raise_warning(type = "parse_parts failed!")
     
   } else {
     
     output <- safe_output$result
-  }
+ 
 
 
   # elimine duplicate rows
@@ -187,7 +191,8 @@ parse_review_parts <- function(
     distinct() %>% 
     mutate(id_measure = row_number()) 
  
-
+  }
+  
       if (verbose) {
         print(output)
         writeLines("\n")
