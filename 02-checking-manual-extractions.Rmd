@@ -85,11 +85,21 @@ sample_doi3 <- "14651858.CD004123.pub4"
 ```
 
 
+### Reviewer
+
+
+Define here the (short) name of the reviewer.
+
+```{r}
+reviewer_selected <- "np"
+```
+
+
 
 ### Paths
 
 ```{r}
-output_path <- paste0(here(),"/output/comparison/nk")
+output_path <- glue("{here()}/output/comparison/{reviewer_selected}")
 ```
 
 
@@ -99,17 +109,10 @@ output_path <- paste0(here(),"/output/comparison/nk")
 
 ## Import manually extracted data
 
-### ss
-
 
 
 ## Prep
 
-Define here the (short) name of the reviewer.
-
-```{r}
-reviewer_selected <- "np"
-```
 
 
 ```{r}
@@ -235,7 +238,7 @@ cols_to_be_checked <-
 
 ```{r}
 id_cols_manual <-
-  c("reviewer", "title", "cochrane_id", "SoF_table_number")
+  c("reviewer", "title", "url", "cochrane_id", "SoF_table_number")
 ```
 
 
@@ -338,7 +341,7 @@ extractions_machine2 <-
 ### Add `GRADE_used`
 
 
-`GRADE_used` is set to TRUE if GRADE was used for at least one measure in the respective SOF.
+`GRADE_used` is set to TRUE if GRADE was used for at least one measure in the respective SoF.
 
 Check
 
@@ -371,14 +374,34 @@ extractions_machine3 <-
 **NOTE**. Although the column `first_high_qual_outcome` suggests via its name that only the *first* high quality outcome is reported, this column checks whether the respective measure of th SoF table is of high GRADE level or not.
 
 
+
+
+
+
 ### Check column type
 
-`SoF_table_number` should be of type `integer`:
+`SoF_table_number` should not be of type `character`:
 
 ```{r}
-extractions_machine3a <-
-  extractions_machine3 %>% 
-  mutate(SoF_table_number = parse_number(SoF_table_number))
+str(extractions_machine3$SoF_table_number)
+```
+
+
+```{r}
+if (is.character(extractions_machine3$SoF_table_number)) 
+  extractions_machine3$SoF_table_number <- as.integer(extractions_machine3$SoF_table_number)
+```
+
+
+```{r}
+extractions_machine3a <- extractions_machine3
+```
+
+
+```{r}
+# extractions_machine3a <-
+#   extractions_machine3 %>% 
+#   mutate_if(is.character(.$SoF_table_number),SoF_table_number = parse_number(SoF_table_number))
 ```
 
 
@@ -386,6 +409,14 @@ extractions_machine3a <-
 extractions_machine3a %>% 
   select(SoF_table_number) %>% 
   str()
+```
+
+
+### Replace NAs
+
+```{r}
+extractions_machine3a %>% 
+  replace_na(across())
 ```
 
 
@@ -431,7 +462,7 @@ names(extractions_machine4)
 # Merge manual and machine extracted data
 
 
-## Check 1 
+## Checks
 
 Are the ID (sample dois) correctly parsed?
 
@@ -447,7 +478,7 @@ Are the ID (sample dois) correctly parsed?
 ```
 
 
-## Check 2
+
 
 
 Are the `GRADE_used` cols are correctly parsed?
@@ -464,6 +495,20 @@ Are the `GRADE_used` cols are correctly parsed?
 # extractions_manual5 %>% 
 #   filter(cochrane_id == sample_doi2) %>% 
 #   select(SoF_table_number, GRADE_used)
+```
+
+
+```{r}
+doi_test <- "14651858.CD009540.pub2"
+
+extractions_manual5 %>% 
+  filter(cochrane_id == doi_test) %>% 
+  pull(first_high_qual_outcome)
+
+
+extractions_machine4 %>% 
+  filter(cochrane_id == doi_test) %>% 
+  pull(first_high_qual_outcome)
 ```
 
 
@@ -498,6 +543,7 @@ extractions_merged2 <-
   mutate(identical_outdated = is_outdated.x == is_outdated.y,
          identical_withdrawn = is_withdrawn.x == is_withdrawn.y,
          identical_GRADE_used = GRADE_used.x == GRADE_used.y) %>% 
+  rowwise() %>% 
   mutate(identical_has_high_quality_outcome = 
            identical(has_high_quality_outcome.x, has_high_quality_outcome.y)) %>% 
   mutate(identical_first_high_qual_outcome = 
@@ -506,7 +552,8 @@ extractions_merged2 <-
              str_detect(first_high_qual_outcome.x, first_high_qual_outcome.y) ~ TRUE,
              str_detect(first_high_qual_outcome.y, first_high_qual_outcome.x) ~ TRUE,
              TRUE ~ FALSE
-           ))
+           )) %>% 
+  ungroup()
 ```
 
 
@@ -525,6 +572,10 @@ extractions_merged2 %>%
 ```
 
 
+
+
+
+
 ## Filter for differences
 
 A difference is indicative for some error, either by the machine or by the reviewer. To be inspected with closer scrunity.
@@ -539,20 +590,27 @@ extractions_merged3 <-
         identical_has_high_quality_outcome == FALSE |
           identical_has_high_quality_outcome == FALSE)
 
-extractions_merged
+dim(extractions_merged)
 ```
 
 
 
 ## Write to disk
 
+```{r}
+path_ext_merged2 <- glue("{output_path}/comparison_human_machine_{reviewer_selected}.xlsx")
+
+path_ext_merged3 <-
+  glue("{output_path}/comparison_human_machine_problems_only_{reviewer_selected}.xlsx")
+```
+
 
 ```{r}
 write_xlsx(extractions_merged2,
-           path = paste0(output_path, "/comparison_human_machine_ss" , ".xlsx"))
+           path = path_ext_merged2)
 
 
 write_xlsx(extractions_merged3,
-           path = paste0(output_path, "/comparison_human_machine_problems_only_ss.xlsx"))
+           path = path_ext_merged3)
 ```
 
