@@ -359,9 +359,6 @@ reviews_ss <-
           output_dir = "output/ss",
           overwrite_file = TRUE,
           reviewer = "ss")
-
-
-
 ```
 
 
@@ -383,6 +380,39 @@ reviews_parsed4 <-
    #old_version_url %>% 
    map_dfr(parse_review, .id = "id_review")
 ```
+
+
+
+### ML
+
+
+```{r}
+dois_ml <- 
+  dois_list %>% 
+  filter(tolower(reviewer) == "ml") %>% 
+  pull(url)
+```
+
+
+
+
+```{r}
+count_reviews <- 1
+reviews_ml <- 
+  dois_ml %>% 
+  map_dfr(parse_review, 
+          .id = "id_review", 
+          output_dir = "output/ML",
+          overwrite_file = TRUE,
+          reviewer = "ml")
+  system("say Ich habe fertig!")
+```
+
+
+```{r}
+writexl::write_xlsx(reviews_ml, path = "output/ML/reviews_ml.xlsx")
+```
+
 
 
 

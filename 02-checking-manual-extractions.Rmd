@@ -415,8 +415,8 @@ extractions_machine3a %>%
 ### Replace NAs
 
 ```{r}
-extractions_machine3a %>% 
-  replace_na(across())
+# extractions_machine3a %>% 
+#   replace_na(across())
 ```
 
 
