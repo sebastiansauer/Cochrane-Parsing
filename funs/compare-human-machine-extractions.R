@@ -1,5 +1,6 @@
 compare_human_machine_extractions <- function(reviewer_selected = "?",
                                               write_to_disk = TRUE,
+                                              discrepancies_only = TRUE,
                                               verbose = TRUE
                                               ) {
   
@@ -22,15 +23,18 @@ compare_human_machine_extractions <- function(reviewer_selected = "?",
   source("funs/get_summary_table.R")
   source("funs/parse-review-parts.R")
   
+  
+  ########## manual extractions:
+
   # Define output path:
   output_path <- glue("{here()}/output/comparison/{reviewer_selected}")
   
-  if (verbose) paste("Assuming this output path:" , output_path, "\n")
+  if (verbose) print(paste("Assuming this output path:" , output_path, "\n"))
   
   # Here's the path where the human (manual) extractions come from:
   extractions_manual_path <- glue("manual-extractions/{reviewer_selected}/InEffective Cochrane Reviews Final_{reviewer_selected}.xlsx")
   
-  if (verbose) paste("Assuming this path for manual extraction data:" , extractions_manual_path, "\n")
+  if (verbose) print(paste("Assuming this path for manual extraction data:" , extractions_manual_path, "\n"))
   
   
   if (!file.exists(extractions_manual_path)) 
@@ -71,9 +75,9 @@ compare_human_machine_extractions <- function(reviewer_selected = "?",
     group_by(url) %>% 
     mutate(SoF_table_number = row_number()) %>% 
     ungroup() %>% 
-    mutate(has_high_quality_outcome = ifelse(
+    mutate(has_high_quality_outcomes = ifelse(
       str_count(str_squish(first_high_qual_outcome)) > 0, TRUE, FALSE)) %>% 
-    mutate(has_high_quality_outcome = replace_na(has_high_quality_outcome, FALSE)) %>% 
+    mutate(has_high_quality_outcomes = replace_na(has_high_quality_outcomes, FALSE)) %>% 
     mutate(first_high_qual_outcome = replace_na(first_high_qual_outcome, 
                                                 "no high quality outcome"))
   
@@ -84,34 +88,46 @@ compare_human_machine_extractions <- function(reviewer_selected = "?",
     extractions_manual3a %>% 
     mutate(cochrane_id = sanitize_review_url(url))
   
+  
+  # remove parantheses, b/c unmatches parantheses caused problems:
+  if (verbose) print("Now removing parentheses.")
+    extractions_manual3c <- 
+    extractions_manual3b %>% 
+    mutate(first_high_qual_outcome = str_remove_all(
+      string = first_high_qual_outcome,
+      pattern = "[()]+"))
+  
   cols_to_be_checked <-
     c("is_outdated",
       "is_withdrawn",   
       "GRADE_used",
       "first_high_qual_outcome",
-      "has_high_quality_outcome"
+      "has_high_quality_outcomes"
     )
   
   id_cols_manual <-
     c("reviewer", "title", "url", "cochrane_id", "SoF_table_number")
   
-  
+  if (verbose) print("Now selecting relevant columns.")
   extractions_manual4 <-
-    extractions_manual3b %>% 
+    extractions_manual3c %>% 
     select(any_of(c(id_cols_manual, cols_to_be_checked)))
   
+  if (verbose) print("Now filtering rows to selected reviewer.\n")
   extractions_manual5 <-
     extractions_manual4 %>% 
     filter(tolower(reviewer) == reviewer_selected)
   
+  ########## machine extractions:
+  
+  
   extractions_machine_path <- glue( "output/{reviewer_selected}/reviews_output_machine_{reviewer_selected}.xlsx")
   
-  if (verbose) print("Assuming this path for machine extracted data",
-                     extractions_machine_path, "\n")
+  if (verbose) print(paste("Assuming this path for machine extracted data",
+                     extractions_machine_path, "\n"))
   
    if (!file.exists(extractions_machine_path)) 
-     stop("File does not exist!") 
-  else message("File found.")
+     stop("File does not exist!") else message("File found.")
   
   extractions_machine <- 
     read_xlsx(extractions_machine_path)
@@ -124,18 +140,19 @@ compare_human_machine_extractions <- function(reviewer_selected = "?",
            url = doi,
            cochrane_id = sanitize_review_url(doi)) 
   
+  print("Computing variables: GRADE_used, has_high_quality_outcomes, first_high_qual_outcome\n")
   extractions_machine3 <-
     extractions_machine2 %>% 
     group_by(doi, SoF_table_number) %>% 
     mutate(GRADE_used = str_detect(GRADE, "⊕|⊝")) %>% 
     mutate(GRADE_used = ifelse(is.na(GRADE_used), FALSE, TRUE )) %>% 
     mutate(GRADE_used = ifelse(any(GRADE_used == TRUE), TRUE, FALSE)) %>% 
-    ungroup() %>% 
-    mutate(has_high_quality_outcome = str_detect(tolower(GRADE), "high")) %>% 
-    mutate(has_high_quality_outcome = ifelse(
-      is.na(has_high_quality_outcome), FALSE, has_high_quality_outcome)) %>% 
+    mutate(is_high_quality_outcome = str_detect(tolower(GRADE), "high")) %>% 
+    mutate(has_high_quality_outcomes = case_when(
+      any(is_high_quality_outcome) ~ TRUE,
+      TRUE ~ FALSE)) %>% 
     mutate(first_high_qual_outcome = 
-             ifelse(has_high_quality_outcome == TRUE,
+             ifelse(is_high_quality_outcome == TRUE,
                     Outcomes, "no high quality outcome")) %>% 
     ungroup()
   
@@ -145,30 +162,46 @@ compare_human_machine_extractions <- function(reviewer_selected = "?",
   
   extractions_machine3a <- extractions_machine3
   
+  if (verbose) print("Now selecting columns.")
   extractions_machine4 <-
     extractions_machine3a %>% 
-    select(cochrane_id, SoF_table_number,
+    select(cochrane_id, 
+           SoF_table_number, 
+           is_paywalled, 
+           warnings,
+           is_high_quality_outcome,
            any_of(cols_to_be_checked))
+  
+  if (verbose) print("Now removing parentheses.")
+  # remove parantheses, because some unmatched parantheses caused problems:
+  extractions_machine4a <- 
+    extractions_machine4 %>% 
+    mutate(first_high_qual_outcome = str_remove_all(
+      string = first_high_qual_outcome,
+      pattern = "[()]+"
+    ))
+  
+ 
   
   if (verbose) print("Now starting merging...\n")
   
   extractions_merged <- 
     extractions_manual5 %>% 
-    left_join(y = extractions_machine4, 
+    left_join(y = extractions_machine4a, 
               by = c("cochrane_id", "SoF_table_number"))
   
-  
+  if (verbose) print("Now comparing human with machine extractions.")
   extractions_merged2 <-
     extractions_merged %>% 
     mutate(identical_outdated = is_outdated.x == is_outdated.y,
            identical_withdrawn = is_withdrawn.x == is_withdrawn.y,
            identical_GRADE_used = GRADE_used.x == GRADE_used.y) %>% 
     rowwise() %>% 
-    mutate(identical_has_high_quality_outcome = 
-             identical(has_high_quality_outcome.x, has_high_quality_outcome.y)) %>% 
+    mutate(identical_has_high_quality_outcomes = 
+             has_high_quality_outcomes.x == has_high_quality_outcomes.y) %>% 
     mutate(identical_first_high_qual_outcome = 
              case_when(
-               identical(first_high_qual_outcome.x, first_high_qual_outcome.y) ~ TRUE,
+               first_high_qual_outcome.x == first_high_qual_outcome.y ~ TRUE,
                str_detect(first_high_qual_outcome.x, first_high_qual_outcome.y) ~ TRUE,
                str_detect(first_high_qual_outcome.y, first_high_qual_outcome.x) ~ TRUE,
                TRUE ~ FALSE
@@ -181,24 +214,33 @@ compare_human_machine_extractions <- function(reviewer_selected = "?",
     filter(identical_outdated == FALSE |
              identical_withdrawn == FALSE |
              identical_GRADE_used == FALSE |
-             identical_has_high_quality_outcome == FALSE |
-             identical_has_high_quality_outcome == FALSE)
+             identical_has_high_quality_outcomes == FALSE |
+             identical_has_high_quality_outcomes == FALSE)
   
-  if (verbose) paste0("Dimensions (row/cols) of Excel files with discrepancies: ", dim(extractions_merged))
+  if (verbose) print(paste0("Dimensions (row/cols) of Excel files with discrepancies: ", str_c(dim(extractions_merged), 
+                                                                                                  collapse = " ")))
   
   if (write_to_disk) {
     path_ext_merged2 <- glue("{output_path}/comparison_human_machine_{reviewer_selected}.xlsx")
-    if (verbose) print("Assuming this output path for complete output file: ", path_ext_merged2, "\n")
+    if (verbose) print(paste("Assuming this output path for complete output file: ", path_ext_merged2, "\n"))
+    
+    write_xlsx(extractions_merged2,
+               path = path_ext_merged2)
+    
     
     path_ext_merged3 <-
       glue("{output_path}/comparison_human_machine_problems_only_{reviewer_selected}.xlsx")
-    if (verbose) print("Assuming this output path for file with discrepancies only: ", path_ext_merged3, "\n")
+    if (verbose) print(paste("Assuming this output path for file with discrepancies only: ", path_ext_merged3, "\n"))
     
+    write_xlsx(extractions_merged3,
+               path = path_ext_merged3)
     
+    if (verbose) print("Files have been written to disk.")
   }
   
   
-  
+  if (discrepancies_only) output <- extractions_merged3
+  if (!discrepancies_only) output <- extractions_merged2
   
   
   return(output)
