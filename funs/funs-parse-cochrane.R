@@ -478,8 +478,8 @@ parse_review <- function(review_url,
   review_url_cochrane <- build_cochrane_url_from_doi(review_url)
   
   #be polite:
-  bow_result <- bow(url = review_url_cochrane,
-                    user_agent = "Sebastian Sauer - sebastiansauer1@gmail.com")
+  #bow_result <- bow(url = review_url_cochrane,
+  #                  user_agent = "Sebastian Sauer - sebastiansauer1@gmail.com")
   # not yet fully implemented!
   
   # parse all parts
