@@ -207,17 +207,17 @@ get_summary_table <- function(page_content,
   if (!exists("warning_df")) raise_warning(type = "Init")
   
   # stop if critical warning has been raised earlier on:
-  if (any(warning_df$critical == TRUE)) {
-    
-    writeLines("Stopping reading the summary table, as critical warning has been raised earlier on")
-    writeLines("Returning empty SoF table")
-    output <- create_empty_df(names_vec = c(get_summarytab_colnames(), get_summarytab_metadata_colnames()))
-    
-    output$warning <- str_c(warning_df$type, collapse = " | ")
-                              
-    return(output)
-    
-  }
+  # if (any(warning_df$critical == TRUE)) {
+  #   
+  #   writeLines("Stopping reading the summary table, as critical warning has been raised earlier on")
+  #   writeLines("Returning empty SoF table")
+  #   output <- create_empty_df(names_vec = c(get_summarytab_colnames(), get_summarytab_metadata_colnames()))
+  #   
+  #   output$warning <- str_c(warning_df$type, collapse = " | ")
+  #                             
+  #   return(output)
+  #   
+  # }
   
   
   # run only if at least one such tables exists:
@@ -319,23 +319,31 @@ get_summary_table <- function(page_content,
     if (verbose) writeLines("Col_GRADE found.")
     
     
-    
-    # delete unneeded header rows:
-    summaryOfFindingsTable2 <-
-      summaryOfFindingsTable %>%
-      filter(id_measure > header_rows)
-    
-    
+
     # delete footer:
     identical_cells_across_cols <- 
-      map2_lgl(.x = summaryOfFindingsTable2$Outcomes,
-               .y = summaryOfFindingsTable2$X2,
+      map2_lgl(.x = summaryOfFindingsTable$Outcomes,
+               .y = summaryOfFindingsTable$X2,
                .f = identical)
     
     # delete rows with constant values:
-    summaryOfFindingsTable3 <-
-      summaryOfFindingsTable2 %>% 
+    summaryOfFindingsTable2 <-
+      summaryOfFindingsTable %>% 
       filter(!identical_cells_across_cols)  
+    
+    # delete unneeded header rows:
+    summaryOfFindingsTable3 <-
+      summaryOfFindingsTable2 %>%
+      group_by(header_row) %>% 
+      mutate(header_row_nr = row_number()) %>% 
+      ungroup() %>% 
+      filter(header_row == FALSE | header_row_nr == 1) %>% 
+      select(-header_row_nr)
+    
+    
+      #filter(id_measure <= header_rows)
+    
+    
     
     
     # 2nd attempt to find GRADE cols.
@@ -402,8 +410,9 @@ get_summary_table <- function(page_content,
     
     
     col_participants_studies <- 
-      summaryOfFindingsTable %>%  # as defined above
+      summaryOfFindingsTable3 %>%  # as defined above
       filter(header_row == TRUE) %>% 
+      #filter(!identical_cells_across_cols) %>%   
       map( ~ str_detect(., pattern = n_of_trials_string2)) %>% 
       map_lgl( ~ any(. == TRUE)) %>% 
       keep(isTRUE) %>% 
@@ -433,7 +442,7 @@ get_summary_table <- function(page_content,
       summaryOfFindingsTable6 <-
         summaryOfFindingsTable5 %>% 
         mutate(n_participants_studies = NA)  
-    } else {  # if everything's ok:
+    } else {  # if everything's ok, proceed:
       
       summaryOfFindingsTable6 <-
         summaryOfFindingsTable5 %>% 
@@ -536,16 +545,24 @@ get_summary_table <- function(page_content,
         rename(Comments := {col_comments})
     }
     
-    #re-number if column:
-    summaryOfFindingsTable7 <- 
+    # remove add rows that are headers actually:
+    summaryOfFindingsTable7a <- 
       summaryOfFindingsTable7 %>% 
+      filter(Outcomes != "Outcomes")
+    
+    
+    
+    #re-number id column:
+    summaryOfFindingsTable7b <- 
+      summaryOfFindingsTable7a %>% 
       mutate(id_measure = row_number()) %>% 
       select(id_measure, everything(), -header_row)
     
     
+  
     # add SoF table metadata:
     summaryOfFindingsTable8 <-
-      summaryOfFindingsTable7 %>% 
+      summaryOfFindingsTable7b %>% 
       bind_cols(SoF_table_metadata)
     
     
