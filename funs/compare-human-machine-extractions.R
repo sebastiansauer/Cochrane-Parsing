@@ -1,8 +1,5 @@
-compare_human_machine_extractions <- function(human_extractions_path,
-                                              machine_extractions_path,
-                                              reviewer_name = "?",
-                                              output_path = "",
-                                              discrepancies_only = FALSE,
+compare_human_machine_extractions <- function(reviewer_selected = "?",
+                                              write_to_disk = TRUE,
                                               verbose = TRUE
                                               ) {
   
@@ -25,14 +22,29 @@ compare_human_machine_extractions <- function(human_extractions_path,
   source("funs/get_summary_table.R")
   source("funs/parse-review-parts.R")
   
+  # Define output path:
+  output_path <- glue("{here()}/output/comparison/{reviewer_selected}")
   
+  if (verbose) paste("Assuming this output path:" , output_path, "\n")
+  
+  # Here's the path where the human (manual) extractions come from:
+  extractions_manual_path <- glue("manual-extractions/{reviewer_selected}/InEffective Cochrane Reviews Final_{reviewer_selected}.xlsx")
+  
+  if (verbose) paste("Assuming this path for manual extraction data:" , extractions_manual_path, "\n")
+  
+  
+  if (!file.exists(extractions_manual_path)) 
+    stop("File not found!") 
+  else message("File found.")
+  
+  # Read human extraction data:
   extractions_manual <-
-    read_xlsx(path = human_extractions_path,
+    read_xlsx(path = extractions_manual_path,
               skip = 1) %>%   # invalid header row
     slice(-c(1,2))  %>% # invalued header rows
     rename(reviewer = `...1`)
-  
-  
+
+  # clean names:
   extractions_manual2 <-
     extractions_manual %>% 
     clean_names()
@@ -46,6 +58,9 @@ compare_human_machine_extractions <- function(human_extractions_path,
   names(extractions_manual3)[7] <- "GRADE_used"
   names(extractions_manual3)[22] <- "first_high_qual_outcome"
   
+  if (verbose) print("Now starting recoding...\n")
+  
+  # recode:
   extractions_manual3a <-
     extractions_manual3 %>% 
     mutate(across(.cols = c(3:7),
@@ -59,14 +74,15 @@ compare_human_machine_extractions <- function(human_extractions_path,
     mutate(has_high_quality_outcome = ifelse(
       str_count(str_squish(first_high_qual_outcome)) > 0, TRUE, FALSE)) %>% 
     mutate(has_high_quality_outcome = replace_na(has_high_quality_outcome, FALSE)) %>% 
-    mutate(first_high_qual_outcome = 
-             replace_na(first_high_qual_outcome, "no high quality outcome"))
+    mutate(first_high_qual_outcome = replace_na(first_high_qual_outcome, 
+                                                "no high quality outcome"))
   
+  
+  if (verbose) print("Not sanitzing review url ...\n")
   
   extractions_manual3b <- 
     extractions_manual3a %>% 
     mutate(cochrane_id = sanitize_review_url(url))
-  
   
   cols_to_be_checked <-
     c("is_outdated",
@@ -77,7 +93,7 @@ compare_human_machine_extractions <- function(human_extractions_path,
     )
   
   id_cols_manual <-
-    c("reviewer", "title", "cochrane_id", "SoF_table_number")
+    c("reviewer", "title", "url", "cochrane_id", "SoF_table_number")
   
   
   extractions_manual4 <-
@@ -86,21 +102,27 @@ compare_human_machine_extractions <- function(human_extractions_path,
   
   extractions_manual5 <-
     extractions_manual4 %>% 
-    filter(tolower(reviewer) == reviewer_name)
+    filter(tolower(reviewer) == reviewer_selected)
   
+  extractions_machine_path <- glue( "output/{reviewer_selected}/reviews_output_machine_{reviewer_selected}.xlsx")
   
+  if (verbose) print("Assuming this path for machine extracted data",
+                     extractions_machine_path, "\n")
   
-  # MACHINE data
+   if (!file.exists(extractions_machine_path)) 
+     stop("File does not exist!") 
+  else message("File found.")
   
   extractions_machine <- 
-    read_xlsx(machine_extractions_path)
+    read_xlsx(extractions_machine_path)
+  
+  if (verbose) print("Excel file with machine extracted data has been read.\n")
   
   extractions_machine2 <-
     extractions_machine %>% 
     mutate(is_outdated = !is_most_recent_version,
            url = doi,
            cochrane_id = sanitize_review_url(doi)) 
-  
   
   extractions_machine3 <-
     extractions_machine2 %>% 
@@ -112,16 +134,23 @@ compare_human_machine_extractions <- function(human_extractions_path,
     mutate(has_high_quality_outcome = str_detect(tolower(GRADE), "high")) %>% 
     mutate(has_high_quality_outcome = ifelse(
       is.na(has_high_quality_outcome), FALSE, has_high_quality_outcome)) %>% 
-    mutate(first_high_qual_outcome = ifelse(has_high_quality_outcome == TRUE,
-                                            Outcomes, "no high quality outcome")) %>% 
+    mutate(first_high_qual_outcome = 
+             ifelse(has_high_quality_outcome == TRUE,
+                    Outcomes, "no high quality outcome")) %>% 
     ungroup()
   
+  # `SoF_table_number` should not be of type `character`:
+  if (is.character(extractions_machine3$SoF_table_number)) 
+    extractions_machine3$SoF_table_number <- as.integer(extractions_machine3$SoF_table_number)
+  
+  extractions_machine3a <- extractions_machine3
   
   extractions_machine4 <-
-    extractions_machine3 %>% 
+    extractions_machine3a %>% 
     select(cochrane_id, SoF_table_number,
            any_of(cols_to_be_checked))
   
+  if (verbose) print("Now starting merging...\n")
   
   extractions_merged <- 
     extractions_manual5 %>% 
@@ -129,13 +158,12 @@ compare_human_machine_extractions <- function(human_extractions_path,
               by = c("cochrane_id", "SoF_table_number"))
   
   
-  # SEE HERE WHICH CHECKS WERE PERFORMED:
-  
   extractions_merged2 <-
     extractions_merged %>% 
     mutate(identical_outdated = is_outdated.x == is_outdated.y,
            identical_withdrawn = is_withdrawn.x == is_withdrawn.y,
            identical_GRADE_used = GRADE_used.x == GRADE_used.y) %>% 
+    rowwise() %>% 
     mutate(identical_has_high_quality_outcome = 
              identical(has_high_quality_outcome.x, has_high_quality_outcome.y)) %>% 
     mutate(identical_first_high_qual_outcome = 
@@ -144,8 +172,10 @@ compare_human_machine_extractions <- function(human_extractions_path,
                str_detect(first_high_qual_outcome.x, first_high_qual_outcome.y) ~ TRUE,
                str_detect(first_high_qual_outcome.y, first_high_qual_outcome.x) ~ TRUE,
                TRUE ~ FALSE
-             ))
+             )) %>% 
+    ungroup()
   
+  if (verbose) print("Now starting testing for equality human/machine... \n")
   extractions_merged3 <-
     extractions_merged2 %>% 
     filter(identical_outdated == FALSE |
@@ -154,14 +184,22 @@ compare_human_machine_extractions <- function(human_extractions_path,
              identical_has_high_quality_outcome == FALSE |
              identical_has_high_quality_outcome == FALSE)
   
+  if (verbose) paste0("Dimensions (row/cols) of Excel files with discrepancies: ", dim(extractions_merged))
   
-  output <- extractions_merged2
+  if (write_to_disk) {
+    path_ext_merged2 <- glue("{output_path}/comparison_human_machine_{reviewer_selected}.xlsx")
+    if (verbose) print("Assuming this output path for complete output file: ", path_ext_merged2, "\n")
+    
+    path_ext_merged3 <-
+      glue("{output_path}/comparison_human_machine_problems_only_{reviewer_selected}.xlsx")
+    if (verbose) print("Assuming this output path for file with discrepancies only: ", path_ext_merged3, "\n")
+    
+    
+  }
   
-  if (discrepancies_only) output <- extractions_merged3
   
-  if (write_to_disk) 
-    write_xlsx(output,
-               path = output_path)
+  
+  
   
   return(output)
 }
