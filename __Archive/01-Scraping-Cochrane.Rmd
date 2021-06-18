@@ -37,6 +37,7 @@ library(glue)
 library(polite)
 library(tidytext)
 library(readxl)
+library(magrittr)
 #update_geom_font_defaults(font_rc)
 ```
 
@@ -49,7 +50,7 @@ Declare conflict preferences:
 
 
 
-# Define pages to be scraped
+# List of dois
 
 Provide a list of DOIs (pointing to Cochrane reviews) to be parsed:
 
@@ -173,6 +174,8 @@ source("funs/parse-review-parts.R")
 ## Init
 
 Let's define some constants we might need later on.
+
+### Constants 
 
 ```{r}
 count_reviews <- 1
@@ -390,7 +393,7 @@ reviews_parsed4 <-
 dois_ml <- 
   dois_list %>% 
   filter(tolower(reviewer) == "ml") %>% 
-  filter(url == "http://dx.doi.org/10.1002/14651858.CD009955.pub3") %>% 
+  #filter(url == "http://dx.doi.org/10.1002/14651858.CD009955.pub3") %>% 
   pull(url)
 ```
 
@@ -405,8 +408,6 @@ reviews_ml <-
           output_dir = "output/ML",
           overwrite_file = TRUE,
           reviewer = "ml")
-  
-#system("say Ich habe fertig!")
 ```
 
 
@@ -414,6 +415,49 @@ reviews_ml <-
 writexl::write_xlsx(reviews_ml, path = "output/ML/reviews_ml.xlsx")
 ```
 
+
+### DK
+
+
+
+```{r}
+dois_dk <- 
+  dois_list %>% 
+  filter(tolower(reviewer) == "dk") %>% 
+  #filter(url == "http://dx.doi.org/10.1002/14651858.CD009955.pub3") %>% 
+  pull(url)
+```
+
+```{r}
+length(dois_dk)
+```
+
+
+
+
+
+```{r}
+count_reviews <- 1
+reviews_dk <- 
+  dois_dk %>% 
+  map_dfr(parse_review, 
+          .id = "id_review", 
+          output_dir = "output/dk",
+          overwrite_file = TRUE,
+          reviewer = "dk")
+```
+
+
+```{r}
+writexl::write_xlsx(reviews_dk, 
+                    path = "output/dk/reviews_output_machine_dk.xlsx")
+```
+
+
+```{r}
+reviews_dk %>% 
+  write_csv(file = "output/dk/reviews_output_machine_dk.csv")
+```
 
 
 
