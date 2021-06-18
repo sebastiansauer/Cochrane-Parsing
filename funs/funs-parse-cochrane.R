@@ -466,6 +466,7 @@ parse_review <- function(review_url,
                          verbose = TRUE,
                          output_dir_to_write = "output",
                          reviewer  = "?",
+                         sound = TRUE,
                          overwrite_file = TRUE) {
   
   if (!exists("count_reviews"))
@@ -509,6 +510,7 @@ parse_review <- function(review_url,
   
   return(review_parsed_parts)
   
+  if (sound) system("say Ich habe fertig!")
   
 }
 

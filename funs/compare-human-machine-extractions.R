@@ -11,7 +11,7 @@ compare_human_machine_extractions <- function(reviewer_selected = "?",
   library(printr)  # print dfs as tables
   library(glue)  # glueing
   library(rcrossref)  # citation count
-  #library(conflicted)  # detect package confligcs
+  #library(conflicted)  # detect package conflicts
   library(readxl)  # import excel data
   library(janitor)  # clean data 
   library(here)  # relative file paths
