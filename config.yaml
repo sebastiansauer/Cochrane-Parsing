@@ -5,11 +5,14 @@ file_type: csv
 human_extractions_file: InEffective Cochrane Reviews Final_jh.xlsx
 machine_extractions_file: reviews_output_machine
 log: true
+flog_threshold: debug
 dois_file: "data/doi-list-reviewer.xlsx"
 nr_of_dois_to_be_parsed: 5
 start_at_doi: 1
 end_at_doi: 2
 save_to_disk: true
+sound: true
+verbose: true
 
 
 
