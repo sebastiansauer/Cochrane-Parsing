@@ -10,12 +10,10 @@ parse_review <- function(review_url) {
   sound = config$sound
   overwrite_file = config$overwrite
   
-  if (!exists("count_reviews"))
-    count_reviews <<- 1
-  
-  flog.debug(paste0("Starting with review url: ", review_url))
-  flog.debug(paste0("Starting with review number: ", count_reviews))
-  if (verbose) writeLines(glue::glue("______Now starting with review number ((( {count_reviews} )))______\n"))
+
+  flog.info(paste0("Starting with review url: ", review_url))
+  #flog.info(paste0("Starting with review number: ", count_reviews))
+  #if (verbose) writeLines(glue::glue("______Now starting with review number ((( {count_reviews} )))______\n"))
   if (verbose) writeLines(glue::glue("______Now review with url ((( {review_url} )))______\n"))
   
   
@@ -27,9 +25,7 @@ parse_review <- function(review_url) {
   # not yet fully implemented!
   
   # parse all parts
-  review_parsed_parts <- parse_review_parts(review_url_cochrane, 
-                                            reviewer = reviewer,
-                                            overwrite = overwrite_file)
+  review_parsed_parts <- parse_review_parts(review_url_cochrane)
   
   # add warnings:
   review_parsed_parts <-  
@@ -38,16 +34,11 @@ parse_review <- function(review_url) {
   
   
   write_parsed_review_to_csv_file(review_url = review_url_cochrane,
-                                  review = review_parsed_parts,
-                                  output_dir = output_dir_to_write,
-                                  reviewer = reviewer,
-                                  overwrite = overwrite_file)
+                                  review = review_parsed_parts)
   
-  if (!exists("count_reviews")) 
-    count_reviews <- 0
   
-  count_reviews <<- count_reviews + 1
   
+
   flog.info("Review has been parsed.")
   writeLines("Finalizing. Warnings:\n")
   print(warning_df)

@@ -1,206 +1,15 @@
 
-# Get number of SoF tables ------------------------------------------------
-
-
-
-get_nr_of_summary_tables <- function(my_page_content, 
-                                     table_number = NULL, # which table should be extracted?
-                                     verbose = TRUE) # should an empty table be returned? if so, what's the name of the only column?
-{
-  
-  
-  
-  
-  # check how many tables exist:
-  nr_Table <- 
-    my_page_content %>% 
-    html_nodes("table") %>% 
-    length()
-  
-  
-  
-  # check if a section "summary of results" exist
-  summary_sections_exists <- 
-    my_page_content %>% 
-    html_nodes(".section-collapse-title") %>% 
-    html_text() %>% 
-    str_trim() %>% 
-    str_detect("Summary of findings") %>% 
-    any()
-  
-  
-  # get number of summary tables:
-  nr_summary_tables <- 
-    my_page_content %>% 
-    html_nodes(".summaryOfFindings") %>% 
-    html_nodes(".table") %>% 
-    length()
-  
-  # alternative way, likely less precise:
-  nr_summary_tables2 <- 
-    my_page_content %>% 
-    html_nodes("table") %>% 
-    html_nodes(".table-label") %>% 
-    html_text() %>% 
-    str_detect("Summary of findings") %>% sum()
-  
-  # warn if there are no summary tables:
-  if (summary_sections_exists == FALSE) {
-    writeLines("No (zero) summary sections detected!")
-    
-    raise_warning(type = "No (zero) summary sections detected",
-                  critical = FALSE)
-  }
-  else {
-    if (verbose) writeLines(paste0("Number of summary tables detected: ", nr_summary_tables))
-    
-  }
-  
-  # warn if user queries for a table number that does not exist:
-  if (!is.null(table_number)) {
-    if (table_number > nr_summaryOfFindingsTable) {
-      
-      writeLines(paste("This table does not exist! Aborting.\n"))
-    }
-    
-  }
-  
-  if (summary_sections_exists == FALSE & nr_summary_tables != 0)
-    stop("summary_sections_exists == FALSE & nr_summary_tables != 0")
-  
-  
-  return(nr_summary_tables)
-}
-
-
-
-
-
-
-
-
-
-
-
-# get_summary_table_metadata ----------------------------------------------
-
-
-
-
-get_summary_table_metadata <- function(page_content, 
-                                       table_number = 1,
-                                       verbose = TRUE) {
-  
-  
-  if (verbose) writeLines("Start parsing SoF Table for metadata.\n")
-  
-  # run only if at least one such tables exists:
-  nr_summaryOfFindingsTable <- get_nr_of_summary_tables(page_content, 
-                                                        verbose = TRUE)
-  
-  
-
-  
-  paste0("Number of summary tables detected: ", nr_summaryOfFindingsTable, "\n")
-  
-  
-  # stop if strange stuff happens:
-  if (table_number > nr_summaryOfFindingsTable) {
-    
-    print("This table does not exist! Aborting.\n")
-    
-    output <- 
-      tibble(metadata = NA)
-    
-    return(output)
-    
-  }
-  
-  
-  
-  # otherwise, start normal work:
-  # get raw summary of findings table:
-  summaryOfFindingsTable <- 
-    page_content %>% 
-    html_nodes(".summaryOfFindings") %>% 
-    html_nodes("table") %>% 
-    .[[table_number]] %>% 
-    html_table(fill = TRUE)
-  
-  
-  main_comparison_of_review <-
-    summaryOfFindingsTable %>% 
-    select(1) %>% 
-    filter(row_number() == 1) %>% 
-    pull()
-  
-  main_comparison_population <- 
-    summaryOfFindingsTable %>% 
-    select(1) %>% 
-    slice(2) %>% 
-    pull() %>% 
-    str_extract("Patient or population.+Setting") %>% 
-    str_remove_all(": |Patient or population|Setting")
-  
-  main_comparison_setting <-
-    summaryOfFindingsTable %>% 
-    select(1) %>% 
-    slice(2) %>% 
-    pull() %>% 
-    str_extract("Setting.+Intervention") %>% 
-    str_remove_all(": |Setting|Intervention")
-  
-  main_comparison_comparison_type <-
-    summaryOfFindingsTable %>% 
-    select(1) %>% 
-    slice(2) %>% 
-    pull() %>% 
-    str_extract("Comparison.+") %>% 
-    str_remove_all(":|: |Comparison") %>% 
-    str_trim()
-  
-  
-  output <-
-    tibble(
-      main_comparison_of_review = main_comparison_of_review,
-      main_comparison_population = main_comparison_population,
-      main_comparison_setting = main_comparison_setting,
-      main_comparison_comparsion_type = main_comparison_comparison_type
-    )
-  
-  if (verbose) print(output)
-  
-  print("SoF metadata dim:\n")
-  print(dim(output))
-  print("Finished parsing SoF metadata.\n")
-  
-  return(output)
-  
-}
-
-
-
-
-
-
-
-# get_summary_table -------------------------------------------------------
-
-
-
-# page_content <- review$page_content
-
-
 get_summary_table <- function(page_content, 
-                              table_number = 1, 
-                              drop_unused_cols = TRUE,
-                              # set to TRUE if only the first outcome should be parsed:
-                              first_outcome_only = FALSE,
-                              verbose = TRUE) {
+                              table_number = 1) {
+  
+  
+  drop_unused_cols <- config$drop_unused_cols
+  first_outcome_only = config$first_outcome_only
+  verbose = config$verbose
   
   
   if (verbose) writeLines("Start parsing SoF Table.\n")
-
+  flog.info("Start parsing SoF Table.\n")
   
   #warnings_summary_table <- NA
   
@@ -222,6 +31,7 @@ get_summary_table <- function(page_content,
   
   # run only if at least one such tables exists:
   
+  
   nr_summaryOfFindingsTable <- get_nr_of_summary_tables(page_content)
   
   
@@ -231,6 +41,7 @@ get_summary_table <- function(page_content,
     
     # output <- 
     #   create_empty_df(names_vec = get_summarytab_colnames())
+    flog.warn("No SoF table detected.")
     raise_warning(type = "No SoF table detected",
                               critical = FALSE)
     output <- create_empty_df(names_vec = get_summarytab_colnames())
@@ -244,7 +55,7 @@ get_summary_table <- function(page_content,
                                                      table_number = table_number,
                                                      verbose = verbose)
     
-    
+    flog.trace("Parse soF from html.")
     # get raw summary of findings table:
     summaryOfFindingsTable <- 
       page_content %>% 
@@ -255,7 +66,7 @@ get_summary_table <- function(page_content,
     
     
 
-    
+    flog.trace("Find outcome columns.")
     # find column in which the outcome variables are mentioned:
     col_Outcomes <- 
       summaryOfFindingsTable %>% 
@@ -265,6 +76,7 @@ get_summary_table <- function(page_content,
     
     # take first columns if there are more than one relevant column:
     if (length(col_Outcomes) > 1) {
+      flog.warn("Too many columns at col_Outcomes.")
      raise_warning(type = "too many columns at `col_Outcomes`",
                                 critical = FALSE)
       
@@ -276,6 +88,7 @@ get_summary_table <- function(page_content,
     }
     
     if (length(col_Outcomes) == 0) {
+      flog.warn("No columns at col_Outcomes.")
       raise_warning(type = "no columns at `col_Outcomes`",
                                 critical = FALSE)
       
@@ -286,7 +99,7 @@ get_summary_table <- function(page_content,
     names(summaryOfFindingsTable)[col_Outcomes] <- "Outcomes"
     
     
-    
+    flog.trace("Add id column to sof extractions.")
     # add id column:
     summaryOfFindingsTable <- 
       summaryOfFindingsTable %>% 
@@ -302,12 +115,14 @@ get_summary_table <- function(page_content,
     
     # define header rows:
     # we'll need this table further down below:
+    flog.trace("Identify header rows from SoF table.")
     summaryOfFindingsTable <-
       summaryOfFindingsTable %>% 
       mutate(header_row = row_number() <= header_rows) 
     
     # find column with GRADE rating:
     # "Quality of the evidence (GRADE)"
+    flog.trace("Find GRADE column.")
     col_GRADE <-
       summaryOfFindingsTable %>% 
       filter(header_row == TRUE) %>% 
@@ -326,12 +141,14 @@ get_summary_table <- function(page_content,
                .y = summaryOfFindingsTable$X2,
                .f = identical)
     
+    flog.trace("Delete footer rows from SoF table.")
     # delete rows with constant values:
     summaryOfFindingsTable2 <-
       summaryOfFindingsTable %>% 
       filter(!identical_cells_across_cols)  
     
     # delete unneeded header rows:
+    flog.trace("Delete unneeded header rows.")
     summaryOfFindingsTable3 <-
       summaryOfFindingsTable2 %>%
       group_by(header_row) %>% 
@@ -362,6 +179,7 @@ get_summary_table <- function(page_content,
     
     # if there are STILL multiple such cols, take the first one and raise error:
     if (length(col_GRADE) > 1) {
+      flog.debug("More than one GRADE column was found. Taking the first one.")
      raise_warning(type = "Multiple cols found at `col_GRADES`. Taking the first one. Might be wrong!")
       
       col_GRADE <- col_grades[1]
@@ -377,6 +195,7 @@ get_summary_table <- function(page_content,
     
     
     # find the effect statistic used:
+    flog.trace("Searching the effect statistic.")
     effect_statistic <- "HR|SMD|RR|OR|MD|[M|m]ean.+[S|s]core"
     
     effect_statistic_per_outcome <- 
@@ -408,7 +227,7 @@ get_summary_table <- function(page_content,
     n_of_trials_string2 <- "([Ss]tudies)|[Pp]articipants"
     
     
-    
+    flog.trace("Identifying SoF column with number of studies and participants.")
     col_participants_studies <- 
       summaryOfFindingsTable3 %>%  # as defined above
       filter(header_row == TRUE) %>% 
@@ -422,6 +241,7 @@ get_summary_table <- function(page_content,
     
     # take first columns if there are more than one relevant column:
     if (length(col_participants_studies) > 1) {
+      flog.warn("Too many columns at `col_participants_studies`. Taking the first one.")
      raise_warning(type = "too many columns at `col_participants_studies`",
                                 critical = FALSE)
       
@@ -436,6 +256,7 @@ get_summary_table <- function(page_content,
     }
     
     if (length(col_participants_studies) == 0) {
+      flog.wanr("No columns found at `col_participants_studies`")
       raise_warning(type = "no columns found at `col_participants_studies`",
                                 critical = FALSE)
       
@@ -449,7 +270,7 @@ get_summary_table <- function(page_content,
         rename(n_participants_studies := {col_participants_studies}) 
     }
     
-    
+    flog.trace("Separating number of studies from number of participants in SoF table.")
     summaryOfFindingsTable6 <-
       summaryOfFindingsTable6 %>% 
       mutate(n_participants = parse_n_subj_n_studies(n_participants_studies,
@@ -465,6 +286,7 @@ get_summary_table <- function(page_content,
     # NOTE: ABSOLUTE effects are ANTI matched. Only RELATIVE effects!
     
     
+    flog.trace("Identifying relative effect confidence interval.")
     col_rel_eff_CI <- 
       summaryOfFindingsTable %>% 
       filter(header_row == TRUE) %>% 
@@ -475,6 +297,7 @@ get_summary_table <- function(page_content,
     
     
     if (length(col_rel_eff_CI) > 1) {
+      flog.warn("too many columns at `col_rel_eff_CI`")
      raise_warning(type = "too many columns at `col_rel_eff_CI`",
                                 critical = FALSE)
       
@@ -490,12 +313,14 @@ get_summary_table <- function(page_content,
     
     
     if (length(col_rel_eff_CI) == 0)  {
+      flog.infor("No relative effects identified.")
       col_rel_eff_CI <- "NO_RELATIV_EFFECTS_REPORTED"
       summaryOfFindingsTable6 <- 
         summaryOfFindingsTable6 %>% 
         mutate(NO_RELATIV_EFFECTS_REPORTED = NA)
     }
     
+    flog.trace("Identifying relative effects, part 2.")
     summaryOfFindingsTable7 <- 
       summaryOfFindingsTable6 %>% 
       rename(relative_effect_95CI := {col_rel_eff_CI}) %>% 
@@ -511,7 +336,7 @@ get_summary_table <- function(page_content,
     # check if there's a comment column for each outcome:
     col_comments <- "Comments"
     
-    
+    flog.trace("Check if there is a comemnts column.")
     col_comments <-
       summaryOfFindingsTable %>%
       filter(header_row == TRUE) %>% 
@@ -521,6 +346,7 @@ get_summary_table <- function(page_content,
       names()
     
     if (length(col_comments) > 1) {
+      flog.warn("too many columns at `col_comments`")
      raise_warning(type = "too many columns at `col_comments`",
                                 critical = FALSE)
       
@@ -545,6 +371,7 @@ get_summary_table <- function(page_content,
         rename(Comments := {col_comments})
     }
     
+    flog.trace("Remove header rows from the actual data rows.")
     # remove add rows that are headers actually:
     summaryOfFindingsTable7a <- 
       summaryOfFindingsTable7 %>% 
@@ -552,6 +379,7 @@ get_summary_table <- function(page_content,
     
     
     
+    flog.trace("Renumber id column.")
     #re-number id column:
     summaryOfFindingsTable7b <- 
       summaryOfFindingsTable7a %>% 
@@ -559,7 +387,7 @@ get_summary_table <- function(page_content,
       select(id_measure, everything(), -header_row)
     
     
-  
+    flog.trace("Add metadata.")
     # add SoF table metadata:
     summaryOfFindingsTable8 <-
       summaryOfFindingsTable7b %>% 
@@ -571,6 +399,8 @@ get_summary_table <- function(page_content,
     # define `not-%in%`:
     `%nin%` <- Negate(`%in%`)
     
+    
+    flog.trace("Compute statistical significance.")
     # compute significance:
     summaryOfFindingsTable8 <-
     summaryOfFindingsTable8 %>%
@@ -588,9 +418,11 @@ get_summary_table <- function(page_content,
     
     if (first_outcome_only) {
       output <- slice(output, 1)
+      flog.info("Only first output is kept.")
     }
     
     if (drop_unused_cols) {
+      flog.info("Unused columns were dropped.")
       output <- 
         output %>% 
         select(-starts_with("X"))
@@ -601,10 +433,12 @@ get_summary_table <- function(page_content,
   }
   
   if (verbose) writeLines(paste0("SoF data dimensions: ",  dim(output)))
+  flog.info(paste0("SoF data dimensions: ",  dim(output)))
   writeLines("\n")
   if (verbose) writeLines("Finished parsing SoF Table.\n")
   
   return(output)
+  flog.info("Finished parsing the SoF table.")
   
   }
 

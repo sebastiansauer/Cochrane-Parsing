@@ -7,20 +7,23 @@
 
 
 parse_review_parts <- function(
-  sanitized_review_url,
-  reviewer = "?",
-  overwrite = TRUE,
-  final_table = TRUE,  # should the results be converted from list to df?
-  verbose = TRUE, ...) {
+  sanitized_review_url, ...) {
+  
+  config <- read_yaml("config.yaml")
+  
+  reviewer = config$reviewer
+  overwrite = config$overwrite
+  # final_table = TRUE,  # should the results be converted from list to df?
+  verbose = config$verbose
   
   
-  
-  parse_individual_parts <- function(sanitized_review_url,
-                                     verbose = TRUE) {
+  parse_individual_parts <- function(sanitized_review_url) {
+    
+    verbose <- config$verbose
     
     #init_new_review()
     if (exists("warning_df")) rm(warning_df, inherits = TRUE)
-
+    flog.info("Starting fun parse_individual_parts.")
     if (verbose) cat(paste0("**Starting to parse the review with this doi: ", 
                             sanitized_review_url, "**\n"))
     
@@ -34,9 +37,9 @@ parse_review_parts <- function(
     if (!is.null(safe_page_content$error)) {
       
       if (verbose) print("Error raised on parsing the review url!\n")
-      
-     raise_warning(type = safe_page_content$error$message,
-                        critical = FALSE)
+      flog.error("Error raised on parsing the review url!\n")
+      raise_warning(type = safe_page_content$error$message,
+                    critical = FALSE)
       
       output <- create_empty_df(names_vec = get_all_colnames())
       #output$warnings <- safe_page_content$error$message
@@ -48,17 +51,17 @@ parse_review_parts <- function(
       writeLines("Error 404 on reading full review page. Stopping this review.\n")
       
       return(output)
-    
       
-      } else {  # else parse regularly:
+      
+    } else {  # else parse regularly:
       
       # close url:
       # if (verbose) writeLines("Closing Url.\n")
       # url <- url(review_url, "rb")
       # close(url)
       
-
-        
+      
+      
       page_content <- safe_page_content$result
       
       # parse info page, must be sanitized! (see function for that):
@@ -99,6 +102,7 @@ parse_review_parts <- function(
       if (!is.null(safe_summaryTable_count$error)) {
         
         summaryTable_count <- 0
+        flog.warn("Zero summary tables detected, critical = FALSE")
         summarytable <- create_empty_df(names_vec = get_summarytab_colnames())
         
         raise_warning(type = "Zero summary tables detected,
@@ -114,6 +118,8 @@ parse_review_parts <- function(
       #safe_get_summary_table <- safely(get_summary_table)
       #safe_summarytable1 <- safe_get_summary_table(page_content)
       
+      
+      flog.info("Starting loop for fun get_summary_table.")
       summarytable <- 
         1:summaryTable_count %>% 
         map_dfr(~ get_summary_table(page_content = safe_page_content$result,
@@ -130,36 +136,33 @@ parse_review_parts <- function(
         
       }
       
+      flog.info("Parts of review have been parsed.")
       return(output)
       
     }  # end of fun parse_individual_parts
   
   
  
-  
-  
-  
-  # initialize emptye output df:
-  
-
   # check if output CSV file exists, and if it should not be overwritten, skip the parsing:
-  if (reviewer != "?") {output_dir <- glue("output/{reviewer}")
+  if (reviewer != "?") {
+    output_dir <- glue("output/{config$reviewer}")
   } else {output_dir <- glue("output")}
   
-  output_file_exists <- check_if_review_file_exists(sanitized_review_url,
-                                                    output_dir = output_dir)
+  flog.trace(paste0("Output dir is: ", output_dir))
+  
+  output_file_exists <- check_if_review_file_exists(sanitized_review_url)
   if (output_file_exists & !overwrite) {
     
     output <- create_empty_df(names_vec = get_all_colnames())
     output$doi <- sanitized_review_url
     output$warnings <- "Output file already exists"
+    flog.warn("Output file already exists. Overwrite=FALSE")
     
     writeLines(glue::glue("Output file already exists. Skipping."))
-    
     return(output)
-    
-  }
+  }  # enf of fun
   
+
   
   # XXX
 
@@ -169,6 +172,8 @@ parse_review_parts <- function(
       sanitized_review_url = sanitized_review_url
       ) 
   
+  
+  
   if (!is.null(safe_output$error)) { 
     if (verbose) print("Error on 'safe_output':")
     print(safe_output$error)
@@ -177,6 +182,7 @@ parse_review_parts <- function(
     output$doi <- sanitized_review_url
     
     raise_warning(type = "parse_parts failed!")
+    flog.error("Parse parts failed!")
     
   } else {
     
@@ -184,7 +190,7 @@ parse_review_parts <- function(
  
 
 
-  # elimine duplicate rows
+  flog.trace("Elimine duplicate rows.")
   output <- 
   output %>% 
   select(-id_measure) %>% 
@@ -199,7 +205,7 @@ parse_review_parts <- function(
         writeLines(paste0("Review has been parsed.\n"))
       }
     
-
+  flog.info("Review has been parsed.")
   
   return(output)
 
