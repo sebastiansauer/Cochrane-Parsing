@@ -5,8 +5,9 @@ get_summary_table_metadata <- function(page_content,
                                        verbose = TRUE) {
   
   
+  flog.info("get_summary_table_metadata", name = "funlog")
   if (verbose) writeLines("Start parsing SoF Table for metadata.\n")
-  
+  flog.info("Start parsing SoF Table for metadata.\n")
   # run only if at least one such tables exists:
   nr_summaryOfFindingsTable <- get_nr_of_summary_tables(page_content, 
                                                         verbose = TRUE)
@@ -70,7 +71,7 @@ get_summary_table_metadata <- function(page_content,
     str_remove_all(": |Setting|Intervention")
   
   
-  flog.trce("Get main_comparison_comparison_type.")
+  flog.trace("Get main_comparison_comparison_type.")
   main_comparison_comparison_type <-
     summaryOfFindingsTable %>% 
     select(1) %>% 

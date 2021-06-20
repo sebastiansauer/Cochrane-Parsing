@@ -143,15 +143,10 @@ get_review_metadata <- function(page_content){
   
   if (is.na(is_paywalled)) is_paywalled <- FALSE
   
-  if (is_paywalled)
-    
-    # warning_df <<- 
-    # warning_df %>% 
-    # bind_rows(raise_warning(type = "is paywalled",
-    #                         critical = FALSE))
-    
+  if (is_paywalled){
     raise_warning(type = "is paywalled")
-  flog.warn("Is paywalled.")
+    flog.warn("This review is paywalled.")
+  }
   
   citation_count <- get_number_of_citations(review_doi)
   

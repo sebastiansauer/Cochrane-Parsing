@@ -8,6 +8,8 @@
 
 create_empty_df <- function(names_vec) {
   
+  flog.info("create_empty_df", name = "funlog")
+  
   df <- data.frame(matrix(ncol = length(names_vec), nrow = 1)) 
   colnames(df) <- names_vec
   
@@ -17,6 +19,8 @@ create_empty_df <- function(names_vec) {
 
 
 get_review_metadata_colnames <- function() {
+  
+  flog.info("get_review_metadata_colnames", name = "funlog")
   
   review_metadata_colnames <- c(
     "title",
@@ -36,6 +40,8 @@ get_review_metadata_colnames <- function() {
 
 
 get_summarytab_colnames <- function() {
+
+  flog.info("get_summarytab_colnames", name = "funlog")
   
   summarytab1_colnames <- c(
     "id_measure",
@@ -62,6 +68,8 @@ get_summarytab_colnames <- function() {
 
 get_summarytab_metadata_colnames <- function() {
   
+  flog.info("get_summarytab_metadata_colnames", name = "funlog")
+  
   summarytab_metadata_colnames <- c(
     "main_comparison_of_review",
     "main_comparison_population",
@@ -74,7 +82,9 @@ get_summarytab_metadata_colnames <- function() {
 }
 
 get_infopage_colnames <- function() {
-  
+ 
+   flog.info("get_infopage_colnames", name = "funlog")
+
   infopage_colnames <- c(
     "publication_date",
     "review_type",
@@ -92,6 +102,9 @@ get_infopage_colnames <- function() {
 
 get_all_colnames <- function(output_file = "automatic",  # if first, take first output file in "output" folder
                              verbose = FALSE, ...) {
+  
+  flog.info("get_all_colnames", name = "funlog")
+  
   
   if (output_file == "automatic") {
     cat("Searching for get-all-columns.csv.\n")
@@ -128,6 +141,8 @@ raise_warning <- function(type,
                           critical = FALSE,
                           write_to_disk = TRUE){
   
+  flog.info("raise_warning", name = "funlog")
+  
   if (!exists("warning_df"))
     warning_df <-
       tibble(
@@ -162,34 +177,16 @@ raise_warning <- function(type,
 
 
 
-sanitize_review_url <- function(review_url,
-                                verbose = FALSE) {
-  
-  delete_string <- "http[s]*://www.cochranelibrary.com/cdsr/doi/10.1002/"
-  delete_string2 <- "http[s]*://[dx.]*doi.org/10.1002/"
-  
-  output <- str_remove(review_url,
-                       delete_string) %>% 
-    str_remove(delete_string2) %>% 
-    str_remove("/full") %>%
-    str_squish()
-  
-  if (verbose) print(output)
-  
-  return(output)
-  
-  
-}
-
 
 
 
 stop_parsing_return_empty_df <- function(review_url,
                                          error_message = "no message",
                                          is_critical = TRUE) {
-  
- raise_warning(type = error_message,
-                            critical = is_critical)
+ 
+  flog.info("stop_parsing_return_empty_df", name = "funlog")  
+  raise_warning(type = error_message,
+                critical = is_critical)
   
   output <- create_empty_df(names_vec = get_all_colnames())
   output$doi <- review_url
@@ -206,6 +203,8 @@ stop_parsing_return_empty_df <- function(review_url,
 
 get_review_url_from_pagecontent <- function(page_content) {
   
+  flog.info("get_review_url_from_pagecontent", name = "funlog")  
+  
   # get doi:
   review_doi <-
     page_content %>% 
@@ -221,6 +220,7 @@ get_review_url_from_pagecontent <- function(page_content) {
 
 init_new_review <- function() {
   
+  flog.info("init_new_review", name = "funlog")  
   
   # initialize logging:
   if (exists("warning_df")) rm(warning_df, inherits = TRUE)
@@ -234,6 +234,8 @@ init_new_review <- function() {
 
 
 build_cochrane_url_from_doi <- function(review_url) {
+  
+  flog.info("build_cochrane_url_from_doi", name = "funlog")  
   
   # example OK: https://www.cochranelibrary.com/cdsr/doi/10.1002/14651858.CD008268.pub3/full
   
@@ -269,6 +271,7 @@ build_cochrane_url_from_doi <- function(review_url) {
 parse_n_subj_n_studies <- function(n_participants_studies,
                                    return = c("subjects", "studies")) {
   
+  flog.info("parse_n_subj_n_studies", name = "funlog")  
   
   rct_string <- "\\(\\d+\\s*(RCT[s]?|stud\\w+)\\)"
   
@@ -302,52 +305,14 @@ parse_n_subj_n_studies <- function(n_participants_studies,
 
 
 
-get_conclusion_sentiment <- function(conclusion, verbose = TRUE) {
-  
-  
-  if (verbose) writeLines("Detecting emotionality of conclusions\n")
-  
-  
-  # get sentiment dict:
-  bing_sentiments <- get_sentiments("bing")
-  
-  # count pos and neg sentiment words:
-  pos_neg_count <- 
-    conclusion %>% 
-    str_squish() %>% 
-    tibble(text = .) %>% 
-    unnest_tokens(word, text) %>% 
-    inner_join(bing_sentiments) %>% 
-    count(sentiment)
-  
-  
-  emo_words_in_conclusion <- 
-    conclusion %>% 
-    str_squish() %>% 
-    tibble(text = .) %>% 
-    unnest_tokens(word, text) %>% 
-    inner_join(bing_sentiments) %>% 
-    summarise(emo_words = str_c(word, collapse = " - ")) %>% 
-    pull(emo_words)
-  
-  output <- 
-    tibble(
-      pos_neg_ratio = pos_neg_count$n[2]/pos_neg_count$n[1],
-      emo_count = sum(pos_neg_count$n),
-      emo_words_in_conclusion = emo_words_in_conclusion
-    )
-  
-  return(output)
-  
-}
-
-
 
 safely_read_html <- safely(read_html)
 
 
 get_number_of_citations <- function(review_url, 
                                     verbose = TRUE) {
+  
+  flog.info("get_number_of_citations", name = "funlog")  
   
   delete_string <- "http[s]*://www.cochranelibrary.com/cdsr/doi/"
   delete_string2 <- "http[s]*://[dx.]*doi.org/"
