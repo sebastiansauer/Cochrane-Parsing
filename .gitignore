@@ -5,6 +5,7 @@
 *.Rproj
 
 *.bak
+*.log
 
 data/
 output/
