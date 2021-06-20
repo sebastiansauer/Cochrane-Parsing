@@ -5,6 +5,10 @@ init <- function() {
   flog.info("Starting init.")
   flog.trace("libs loaded.")
   
+  flog.appender(appender.file("funs-called.log"), 
+                name = "funlog")
+  flog.info("init", name = "funlog")
+  
   
   flog.trace("Reading config.caml")
   stopifnot(file.exists("config.yaml"))
@@ -32,6 +36,11 @@ init <- function() {
     dplyr::slice(config$start_at_doi:config$end_at_doi) %>% 
     dplyr::pull(url)
   
+  flog.trace(paste0("Selected reviewer is: ",config$reviewer))
+  flog.trace(paste0("First doi to be extracted is: ", 
+                    dois_of_selected_reviewer[[1]]))
+  flog.trace(paste0("Number of dois to be extracted is: ", 
+                    length(dois_of_selected_reviewer)))
   return(dois_of_selected_reviewer)
   
   
