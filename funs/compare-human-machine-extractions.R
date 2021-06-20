@@ -18,11 +18,7 @@ compare_human_machine_extractions <- function(reviewer_selected = "?",
   library(writexl)  # write to xslx
   
   
-  source("funs/helper-funs.R")
-  source("funs/funs-parse-cochrane.R")
-  source("funs/get_summary_table.R")
-  source("funs/parse-review-parts.R")
-  
+
   
   ########## manual extractions:
 
