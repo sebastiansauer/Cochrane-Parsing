@@ -1,24 +1,4 @@
-init <- function() {  
-  
-
-  flog.appender(appender.file('parse-dois.log'))
-  flog.info("Starting init.")
-  flog.trace("libs loaded.")
-  
-  flog.appender(appender.file("funs-called.log"), 
-                name = "funlog")
-  flog.info("init", name = "funlog")
-  
-  
-  flog.trace("Reading config.caml")
-  stopifnot(file.exists("config.yaml"))
-  flog.info("Object 'config' defined as global variable")
-  config <<- read_yaml("config.yaml")
-  flog.threshold(config$flog_threshold)
-  if (config$rm_old_logfile) {
-    system("rm parse-dois.log")
-    flog.info("Removing existing log file. Starting fresh log file.")
-  }
+init_dois_to_be_extracted <- function(){
   
   flog.trace("Reading dois file.")
   dois_list <- readxl::read_xlsx(config$dois_file)
@@ -42,6 +22,5 @@ init <- function() {
   flog.trace(paste0("Number of dois to be extracted is: ", 
                     length(dois_of_selected_reviewer)))
   return(dois_of_selected_reviewer)
-  
   
 }

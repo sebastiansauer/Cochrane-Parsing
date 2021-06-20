@@ -4,9 +4,11 @@ get_abstract <- function(page_content) {
   
   verbose <- config$verbose
   
-  if (verbose) writeLines("Now reading abstract.\n")
-  flog.info("Now reading abstract.\n")
+  flog.info("get_abstract", name = "funlog")
+  flog.trace("Starting get_abstract.")
   
+  if (verbose) writeLines("Now reading abstract.\n")
+
   # parse structured abstract (in parts):
   abstract <- page_content %>%
     html_node("body") %>% 

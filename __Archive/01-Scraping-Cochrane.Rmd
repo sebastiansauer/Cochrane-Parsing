@@ -1,6 +1,5 @@
 ---
 title: "01-Cochrane-Scraping"
-
 output: 
   hrbrthemes::ipsum:
     toc: true

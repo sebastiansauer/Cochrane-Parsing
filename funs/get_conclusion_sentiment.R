@@ -3,6 +3,7 @@
 get_conclusion_sentiment <- function(conclusion, verbose = TRUE) {
   
   flog.info("get_conclusion_sentiment", name = "funlog")  
+  flog.trace("Starting get_conclusion_sentiment")
   
   if (verbose) writeLines("Detecting emotionality of conclusions\n")
   

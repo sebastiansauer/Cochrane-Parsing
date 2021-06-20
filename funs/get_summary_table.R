@@ -256,7 +256,7 @@ get_summary_table <- function(page_content,
     }
     
     if (length(col_participants_studies) == 0) {
-      flog.wanr("No columns found at `col_participants_studies`")
+      flog.warn("No columns found at `col_participants_studies`")
       raise_warning(type = "no columns found at `col_participants_studies`",
                                 critical = FALSE)
       

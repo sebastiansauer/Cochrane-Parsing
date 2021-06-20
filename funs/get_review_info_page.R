@@ -5,6 +5,7 @@ get_review_info_page <- function(review_url) {
   
   if (verbose) writeLines("Now reading info page.\n")
   flog.info("Now reading info page.")
+  flog.info("get_review_info_page", name = "funlog")
   
   infopage_url <- glue::glue("{review_url}/information") %>% 
     str_remove("/full") %>% 

@@ -1,24 +1,19 @@
-compare_human_machine_extractions <- function(reviewer_selected = "?",
-                                              write_to_disk = TRUE,
-                                              discrepancies_only = TRUE,
-                                              verbose = TRUE
-                                              ) {
-  
-  library(tidyverse)  # data wrangling
-  library(rvest)  # web scraping
-  library(xml2)  # web scraping
-  
-  library(printr)  # print dfs as tables
-  library(glue)  # glueing
-  library(rcrossref)  # citation count
-  #library(conflicted)  # detect package conflicts
-  library(readxl)  # import excel data
-  library(janitor)  # clean data 
-  library(here)  # relative file paths
-  library(writexl)  # write to xslx
-  
+compare_human_machine_extractions <- function() {
   
 
+  
+  reviewer_selected = config$reviewer
+  write_to_disk = config$write_to_disk
+  discrepancies_only = config$discrepancies_only
+  verbose = config$verbose
+  
+  flog.info("compare_human_machine_extractions", name = "fun_log")
+  flog.info("Starting fun compare_human_machine_extractions.")
+  
+  if (!exists("config")) {
+    flog.info("Config.yaml has been read.")
+    config <<- read_yaml("config.yaml")
+  }
   
   ########## manual extractions:
 
@@ -26,25 +21,30 @@ compare_human_machine_extractions <- function(reviewer_selected = "?",
   output_path <- glue("{here()}/output/comparison/{reviewer_selected}")
   
   if (verbose) print(paste("Assuming this output path:" , output_path, "\n"))
+  flog.trace(paste("Assuming this output path:" , output_path))
   
   # Here's the path where the human (manual) extractions come from:
-  extractions_manual_path <- glue("manual-extractions/{reviewer_selected}/InEffective Cochrane Reviews Final_{reviewer_selected}.xlsx")
+  extractions_manual_path <- glue("manual-extractions/{reviewer_selected}/{config$human_extractions_file}{reviewer_selected}.xlsx")
   
   if (verbose) print(paste("Assuming this path for manual extraction data:" , extractions_manual_path, "\n"))
+  flog.info(paste("Assuming this path for manual extraction data:" , extractions_manual_path))
   
   
-  if (!file.exists(extractions_manual_path)) 
-    stop("File not found!") 
+  if (!file.exists(extractions_manual_path)) {
+    flog.error("File with manual extractions not found!")
+    stop("File for `extractions_manual_path` not found!") 
+  }
+   
   else message("File found.")
   
-  # Read human extraction data:
+  flog.trace("Read human extraction data.")
   extractions_manual <-
     read_xlsx(path = extractions_manual_path,
               skip = 1) %>%   # invalid header row
     slice(-c(1,2))  %>% # invalued header rows
     rename(reviewer = `...1`)
 
-  # clean names:
+  flog.trace("Cleaning names.")
   extractions_manual2 <-
     extractions_manual %>% 
     clean_names()
@@ -59,8 +59,9 @@ compare_human_machine_extractions <- function(reviewer_selected = "?",
   names(extractions_manual3)[22] <- "first_high_qual_outcome"
   
   if (verbose) print("Now starting recoding...\n")
+  flog.trace("Now starting recoding.")
   
-  # recode:
+  flog.trace("Recoding values in columns.")
   extractions_manual3a <-
     extractions_manual3 %>% 
     mutate(across(.cols = c(3:7),
@@ -78,14 +79,15 @@ compare_human_machine_extractions <- function(reviewer_selected = "?",
                                                 "no high quality outcome"))
   
   
-  if (verbose) print("Not sanitzing review url ...\n")
+  if (verbose) print("Now sanitzing review url ...\n")
+  flog.trace("Now sanitzing review url.")
   
   extractions_manual3b <- 
     extractions_manual3a %>% 
     mutate(cochrane_id = sanitize_review_url(url))
   
   
-  # remove parantheses, b/c unmatches parantheses caused problems:
+  flog.trace("Removeing parantheses, b/c unmatches parantheses caused problems.")
   if (verbose) print("Now removing parentheses.")
     extractions_manual3c <- 
     extractions_manual3b %>% 
@@ -105,30 +107,50 @@ compare_human_machine_extractions <- function(reviewer_selected = "?",
     c("reviewer", "title", "url", "cochrane_id", "SoF_table_number")
   
   if (verbose) print("Now selecting relevant columns.")
+  flog.trace("Now selecting relevant columns.")
   extractions_manual4 <-
     extractions_manual3c %>% 
     select(any_of(c(id_cols_manual, cols_to_be_checked)))
   
   if (verbose) print("Now filtering rows to selected reviewer.\n")
+  flog.trace("Now filtering rows to selected reviewer.")
   extractions_manual5 <-
     extractions_manual4 %>% 
     filter(tolower(reviewer) == reviewer_selected)
   
+  
   ########## machine extractions:
   
   
-  extractions_machine_path <- glue( "output/{reviewer_selected}/reviews_output_machine_{reviewer_selected}.xlsx")
+  extractions_machine_path <- glue( "output/{reviewer_selected}/{config$machine_extractions_file}{reviewer_selected}.xlsx")
   
-  if (verbose) print(paste("Assuming this path for machine extracted data",
+  if (verbose) print(paste("Assuming this path for machine extracted data: ",
                      extractions_machine_path, "\n"))
+  flog.info(paste("Assuming this path for machine extracted data: ",
+                  extractions_machine_path))
   
-   if (!file.exists(extractions_machine_path)) 
-     stop("File does not exist!") else message("File found.")
+   if (!file.exists(extractions_machine_path)) {
+    flog.error("File does not exist!")
+    stop("File does not exist!") 
+   }
+    else message("File found.")
   
   extractions_machine <- 
     read_xlsx(extractions_machine_path)
   
+  flog.trace("Excel file with machine extracted data has been read.")
   if (verbose) print("Excel file with machine extracted data has been read.\n")
+  
+ 
+  if (str_detect(names(extractions_machine)[9], "^doi\\.\\..*\\d$")) {
+    if (verbose) print("Column `doi` has an incorrect name, something starting with `doi..`. 
+                       I'm correcting, but results my by flawed.")
+    flog.warn("Column `doi` has an incorrect name, something starting with `doi..`. 
+                       I'm correcting, but results my by flawed.")
+    
+    names(extractions_machine)[9] <- "doi"
+  }
+
   
   extractions_machine2 <-
     extractions_machine %>% 
@@ -136,7 +158,7 @@ compare_human_machine_extractions <- function(reviewer_selected = "?",
            url = doi,
            cochrane_id = sanitize_review_url(doi)) 
   
-  print("Computing variables: GRADE_used, has_high_quality_outcomes, first_high_qual_outcome\n")
+  flog.trace("Computing variables: GRADE_used, has_high_quality_outcomes, first_high_qual_outcome\n")
   extractions_machine3 <-
     extractions_machine2 %>% 
     group_by(doi, SoF_table_number) %>% 
@@ -152,13 +174,14 @@ compare_human_machine_extractions <- function(reviewer_selected = "?",
                     Outcomes, "no high quality outcome")) %>% 
     ungroup()
   
-  # `SoF_table_number` should not be of type `character`:
+  flog.trace("`SoF_table_number` should not be of type `character`.")
   if (is.character(extractions_machine3$SoF_table_number)) 
     extractions_machine3$SoF_table_number <- as.integer(extractions_machine3$SoF_table_number)
   
   extractions_machine3a <- extractions_machine3
   
   if (verbose) print("Now selecting columns.")
+  flog.trace("Now selecting columns.")
   extractions_machine4 <-
     extractions_machine3a %>% 
     select(cochrane_id, 
@@ -169,6 +192,7 @@ compare_human_machine_extractions <- function(reviewer_selected = "?",
            any_of(cols_to_be_checked))
   
   if (verbose) print("Now removing parentheses.")
+  flog.trace("Now removing parentheses.")
   # remove parantheses, because some unmatched parantheses caused problems:
   extractions_machine4a <- 
     extractions_machine4 %>% 
@@ -180,6 +204,7 @@ compare_human_machine_extractions <- function(reviewer_selected = "?",
  
   
   if (verbose) print("Now starting merging...\n")
+  flog.info("Merging human and machine results.")
   
   extractions_merged <- 
     extractions_manual5 %>% 
@@ -187,6 +212,7 @@ compare_human_machine_extractions <- function(reviewer_selected = "?",
               by = c("cochrane_id", "SoF_table_number"))
   
   if (verbose) print("Now comparing human with machine extractions.")
+  flog.info("Now comparing human with machine extractions.")
   extractions_merged2 <-
     extractions_merged %>% 
     mutate(identical_outdated = is_outdated.x == is_outdated.y,
@@ -204,6 +230,7 @@ compare_human_machine_extractions <- function(reviewer_selected = "?",
              )) %>% 
     ungroup()
   
+  flog.info("Now starting testing for equality human/machine... \n")
   if (verbose) print("Now starting testing for equality human/machine... \n")
   extractions_merged3 <-
     extractions_merged2 %>% 
@@ -215,8 +242,17 @@ compare_human_machine_extractions <- function(reviewer_selected = "?",
   
   if (verbose) print(paste0("Dimensions (row/cols) of Excel files with discrepancies: ", str_c(dim(extractions_merged), 
                                                                                                   collapse = " ")))
+   
   
   if (write_to_disk) {
+    
+    if (!dir.exists(output_path)) {
+      flog.warn("Output path does not exist, now creating it.")
+      flog.warn(paste0("Output path: ", output_path))
+      dir.create(output_path)
+    }
+    
+    flog.info(glue("{output_path}/comparison_human_machine_{reviewer_selected}.xlsx"))
     path_ext_merged2 <- glue("{output_path}/comparison_human_machine_{reviewer_selected}.xlsx")
     if (verbose) print(paste("Assuming this output path for complete output file: ", path_ext_merged2, "\n"))
     
@@ -227,11 +263,13 @@ compare_human_machine_extractions <- function(reviewer_selected = "?",
     path_ext_merged3 <-
       glue("{output_path}/comparison_human_machine_problems_only_{reviewer_selected}.xlsx")
     if (verbose) print(paste("Assuming this output path for file with discrepancies only: ", path_ext_merged3, "\n"))
+    flog.info(glue("{output_path}/comparison_human_machine_problems_only_{reviewer_selected}.xlsx"))
     
     write_xlsx(extractions_merged3,
                path = path_ext_merged3)
     
     if (verbose) print("Files have been written to disk.")
+    flog.info("Files have been written to disk.")
   }
   
   

@@ -3,6 +3,8 @@ parse_dois <- function(dois_of_selected_reviewer) {
   
 
   flog.info("Starting extracting reviews.")
+  flog.info("parse_dois", name = "funlog")
+  
   extracted_reviews <- 
     dois_of_selected_reviewer %>% 
     map_dfr(parse_review, 

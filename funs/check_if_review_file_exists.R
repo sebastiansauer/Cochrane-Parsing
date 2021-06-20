@@ -4,7 +4,8 @@ check_if_review_file_exists <- function(review_url,
   
   output_dir = config$output
   verbose = config$verbose
-  
+ 
+  #flog.info(current_fun_name, name = "funlog")
   flog.info("Checking if review file already exists in output directory.")
   
   if (length(output_dir) == 0) stop("Please specify output directory.")

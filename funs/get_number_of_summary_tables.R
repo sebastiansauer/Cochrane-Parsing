@@ -8,6 +8,8 @@ get_nr_of_summary_tables <- function(my_page_content,
   
   
   flog.info("Starting counting the number of SoF Tables.")
+  flog.info("get_nr_of_summary_tables", name = "funlog")
+  
   # check how many tables exist:
   nr_Table <- 
     my_page_content %>% 

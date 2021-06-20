@@ -2,7 +2,7 @@
 parse_review <- function(review_url) {
   
   
-  config <- read_yaml("config.yaml")
+  #config <- read_yaml("config.yaml")
   
   verbose = config$verbose
   output_dir_to_write = paste0(config$output_path,"/",config$reviewer)
@@ -12,6 +12,22 @@ parse_review <- function(review_url) {
   
 
   flog.info(paste0("Starting with review url: ", review_url))
+  flog.info("parse_review", name = "funlog")
+  
+  # Report the number of the review currently processed
+  # relative to the list of dois provided
+  
+  if (!exists("dois_to_be_parsed")) dois_to_be_parsed <- init_dois_to_be_extracted()
+  
+  pos_current_review_in_dois_list <- which(review_url == dois_to_be_parsed)
+  
+  writeLines(paste0("____Review number____", 
+                    pos_current_review_in_dois_list,
+                    "____ of ", length(dois_to_be_parsed),"."))
+  flog.info(paste0("Currently processing review at position ", pos_current_review_in_dois_list,
+                   " of ", length(dois_to_be_parsed)))
+  
+  
   #flog.info(paste0("Starting with review number: ", count_reviews))
   #if (verbose) writeLines(glue::glue("______Now starting with review number ((( {count_reviews} )))______\n"))
   if (verbose) writeLines(glue::glue("______Now review with url ((( {review_url} )))______\n"))

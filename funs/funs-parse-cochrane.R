@@ -9,7 +9,7 @@ write_parsed_review_to_csv_file <- function(review_url,
   overwrite = config$overwrite
   
   
-  
+  flog.info("write_parsed_review_to_csv_file", name = "funlog")
   writeLines("Now writing file to disk.\n")
   flog.info("Now writing file to disk.\n")
   
