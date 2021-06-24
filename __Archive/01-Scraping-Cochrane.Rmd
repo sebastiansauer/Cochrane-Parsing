@@ -69,6 +69,39 @@ dois_list %>%
 ```
 
 
+## Replace PF by SJ
+
+```{r}
+dois_list2 <-
+  dois_list %>% 
+  mutate(reviewer = ifelse(reviewer == "PF",
+                           "SJ", reviewer))
+```
+
+
+
+```{r}
+dois_list2 %>% 
+  count(reviewer)
+```
+
+
+```{r}
+write_xlsx(dois_list2, config$dois_file)
+```
+
+
+### Check
+
+
+```{r}
+dois_list3 <- readxl::read_xlsx(config$dois_file)
+```
+
+```{r}
+dois_list3 %>% 
+  count(reviewer)
+```
 
 
 ## Subsamples of reviewers

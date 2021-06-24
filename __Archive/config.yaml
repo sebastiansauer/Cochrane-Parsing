@@ -1,7 +1,7 @@
 discrepancies_only: true
 dois_file: "data/doi-list-reviewer.xlsx"
 drop_unused_cols: true
-end_at_doi: NULL
+end_at_doi: 1500
 file_type: csv
 first_outcome_only: false
 flog_threshold: TRACE
@@ -9,11 +9,11 @@ logging: true
 machine_extractions_file: reviews_output_machine_
 output_path: output 
 overwrite: TRUE
-reviewer: sj
+reviewer: jh
 rm_old_logfile: true
 save_to_disk: true
 sound: true
-start_at_doi: 1
+start_at_doi: 1000
 verbose: true
 write_to_disk: true
 human_extractions_file: InEffective Cochrane Reviews Final_
