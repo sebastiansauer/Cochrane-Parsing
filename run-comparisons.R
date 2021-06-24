@@ -1,4 +1,4 @@
-source("R/load-libs.R")
+source("funs/load-libs.R")
 
 files_to_source <- list.files("funs/")
 files_to_source_w_path <- paste0("funs/", files_to_source)

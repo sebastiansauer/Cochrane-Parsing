@@ -1,7 +1,8 @@
 # See config.yaml for specs:
 
-source("R/load-libs.R")
+source("funs/load-libs.R")
 
+load_libs()
 
 files_to_source <- list.files("funs/")
 files_to_source_w_path <- paste0("funs/", files_to_source)
@@ -15,7 +16,7 @@ dois_to_be_parsed
 
 
 undebug(parse_dois)
-reviews_jh4 <- parse_dois(dois_to_be_parsed)
+reviews_sj <- parse_dois(dois_to_be_parsed)
 
 
 # debug(parse_review)
