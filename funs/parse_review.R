@@ -24,8 +24,8 @@ parse_review <- function(review_url) {
   writeLines(paste0("____Review number____", 
                     pos_current_review_in_dois_list,
                     "____ of ", length(dois_to_be_parsed),"."))
-  flog.info(paste0("Currently processing review at position ", pos_current_review_in_dois_list,
-                   " of ", length(dois_to_be_parsed)))
+  flog.info(paste0("____Currently processing review at position ", pos_current_review_in_dois_list,
+                   " of ", length(dois_to_be_parsed), "____"))
   
   
   #flog.info(paste0("Starting with review number: ", count_reviews))

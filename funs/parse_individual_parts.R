@@ -2,13 +2,15 @@
 parse_individual_parts <- function(sanitized_review_url) {
   
   flog.info("parse_individual_parts", name = "funlog")
-  flog.trace("Starting `parse_individual_parts`")
+  flog.info("Starting `parse_individual_parts`")
   verbose <- config$verbose
   
   #init_new_review()
   if (exists("warning_df")) rm(warning_df, inherits = TRUE)
   if (verbose) cat(paste0("**Starting to parse the review with this doi: ", 
                           sanitized_review_url, "**\n"))
+  flog.info(paste0("**Starting to parse the review with this doi: ", 
+                   sanitized_review_url, "**"))
   
   # if review should not be taken vom from rds file, but read from html page:
   # read html page, must be sanitized! (see function for that):

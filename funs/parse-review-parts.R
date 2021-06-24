@@ -10,7 +10,7 @@ parse_review_parts <- function(
   sanitized_review_url, ...) {
   
   flog.info("parse_review_parts", name = "funlog")
-  flog.trace("Starting `parse_review_parts`")
+  flog.info("Starting __`parse_review_parts`__")
  
   
   reviewer = config$reviewer
@@ -85,7 +85,7 @@ parse_review_parts <- function(
         writeLines(paste0("Review has been parsed.\n"))
       }
     
-  flog.info("Review has been parsed.")
+  flog.info("__Review has been parsed.__")
   
   return(output)
 

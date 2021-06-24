@@ -7,13 +7,24 @@ parse_dois <- function(dois_of_selected_reviewer) {
   
   extracted_reviews <- 
     dois_of_selected_reviewer %>% 
-    map_dfr(parse_review, 
+    map_dfr(parse_review,  # that's the main function of the whole shebang!!!
             .id = "id_review")
   
+  output_path <- paste0(config$output_path,"/",config$reviewer)
   
-  output_filename <- paste0(config$output_path,"/",config$reviewer,
+  flog.info(paste0("Output path: ", output_path))
+  flog.info(paste0("Output_filename: ", output_filename))
+  
+  output_filename <- paste0(output_path,
                             "/", config$machine_extractions_file,
                             "_",config$reviewer)
+  
+  if (!dir.exists(output_path)) {
+    flog.info(paste0("Creating directory as to output_path and reviewer: ", output_path))
+    dir.create(output_path)
+    if (verbose) print(paste0("Creating directory as to output_path and reviewer: ",
+                              output_path)) 
+  }
   
   flog.trace("Writing xlsx filewith extracted reviews.")
   writexl::write_xlsx(extracted_reviews, 
