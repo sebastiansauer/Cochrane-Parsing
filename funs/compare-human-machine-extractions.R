@@ -1,30 +1,62 @@
+
 compare_human_machine_extractions <- function() {
   
 
+  if (!exists("config")) {
+    flog.info("Object `config` does not exist. Now reading it from file.")
+    config <- read_yaml("config.yaml")
+  }
   
+  
+  # defining come constants:
   reviewer_selected = config$reviewer
   write_to_disk = config$write_to_disk
   discrepancies_only = config$discrepancies_only
   verbose = config$verbose
+  manual_extractions_path <- config$manual_extractions_path
   
-  flog.info("compare_human_machine_extractions", name = "fun_log")
-  flog.info("Starting fun compare_human_machine_extractions.")
+  cols_to_be_checked <-
+    c("is_outdated",
+      "is_withdrawn",   
+      "GRADE_used",
+      "first_high_qual_outcome",
+      "has_high_quality_outcomes"
+    )
   
-  if (!exists("config")) {
-    flog.info("Config.yaml has been read.")
-    config <<- read_yaml("config.yaml")
-  }
+  id_cols_manual <-
+    c("reviewer", "title", "url", "cochrane_id", "SoF_table_number")
   
-  ########## manual extractions:
+  
+  
+  flog.info("compare_human_machine_extractions", name = "funlog")
+  flog.info("Starting fun `compare_human_machine_extractions`.")
+  
 
+  
+  
+  ########## human (manual) extractions: ########################
+
+  
+  flog.info(paste0("Assuming this reviewer: "), reviewer_selected)
   # Define output path:
   output_path <- glue("{here()}/output/comparison/{reviewer_selected}")
   
   if (verbose) print(paste("Assuming this output path:" , output_path, "\n"))
   flog.trace(paste("Assuming this output path:" , output_path))
   
+  if (!dir.exists(output_path)) {
+    flog.info(paste0("Creating directory as to output_path and reviewer: ", output_path))
+    dir.create(output_path)
+    if (verbose) 
+      print(paste0("Creating directory as to output_path and reviewer: ",
+                              output_path)) 
+  }
+  
+  
   # Here's the path where the human (manual) extractions come from:
-  extractions_manual_path <- glue("manual-extractions/{reviewer_selected}/{config$human_extractions_file}{reviewer_selected}.xlsx")
+  extractions_manual_path_file_relativ <- glue("{manual_extractions_path}/{reviewer_selected}/{config$human_extractions_file}{reviewer_selected}.xlsx")
+  
+  extractions_manual_path <- paste0(here(), "/", extractions_manual_path_file_relativ)
   
   if (verbose) print(paste("Assuming this path for manual extraction data:" , extractions_manual_path, "\n"))
   flog.info(paste("Assuming this path for manual extraction data:" , extractions_manual_path))
@@ -37,26 +69,62 @@ compare_human_machine_extractions <- function() {
    
   else message("File found.")
   
-  flog.trace("Read human extraction data.")
+  flog.trace("Reading human extraction data.")
   extractions_manual <-
     read_xlsx(path = extractions_manual_path,
               skip = 1) %>%   # invalid header row
-    slice(-c(1,2))  %>% # invalued header rows
-    rename(reviewer = `...1`)
-
+    slice(-c(1,2))   # invalid header rows
+    
+  
   flog.trace("Cleaning names.")
   extractions_manual2 <-
     extractions_manual %>% 
     clean_names()
   
+  names(extractions_manual2)[1:5]
+  
+  if (str_detect(names(extractions_manual2)[1], "id")) {
+    flog.info("Removing id column (pos. 1)")
+    extractions_manual2 <-
+      extractions_manual2 %>% 
+      select(-1)
+  }
+
+    
+  
+  if (!("reviewer" %in% names(extractions_manual2))) 
+    stop("No column 'reviewer' found in human extraction data.")
+  
+  if (verbose) print(paste0("First few columns names: ", str_c(names(extractions_manual2)[1:7], collapse = " - "))) 
+  
+  flog.trace(paste0("First few columns names: ", str_c(names(extractions_manual2)[1:7], collapse = " - "))) 
+  
   extractions_manual3 <-
     extractions_manual2
   
-  names(extractions_manual3)[3] <- "SoF_table_number"
-  names(extractions_manual3)[4] <- "is_outdated"
-  names(extractions_manual3)[5] <- "is_withdrawn"
-  names(extractions_manual3)[7] <- "GRADE_used"
-  names(extractions_manual3)[22] <- "first_high_qual_outcome"
+  pos_SoF_table_number <- str_detect(names(extractions_manual2), "automatically_pop[u]*lated") %>% which()
+  pos_is_outdated <- str_detect(names(extractions_manual2), "updated_review") %>% which()
+  pos_is_withdrawn <- str_detect(names(extractions_manual2), "withdrawn") %>% which()
+  pos_GRADE_used <- str_detect(names(extractions_manual2), "grade_assessment") %>% which()
+  pos_first_high_qual_outcome <- str_detect(names(extractions_manual2), "primary_first_listed_high_qualiity_outcome") %>% which()
+  
+  
+  positions_of_cols <- c(pos_is_outdated, pos_is_withdrawn, pos_is_withdrawn, pos_GRADE_used, pos_first_high_qual_outcome)
+  
+  
+  if (any(is_empty(positions_of_cols))) 
+    print("Some columns were not found.")
+  
+  
+  
+  names(extractions_manual3)[pos_SoF_table_number] <- "SoF_table_number" 
+  names(extractions_manual3)[pos_is_outdated] <- "is_outdated"
+  names(extractions_manual3)[pos_is_withdrawn] <- "is_withdrawn"
+  names(extractions_manual3)[pos_GRADE_used] <- "GRADE_used"
+  names(extractions_manual3)[pos_first_high_qual_outcome] <- "first_high_qual_outcome"
+  
+
+  
   
   if (verbose) print("Now starting recoding...\n")
   flog.trace("Now starting recoding.")
@@ -84,7 +152,7 @@ compare_human_machine_extractions <- function() {
   
   extractions_manual3b <- 
     extractions_manual3a %>% 
-    mutate(cochrane_id = sanitize_review_url(url))
+    mutate(cochrane_id = sanitize_review_url(url, verbose = FALSE))
   
   
   flog.trace("Removeing parantheses, b/c unmatches parantheses caused problems.")
@@ -95,17 +163,7 @@ compare_human_machine_extractions <- function() {
       string = first_high_qual_outcome,
       pattern = "[()]+"))
   
-  cols_to_be_checked <-
-    c("is_outdated",
-      "is_withdrawn",   
-      "GRADE_used",
-      "first_high_qual_outcome",
-      "has_high_quality_outcomes"
-    )
-  
-  id_cols_manual <-
-    c("reviewer", "title", "url", "cochrane_id", "SoF_table_number")
-  
+ 
   if (verbose) print("Now selecting relevant columns.")
   flog.trace("Now selecting relevant columns.")
   extractions_manual4 <-
@@ -119,7 +177,7 @@ compare_human_machine_extractions <- function() {
     filter(tolower(reviewer) == reviewer_selected)
   
   
-  ########## machine extractions:
+  ########## machine extractions: ########################
   
   
   extractions_machine_path <- glue( "output/{reviewer_selected}/{config$machine_extractions_file}{reviewer_selected}.xlsx")
@@ -132,8 +190,11 @@ compare_human_machine_extractions <- function() {
    if (!file.exists(extractions_machine_path)) {
     flog.error("File does not exist!")
     stop("File does not exist!") 
-   }
-    else message("File found.")
+   } else {
+    if (verbose) message("File found.")
+    flog.trace("File found.")
+  }
+  
   
   extractions_machine <- 
     read_xlsx(extractions_machine_path)
@@ -156,9 +217,9 @@ compare_human_machine_extractions <- function() {
     extractions_machine %>% 
     mutate(is_outdated = !is_most_recent_version,
            url = doi,
-           cochrane_id = sanitize_review_url(doi)) 
+           cochrane_id = sanitize_review_url(doi, verbose = FALSE)) 
   
-  flog.trace("Computing variables: GRADE_used, has_high_quality_outcomes, first_high_qual_outcome\n")
+  flog.trace(" variables: GRADE_used, has_high_quality_outcomes, first_high_qual_outcome\n")
   extractions_machine3 <-
     extractions_machine2 %>% 
     group_by(doi, SoF_table_number) %>% 
@@ -230,6 +291,20 @@ compare_human_machine_extractions <- function() {
              )) %>% 
     ungroup()
   
+  n_distinct_url <-
+    extractions_merged2 %>% 
+    summarise(n_distinct_url = n_distinct(url)) %>% 
+    pull(n_distinct_url)
+  
+  flog.info(paste("Number of different urls processed in merged human/machine output file: ", n_distinct_url))
+  if(verbose) print(paste("Number of different urls processed in merged human/machine output file: ", n_distinct_url))
+  
+  
+  if (nrow(extractions_merged2) == 0) flog.error("The table of human/machine comparisons has zero lines. There appears to be some error. Please check, human.")
+  if (verbose) print("The table of human/machine comparisons has zero lines. There appears to be some error. Please check, human.")
+  
+  
+  
   flog.info("Now starting testing for equality human/machine... \n")
   if (verbose) print("Now starting testing for equality human/machine... \n")
   extractions_merged3 <-
@@ -242,7 +317,22 @@ compare_human_machine_extractions <- function() {
   
   if (verbose) print(paste0("Dimensions (row/cols) of Excel files with discrepancies: ", str_c(dim(extractions_merged), 
                                                                                                   collapse = " ")))
-   
+  
+  flog.info(paste0("Dimensions (row/cols) of Excel files with discrepancies: ", str_c(dim(extractions_merged))))
+  
+  n_distinct_url_discrepancies <-
+    extractions_merged3 %>% 
+    summarise(n_distinct_url = n_distinct(url)) %>% 
+    pull(n_distinct_url)
+  
+  flog.info(paste("Number of different urls processed in merged human/machine output DISCREPANCIES file: ", n_distinct_url_discrepancies))
+  if(verbose) print(paste("Number of different urls processed in merged human/machine output file: ", n_distinct_url_discrepancies))
+  
+  
+  if (nrow(extractions_merged3) == 0) flog.warn("No discrepancies detected, this seems unlikely, however it is possible. Please check, human.")
+  if (verbose) print("No discrepancies detected, this seems unlikely, however it is possible. Please check, human.")
+  
+  
   
   if (write_to_disk) {
     
