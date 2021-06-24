@@ -1,9 +1,10 @@
 
-sanitize_review_url <- function(review_url) {
+sanitize_review_url <- function(review_url,
+                                verbose = NULL) {
   
   flog.info("sanitize_review_url", name = "funlog")
   flog.trace("sanitizing review url")
-  verbose <- config$verbose
+  if (is.null(verbose)) verbose <- config$verbose
   
   delete_string <- "http[s]*://www.cochranelibrary.com/cdsr/doi/10.1002/"
   delete_string2 <- "http[s]*://[dx.]*doi.org/10.1002/"

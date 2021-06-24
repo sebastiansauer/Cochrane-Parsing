@@ -5,8 +5,10 @@ end_at_doi: NULL
 file_type: csv
 first_outcome_only: false
 flog_threshold: TRACE
+human_extractions_file: InEffective Cochrane Reviews Final_
 logging: true
 machine_extractions_file: reviews_output_machine_
+manual_extractions_path: manual-extractions
 output_path: output 
 overwrite: TRUE
 reviewer: sj
@@ -16,7 +18,6 @@ sound: true
 start_at_doi: 1
 verbose: true
 write_to_disk: true
-human_extractions_file: InEffective Cochrane Reviews Final_
   
 
 

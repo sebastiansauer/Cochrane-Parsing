@@ -1,6 +1,4 @@
-
 parse_dois <- function(dois_of_selected_reviewer) {
-  
 
   flog.info("Starting extracting reviews.")
   flog.info("parse_dois", name = "funlog")
@@ -18,6 +16,11 @@ parse_dois <- function(dois_of_selected_reviewer) {
   output_filename <- paste0(output_path,
                             "/", config$machine_extractions_file,
                             "_",config$reviewer)
+
+  # at times there can be two (or even more) underscores, but only 1 is needed:
+  output_filename <- str_replace_all(output_filename, "_{2,}", "_")
+  
+  flog.trace(paste0("(Relative) Output path/file name is: ", output_filename))
   
   if (!dir.exists(output_path)) {
     flog.info(paste0("Creating directory as to output_path and reviewer: ", output_path))
