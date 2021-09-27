@@ -11,7 +11,7 @@ machine_extractions_file: reviews_output_machine_
 manual_extractions_path: manual-extractions
 output_path: output 
 overwrite: TRUE
-reviewer: sj
+reviewer: ss
 rm_old_logfile: true
 save_to_disk: true
 sound: true

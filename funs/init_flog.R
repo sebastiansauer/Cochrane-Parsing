@@ -1,11 +1,11 @@
-init_flog <- function() {  
+init_flog <- function(flog_filename = "parse-dois.log") {  
   
 
-  flog.appender(appender.file('parse-dois.log'))
+  flog.appender(appender.file(paste0("logging/", flog_filename)))
   flog.info("Starting init.")
  
   
-  flog.appender(appender.file("funs-called.log"), 
+  flog.appender(appender.file("logging/funs-called.log"), 
                 name = "funlog")
   
   stopifnot(file.exists("config.yaml"))
@@ -15,8 +15,8 @@ init_flog <- function() {
   
   flog.threshold(config$flog_threshold)
   if (config$rm_old_logfile) {
-    system("rm parse-dois.log")
-    system("rm funs-called.log")
+    system("rm logging/parse-dois.log")
+    system("rm logging/funs-called.log")
     flog.info("Removing existing log file. Starting fresh log file.")
   }
   

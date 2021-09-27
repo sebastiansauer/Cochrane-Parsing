@@ -1,13 +1,6 @@
 
-
-# parse parts ------------------------------------------------------------
-
-
-
-
-
 parse_review_parts <- function(
-  sanitized_review_url, ...) {
+  review_url_cochrane, ...) {
   
   flog.info("parse_review_parts", name = "funlog")
   flog.info("Starting __`parse_review_parts`__")
@@ -26,11 +19,11 @@ parse_review_parts <- function(
   
   flog.trace(paste0("Output dir is: ", output_dir))
   
-  output_file_exists <- check_if_review_file_exists(sanitized_review_url)
+  output_file_exists <- check_if_review_file_exists(review_url_cochrane)
   if (output_file_exists & !overwrite) {
     
     output <- create_empty_df(names_vec = get_all_colnames())
-    output$doi <- sanitized_review_url
+    output$doi <- review_url_cochrane
     output$warnings <- "Output file already exists"
     flog.warn("Output file already exists. Overwrite=FALSE")
     
@@ -45,7 +38,7 @@ parse_review_parts <- function(
   safely_parse_individual_parts <- safely(parse_individual_parts)
   safe_output <- 
     safely_parse_individual_parts(
-      sanitized_review_url = sanitized_review_url
+      review_url_cochrane
       ) 
   
   
@@ -59,21 +52,21 @@ parse_review_parts <- function(
                       safe_output$error))
     
     output <- create_empty_df(names_vec = get_all_colnames())
-    output$doi <- sanitized_review_url
+    output$doi <- review_url_cochrane
     
     raise_warning(type = "parse_parts failed!")
     flog.error("Parse parts failed! Position: `safe_output$error`")
     
-  } else {
+  } else {  # if no error:
     
     output <- safe_output$result
- 
 
 
   flog.trace("Elimine duplicate rows.")
   output <- 
   output %>% 
-  select(-id_measure) %>% 
+    relocate(doi, everything()) %>% 
+    select(-id_measure) %>% 
     distinct() %>% 
     mutate(id_measure = row_number()) 
  

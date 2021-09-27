@@ -1,0 +1,48 @@
+ wc -l *.R *.yaml funs/*.R R/*.R tests/*.R __Archive/*.Rmd > count.txt 
+
+
+
+
+      15 run-comparisons.R
+      24 run-parse-reviews.R
+      93 testing.R
+      26 config.yaml
+      40 funs/build_cochrane_url_from_doi.R
+      39 funs/check_if_review_file_exists.R
+     377 funs/compare-human-machine-extractions.R
+     103 funs/get-summary-table-metadata.R
+      80 funs/get_abstract.R
+      42 funs/get_conclusion_sentiment.R
+      17 funs/get_dummy_data.R
+      23 funs/get_number_of_citations.R
+      87 funs/get_number_of_summary_tables.R
+     105 funs/get_review_info_page.R
+     174 funs/get_review_metadata.R
+      18 funs/get_review_url_from_page_content.R
+     448 funs/get_summary_table.R
+     170 funs/helper-funs.R
+      74 funs/init_dois_to_be_extracted.R
+      32 funs/init_flog.R
+      11 funs/init_new_review.R
+      16 funs/is_valide_cochrane_url.R
+      24 funs/load-libs.R
+      87 funs/parse-review-parts.R
+      47 funs/parse_dois.R
+     138 funs/parse_individual_parts.R
+      43 funs/parse_n_subj_n_studies.R
+      67 funs/parse_review.R
+      40 funs/raise_warning.R
+      99 funs/read-page-content-to-disk.R
+       0 funs/safely_read_html.R
+      23 funs/sanitize_review_url.R
+      44 funs/write_parsed_review_to_csv_file.R
+      22 R/combining-multiple-output-parts.R
+      11 tests/test_init.R
+      21 tests/test_parse-dois.R
+      16 tests/test_parse-individual-parts.R
+      16 tests/test_source.R
+       3 tests/testthat.R
+     526 __Archive/01-Scraping-Cochrane.Rmd
+     616 __Archive/02-checking-manual-extractions.Rmd
+     166 __Archive/03-Read-CSV-outputs-to-DF.Rmd
+    4023 total

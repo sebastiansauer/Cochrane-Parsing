@@ -37,7 +37,7 @@ compare_human_machine_extractions <- function() {
   ########## human (manual) extractions: ########################
 
   
-  flog.info(paste0("Assuming this reviewer: "), reviewer_selected)
+  flog.info(paste0("Assuming this reviewer: ", reviewer_selected))
   # Define output path:
   output_path <- glue("{here()}/output/comparison/{reviewer_selected}")
   
@@ -81,7 +81,11 @@ compare_human_machine_extractions <- function() {
     extractions_human %>% 
     clean_names()
   
-  names(extractions_human2)[1:5]
+  if (verbose) print(paste0("First few columns names: ", str_c(names(extractions_human2)[1:7], collapse = " - "))) 
+  
+  flog.trace(paste0("First few columns names: ", str_c(names(extractions_human2)[1:7], collapse = " - "))) 
+  
+  
   
   if (str_detect(names(extractions_human2)[1], "id")) {
     flog.info("Removing id column (pos. 1)")
@@ -89,15 +93,16 @@ compare_human_machine_extractions <- function() {
       extractions_human2 %>% 
       select(-1)
   }
+  
+  names(extractions_human2)[1] <- "reviewer"
+  flog.info("I'm assuming that the name of the reviewer is the name of the first column.")
 
     
   
   if (!("reviewer" %in% names(extractions_human2))) 
     stop("No column 'reviewer' found in human extraction data.")
   
-  if (verbose) print(paste0("First few columns names: ", str_c(names(extractions_human2)[1:7], collapse = " - "))) 
-  
-  flog.trace(paste0("First few columns names: ", str_c(names(extractions_human2)[1:7], collapse = " - "))) 
+
   
   extractions_human3 <-
     extractions_human2
@@ -132,7 +137,7 @@ compare_human_machine_extractions <- function() {
   flog.trace("Recoding values in columns.")
   extractions_human3a <-
     extractions_human3 %>% 
-    mutate(across(.cols = c(3:7),
+    mutate(across(.cols = c(1:7),
                   .fns = tolower)) %>% 
     mutate(is_outdated = ifelse(is_outdated == "yes", TRUE, FALSE),
            is_withdrawn = ifelse(is_withdrawn == "yes", TRUE, FALSE),
@@ -246,6 +251,7 @@ compare_human_machine_extractions <- function() {
   extractions_machine4 <-
     extractions_machine3a %>% 
     select(cochrane_id, 
+           id_review,
            SoF_table_number, 
            is_paywalled, 
            warnings,

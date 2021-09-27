@@ -17,7 +17,7 @@ get_review_info_page <- function(review_url) {
   # on error, stop:
   if (!is.null(safe_page_content_info_page$error)) {
     
-    flog.warn("Error on reading the info page of the review.")
+    flog.error("Error on reading the info page of the review.")
     raise_warning(type = safe_page_content_info_page$error$message,
                   critical = TRUE)
     
@@ -69,7 +69,7 @@ get_review_info_page <- function(review_url) {
       str_extract("Cochrane\\s+Editorial\\s+Group:\\s+.+Copyright?") %>% 
       str_remove("Cochrane\\s+Editorial\\s+Group:") %>% 
       str_remove_all("Copyright:*") %>% 
-      str_squish
+      str_squish()
     
     if (length(review_group) == 0)
       review_group <- NA
@@ -78,7 +78,9 @@ get_review_info_page <- function(review_url) {
     review_mesh_keywords <- 
       page_content_info_page %>% 
       html_nodes("#keywords") %>% 
-      html_text()
+      html_text() %>% 
+      str_remove("keywords") %>% 
+      str_squish()
     
     if (length(review_mesh_keywords) == 0)
       review_mesh_keywords <- NA

@@ -1,0 +1,1 @@
+safely_read_html <- safely(read_html)

@@ -1,5 +1,5 @@
 
-parse_individual_parts <- function(sanitized_review_url) {
+parse_individual_parts <- function(cochrane_url) {
   
   flog.info("parse_individual_parts", name = "funlog")
   flog.info("Starting `parse_individual_parts`")
@@ -7,14 +7,17 @@ parse_individual_parts <- function(sanitized_review_url) {
   
   #init_new_review()
   if (exists("warning_df")) rm(warning_df, inherits = TRUE)
-  if (verbose) cat(paste0("**Starting to parse the review with this doi: ", 
-                          sanitized_review_url, "**\n"))
-  flog.info(paste0("**Starting to parse the review with this doi: ", 
-                   sanitized_review_url, "**"))
+  if (verbose) cat(paste0("**Starting to parse the review with this url: ", 
+                          cochrane_url, "**\n"))
+  flog.info(paste0("**Starting to parse the review with this url: ", 
+                   cochrane_url, "**"))
   
   # if review should not be taken vom from rds file, but read from html page:
   # read html page, must be sanitized! (see function for that):
-  safe_page_content <- safely_read_html(sanitized_review_url)  
+   
+   
+
+  safe_page_content <- safely_read_html(cochrane_url)  
   
   
   
@@ -28,7 +31,7 @@ parse_individual_parts <- function(sanitized_review_url) {
     
     output <- create_empty_df(names_vec = get_all_colnames())
     #output$warnings <- safe_page_content$error$message
-    output$doi <- review_url
+    output$doi <- build_cochrane_url_from_doi(sanitized_review_url) 
     output$warnings <- str_c(output$warnings,
                              "Error 404 on reading full review page",
                              collapse =  " - ")
@@ -50,12 +53,18 @@ parse_individual_parts <- function(sanitized_review_url) {
     page_content <- safe_page_content$result
     
     # parse info page, must be sanitized! (see function for that):
-    info_page <- get_review_info_page(sanitized_review_url)
+    info_page <- get_review_info_page(cochrane_url)
     
     # we build up the output of the function step by step
     # first step: add info page results to output
+    
+    output <-
+      tibble() %>% 
+      mutate(review_url = cochrane_url)
+    
     output <- 
-      info_page
+      output %>% 
+      bind_cols(info_page)
     
     # add the name of the reviewer:
     output <- 
@@ -117,7 +126,7 @@ parse_individual_parts <- function(sanitized_review_url) {
     # bind summary tables results to output object
     output <- 
       output %>% 
-      bind_cols(summarytable)
+      bind_cols(summarytable) 
     
   }
   

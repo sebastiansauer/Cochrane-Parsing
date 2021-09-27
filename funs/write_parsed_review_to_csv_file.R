@@ -10,8 +10,10 @@ write_parsed_review_to_csv_file <- function(review_url,
   
   
   
+  flog.info("write_parsed_review_to_csv_file", name = "funlog")
   writeLines("Now writing file to disk.\n")
   flog.info("Now writing file to disk.\n")
+  
   
   if (reviewer != "?") output_dir <- glue("output/{reviewer}")
   

@@ -151,18 +151,19 @@ get_review_metadata <- function(page_content){
   citation_count <- get_number_of_citations(review_doi)
   
   
-  output <- tibble(title = title_publication,
-                   doi = review_doi,
-                   authors = authors,
-                   publish_type = publish_type,
-                   is_withdrawn = is_withdrawn,
-                   is_most_recent_version = is_most_recent_version,
-                   url_most_most_version = url_most_most_version,
-                   summaryTable_count = summaryTable_count,
-                   GRADE_somewhere_in_the_text = GRADE_somewhere_in_the_text,
-                   is_paywalled = is_paywalled,
-                   citation_count = citation_count
-                   #warning = str_c(warning_df$type, collapse = " - ")
+  output <- tibble(
+    doi = review_doi,
+    title = title_publication,
+    authors = authors,
+    publish_type = publish_type,
+    is_withdrawn = is_withdrawn,
+    is_most_recent_version = is_most_recent_version,
+    url_most_most_version = url_most_most_version,
+    summaryTable_count = summaryTable_count,
+    GRADE_somewhere_in_the_text = GRADE_somewhere_in_the_text,
+    is_paywalled = is_paywalled,
+    citation_count = citation_count
+    #warning = str_c(warning_df$type, collapse = " - ")
   )
   
   if (verbose) print(output)
